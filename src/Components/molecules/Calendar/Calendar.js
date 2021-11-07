@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import CalendarCard from 'atoms/CalendarCard/CalendarCard';
 
 const CalendarBox = styled.View`
+  margin-top: 50px;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -18,7 +19,7 @@ const Calendar = () => {
       <CalendarCard date={6} />
       <CalendarCard date={7} active />
       <CalendarCard date={8} />
-      <CalendarCard date={9} />
+      <CalendarCard date={7} />
     </CalendarBox>
   );
 };

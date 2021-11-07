@@ -12,8 +12,6 @@ import {changePath} from 'src/actions';
 import LostFocus from 'src/LostFocus';
 import Calendar from 'molecules/Calendar/Calendar';
 
-import {Text} from 'react-native';
-
 const App = () => {
   const {inputFocused, path, oldPath} = useSelector(state => state);
 

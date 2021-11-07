@@ -7,21 +7,23 @@ const CalendarCard = ({active, date}) => {
   const CardBox = styled.View`
     overflow: hidden;
     padding: 10px;
+    background-color: #fff;
+    display: flex;
     width: 15%;
     height: 120px;
-    display: flex;
     justify-content: ${() => (active ? 'space-between' : 'flex-end')};
     flex-direction: column;
     border-radius: 10px;
+    elevation: 4;
     ${() => !active && 'border: 1px solid #d1d1d1'}
   `;
 
   const CardText = styled.Text`
     text-align: center;
-    font-size: ${({date}) => (date ? '35' : '16')}px;
+    font-size: ${({isDate}) => (isDate ? '35' : '16')}px;
     color: ${() => (active ? '#FFFFFF' : '#8B8B8B')};
-    ${({date}) =>
-      date &&
+    ${({isDate}) =>
+      isDate &&
       `
         position: absolute;
         top: 50%;
@@ -49,7 +51,7 @@ const CalendarCard = ({active, date}) => {
         />
       )}
       {active && <CardText font="Bold">Dziś</CardText>}
-      <CardText date>{date}</CardText>
+      <CardText isDate>{date}</CardText>
       <CardText>Lis</CardText>
     </CardBox>
   );
