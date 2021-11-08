@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 
 import CalendarCard from 'atoms/CalendarCard/CalendarCard';
+
+import getDateList from 'src/Utils/getDateList';
 
 const CalendarBox = styled.View`
   margin-top: 50px;
@@ -13,13 +15,18 @@ const CalendarBox = styled.View`
 `;
 
 const Calendar = () => {
+  const [dateList, setDateList] = useState(getDateList());
+
   return (
     <CalendarBox>
-      <CalendarCard date={5} />
-      <CalendarCard date={6} />
-      <CalendarCard date={7} active />
-      <CalendarCard date={8} />
-      <CalendarCard date={7} />
+      {dateList.map(({date, month}, index) => (
+        <CalendarCard
+          date={date}
+          month={month}
+          active={index === 2}
+          key={date}
+        />
+      ))}
     </CalendarBox>
   );
 };

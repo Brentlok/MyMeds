@@ -11,6 +11,8 @@ import {changePath} from 'src/actions';
 
 import LostFocus from 'src/LostFocus';
 import Calendar from 'molecules/Calendar/Calendar';
+import TopPanel from 'molecules/TopPanel/TopPanel';
+import BottomPanel from 'molecules/BottomPanel/BottomPanel';
 
 const App = () => {
   const {inputFocused, path, oldPath} = useSelector(state => state);
@@ -37,7 +39,9 @@ const App = () => {
   return (
     <>
       {inputFocused && <LostFocus />}
+      <TopPanel />
       <Calendar />
+      <BottomPanel />
     </>
   );
 };
