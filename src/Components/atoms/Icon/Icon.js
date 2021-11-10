@@ -5,6 +5,7 @@ import PersonIcon from 'assets/svg/group.svg';
 import HomeIcon from 'assets/svg/home.svg';
 import SettingsIcon from 'assets/svg/settings.svg';
 import CalendarIcon from 'assets/svg/calendar.svg';
+import CalendarIconSmall from 'assets/svg/calendar-small.svg';
 
 const Icon = ({type}) => {
   switch (type) {
@@ -20,6 +21,8 @@ const Icon = ({type}) => {
       return <SettingsIcon />;
     case 'calendar':
       return <CalendarIcon />;
+    case 'calendar-small':
+      return <CalendarIconSmall />;
     default:
       return null;
   }

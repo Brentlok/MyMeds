@@ -3,15 +3,14 @@ import styled from 'styled-components/native';
 
 import CalendarCard from 'atoms/CalendarCard/CalendarCard';
 
-import getDateList from 'src/Utils/getDateList';
+import {getDateList} from 'src/Utils/getDate';
 
 const CalendarBox = styled.View`
-  margin-top: 50px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: row;
-  padding: 0 10px;
+  margin-top: 20px;
 `;
 
 const Calendar = () => {

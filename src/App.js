@@ -10,7 +10,7 @@ import store from 'src/store';
 import {changePath} from 'src/actions';
 
 import LostFocus from 'src/LostFocus';
-import Calendar from 'molecules/Calendar/Calendar';
+import CalendarSection from 'organisms/CalendarSection/CalendarSection';
 import TopPanel from 'molecules/TopPanel/TopPanel';
 import BottomPanel from 'molecules/BottomPanel/BottomPanel';
 
@@ -40,7 +40,7 @@ const App = () => {
     <>
       {inputFocused && <LostFocus />}
       <TopPanel />
-      <Calendar />
+      <CalendarSection />
       <BottomPanel />
     </>
   );

@@ -12,7 +12,8 @@ const PanelWrapper = styled.View`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  border: 1px solid #cdcdcd;
+  border: 0px solid #cdcdcd;
+  border-top-width: 1px;
   padding: 40px;
 `;
 

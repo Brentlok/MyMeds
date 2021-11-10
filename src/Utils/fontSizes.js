@@ -8,6 +8,10 @@ const fontSizes = {
       today: 21,
     },
   },
+  calendar: {
+    title: 27,
+    edit: 17,
+  },
 };
 
 export default fontSizes;
