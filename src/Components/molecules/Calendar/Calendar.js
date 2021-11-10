@@ -15,7 +15,8 @@ const CalendarBox = styled.View`
 
 const Calendar = () => {
   const [dateList, setDateList] = useState(getDateList());
-
+  // get array of dates [today - 2, today - 1, today, today +1, today + 2]
+  // each date object has date and month properties
   return (
     <CalendarBox>
       {dateList.map(({date, month}, index) => (

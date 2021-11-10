@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Calendar from 'molecules/Calendar/Calendar';
 import Icon from 'atoms/Icon/Icon';
-import fontSizes from 'src/Utils/fontSizes';
+import MetroText, {
+  REGULAR,
+  EXTRA_BOLD,
+  EXTRA_SMALL,
+} from 'atoms/MetroText/MetroText';
 import {getToday} from 'src/Utils/getDate';
 
 const Wrapper = styled.View`
@@ -11,30 +15,23 @@ const Wrapper = styled.View`
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  padding: 20px 15px;
+  padding: 25px 15px 0 15px;
 `;
 
-const Title = styled.Text`
-  font-family: Metropolis;
-  color: black;
-  font-size: ${fontSizes.calendar.title}px;
-  font-weight: bold;
+const TitleText = styled(MetroText)`
   width: 50%;
+  text-align: left;
 `;
 
 const EditCalendar = styled.TouchableOpacity`
-  width: 155px;
+  width: 170px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
 `;
 
-const EditCalendarText = styled.Text`
-  font-family: Metropolis;
-  font-size: ${fontSizes.calendar.edit}px;
-  font-weight: bold;
-  color: black;
+const EditCalendarText = styled(MetroText)`
   text-decoration: underline;
 `;
 
@@ -42,11 +39,13 @@ const CalendarSection = () => {
   const {date, month} = getToday();
   return (
     <Wrapper>
-      <Title>
+      <TitleText size={REGULAR}>
         {date} {month}
-      </Title>
+      </TitleText>
       <EditCalendar>
-        <EditCalendarText>Edytuj kalendarz</EditCalendarText>
+        <EditCalendarText size={EXTRA_SMALL} weight={EXTRA_BOLD}>
+          Edytuj kalendarz
+        </EditCalendarText>
         <Icon type="calendar-small" />
       </EditCalendar>
       <Calendar />

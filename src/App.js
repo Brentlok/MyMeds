@@ -11,6 +11,7 @@ import {changePath} from 'src/actions';
 
 import LostFocus from 'src/LostFocus';
 import CalendarSection from 'organisms/CalendarSection/CalendarSection';
+import TimeSection from 'organisms/TimeSection/TimeSection';
 import TopPanel from 'molecules/TopPanel/TopPanel';
 import BottomPanel from 'molecules/BottomPanel/BottomPanel';
 
@@ -41,6 +42,7 @@ const App = () => {
       {inputFocused && <LostFocus />}
       <TopPanel />
       <CalendarSection />
+      <TimeSection />
       <BottomPanel />
     </>
   );

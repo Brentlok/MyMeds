@@ -3,8 +3,17 @@ import styled from 'styled-components/native';
 import {TouchableOpacity, View} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-
-import fontSizes from 'src/Utils/fontSizes';
+import MetroText, {
+  EXTRA_SMALL,
+  SMALL,
+  MEDIUM,
+  BIG,
+  EXTRA_BIG,
+  BOLD,
+  EXTRA_BOLD,
+  WHITE,
+  LIGHT_GREY,
+} from 'atoms/MetroText/MetroText';
 
 const CalendarCard = ({active, date, month}) => {
   const isMonth = 'isMonth';
@@ -25,32 +34,7 @@ const CalendarCard = ({active, date, month}) => {
     ${() => !active && 'border: 1px solid #d1d1d1'}
   `;
 
-  const getFontSize = type => {
-    const {calendarCard} = fontSizes;
-    if (active) {
-      const activeCalendarCard = calendarCard.active;
-      switch (type) {
-        case isToday:
-          return activeCalendarCard.today;
-        case isDay:
-          return activeCalendarCard.day;
-        case isMonth:
-          return activeCalendarCard.month;
-      }
-    }
-    switch (type) {
-      case isDay:
-        return calendarCard.day;
-      case isMonth:
-        return calendarCard.month;
-    }
-  };
-
-  const CardText = styled.Text`
-    text-align: center;
-    font-size: ${({type}) => getFontSize(type)}px;
-    color: ${() => (active ? '#FFFFFF' : '#8B8B8B')};
-    font-family: Metropolis-${({type}) => (type === isToday ? 'Bold' : 'ExtraBold')};
+  const CardText = styled(MetroText)`
     ${({type}) => type === isDay && !active && 'margin-bottom: 10px;'}
     ${({type}) =>
       [isMonth, isDay].includes(type) && active && 'margin-top: -5px;'}
@@ -73,9 +57,28 @@ const CalendarCard = ({active, date, month}) => {
           colors={['#17C79A', '#01FFBE']}
         />
       )}
-      {active && <CardText type={isToday}>Dziś</CardText>}
-      <CardText type={isDay}>{date}</CardText>
-      <CardText type={isMonth}>{month}</CardText>
+      {active && (
+        <CardText
+          type={isToday}
+          color={active ? WHITE : LIGHT_GREY}
+          size={SMALL}>
+          Dziś
+        </CardText>
+      )}
+      <CardText
+        type={isDay}
+        weight={EXTRA_BOLD}
+        color={active ? WHITE : LIGHT_GREY}
+        size={active ? EXTRA_BIG : BIG}>
+        {date}
+      </CardText>
+      <CardText
+        type={isMonth}
+        weight={active ? BOLD : EXTRA_BOLD}
+        color={active ? WHITE : LIGHT_GREY}
+        size={active ? MEDIUM : EXTRA_SMALL}>
+        {month}
+      </CardText>
     </CardBox>
   );
 };
