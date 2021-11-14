@@ -1,4 +1,46 @@
 const initialState = {
+  list: [
+    {
+      time: {
+        hours: '7',
+        minutes: '00',
+      },
+      medsList: [
+        {
+          name: 'Witamina C',
+          quantity: 2,
+          quantityType: 'tabletki',
+        },
+      ],
+    },
+    {
+      time: {
+        hours: '12',
+        minutes: '32',
+      },
+      medsList: [
+        {
+          name: 'Witamina D',
+          quantity: 4,
+          quantityType: 'krople',
+        },
+      ],
+    },
+    {
+      time: {
+        hours: '20',
+        minutes: '12',
+      },
+      medsList: [
+        {
+          name: 'Magnez',
+          quantity: 1,
+          quantityType: 'tabletka',
+        },
+      ],
+    },
+  ],
+  inputFocused: false,
   path: '/',
   oldPath: null,
 };

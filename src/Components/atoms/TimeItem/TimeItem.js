@@ -8,7 +8,7 @@ import MetroText, {
 } from 'atoms/MetroText/MetroText';
 import LinearGradient from 'react-native-linear-gradient';
 
-const TimeItem = ({last, active}) => {
+const TimeItem = ({last, active, data}) => {
   const TimeItemWrapper = styled.View`
     width: 100%;
     display: flex;
@@ -19,7 +19,7 @@ const TimeItem = ({last, active}) => {
     ${() => !last && !active && 'border-bottom-width: 3px;'}
   `;
 
-  const HourText = styled(MetroText)`
+  const MedTimeTitle = styled(MetroText)`
     border: 0px solid #c4c4c4;
     border-right-width: 2px;
     width: 20%;
@@ -57,20 +57,25 @@ const TimeItem = ({last, active}) => {
     height: 3px;
   `;
 
+  const {
+    time: {hours, minutes},
+    medsList,
+  } = data;
+
   return (
     <TimeItemWrapper>
-      <HourText size={SMALL} weight={EXTRA_BOLD}>
-        7:00
-      </HourText>
+      <MedTimeTitle size={SMALL} weight={EXTRA_BOLD}>
+        {hours}:{minutes}
+      </MedTimeTitle>
       <Meds>
         <MedTitle weight={EXTRA_BOLD} size={SMALL}>
-          Witamina C
+          {medsList[0].name}
         </MedTitle>
         <MedQuantity weight={MEDIUM} size={EXTRA_SMALL}>
-          2 tabletki
+          {medsList[0].quantity} {medsList[0].quantityType}
         </MedQuantity>
         <MedTime weight={MEDIUM} size={EXTRA_SMALL}>
-          7:00 - 8:00
+          {hours}:{minutes} - {parseInt(hours, 10) + 1}:{minutes}
         </MedTime>
       </Meds>
       {active && (

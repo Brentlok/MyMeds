@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {Dimensions} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const TimeList = () => {
+  const {list} = useSelector(state => state);
   const TimeListWrapper = styled.ScrollView`
     width: ${Dimensions.get('window').width - 30}px;
     margin: 0 auto 80px auto;
@@ -13,9 +15,14 @@ const TimeList = () => {
   `;
   return (
     <TimeListWrapper>
-      <TimeItem active />
-      <TimeItem />
-      <TimeItem last />
+      {list.map((data, index) => (
+        <TimeItem
+          key={index}
+          active={index === 0}
+          last={index === list.length - 1}
+          data={data}
+        />
+      ))}
     </TimeListWrapper>
   );
 };

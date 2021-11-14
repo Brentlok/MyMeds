@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'atoms/Icon/Icon';
+import PushNotification from 'react-native-push-notification';
 
 const PanelWrapper = styled.View`
   position: absolute;
@@ -18,9 +19,24 @@ const PanelWrapper = styled.View`
 `;
 
 const TopPanel = () => {
+  const date = new Date(Date.now() + 1000);
+  const testNotification = () => {
+    PushNotification.localNotificationSchedule({
+      id: '123',
+      userInfo: {id: '123'},
+      channelId: 'my-meds-notifications',
+      title: 'Przypomnienie',
+      message: 'pora na leki',
+      date: date,
+      repeatType: 'day',
+      repeatTime: 1,
+      soundName: 'default',
+    });
+  };
+
   return (
     <PanelWrapper>
-      <Icon type="calendar" />
+      <Icon onPress={testNotification} type="calendar" />
       <Icon type="home" />
       <Icon type="settings" />
     </PanelWrapper>

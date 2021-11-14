@@ -7,7 +7,7 @@ const PanelWrapper = styled.View`
   height: 120px;
   background-color: #f5f5f5;
   elevation: 6;
-  padding: 20px;
+  padding: 20px 30px 20px 20px;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
   display: flex;

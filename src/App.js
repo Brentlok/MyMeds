@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {Alert, BackHandler} from 'react-native';
 import {useBackHandler} from '@react-native-community/hooks';
 
 import {NativeRouter, Switch, Route} from 'react-router-native';
 import {Provider, useSelector, useDispatch} from 'react-redux';
+
+import useNotification from 'src/Utils/useNotification';
 
 import store from 'src/store';
 import {changePath} from 'src/actions';
@@ -19,6 +21,8 @@ const App = () => {
   const {inputFocused, path, oldPath} = useSelector(state => state);
 
   const dispatch = useDispatch();
+
+  useNotification();
 
   useBackHandler(() => {
     if (oldPath && path !== '/') {
