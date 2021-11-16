@@ -9,7 +9,9 @@ import {Provider, useSelector, useDispatch} from 'react-redux';
 import useNotification from 'src/Utils/useNotification';
 
 import store from 'src/store';
-import {changePath} from 'src/actions';
+import {changePath, loadData} from 'src/actions';
+
+import RootView from 'src/Views/RootView';
 
 import LostFocus from 'src/LostFocus';
 import CalendarSection from 'organisms/CalendarSection/CalendarSection';
@@ -23,6 +25,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   useNotification();
+
+  // useEffect(() => {
+  //   dispatch(loadData());
+  // }, []);
 
   useBackHandler(() => {
     if (oldPath && path !== '/') {
@@ -42,13 +48,13 @@ const App = () => {
   });
 
   return (
-    <>
+    <RootView>
       {inputFocused && <LostFocus />}
       <TopPanel />
       <CalendarSection />
       <TimeSection />
       <BottomPanel />
-    </>
+    </RootView>
   );
 };
 

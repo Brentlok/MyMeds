@@ -1,0 +1,46 @@
+{
+  "list": [
+    {
+      "id": "1",
+      "time": {
+        "hours": "7",
+        "minutes": "00"
+      },
+      "medsList": [
+        {
+          "name": "Witamina C",
+          "quantity": 2,
+          "quantityType": "tabletki"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "time": {
+        "hours": "12",
+        "minutes": "32"
+      },
+      "medsList": [
+        {
+          "name": "Witamina D",
+          "quantity": 4,
+          "quantityType": "krople"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "time": {
+        "hours": "20",
+        "minutes": "12"
+      },
+      "medsList": [
+        {
+          "name": "Magnez",
+          "quantity": 1,
+          "quantityType": "tabletka"
+        }
+      ]
+    }
+  ]
+}
