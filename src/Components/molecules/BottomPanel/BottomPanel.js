@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon from 'atoms/Icon/Icon';
+import Icon, {HOME, CALENDAR, SETTINGS} from 'atoms/Icon/Icon';
 import PushNotification from 'react-native-push-notification';
 
 const PanelWrapper = styled.View`
@@ -36,9 +36,9 @@ const TopPanel = () => {
 
   return (
     <PanelWrapper>
-      <Icon onPress={testNotification} type="calendar" />
-      <Icon type="home" />
-      <Icon type="settings" />
+      <Icon onPress={testNotification} type={CALENDAR} />
+      <Icon type={HOME} />
+      <Icon type={SETTINGS} />
     </PanelWrapper>
   );
 };

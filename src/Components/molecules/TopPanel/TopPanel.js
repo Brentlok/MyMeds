@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon from 'atoms/Icon/Icon';
+import Icon, {TOP_MENU, LOGO, PERSON} from 'atoms/Icon/Icon';
 
 const PanelWrapper = styled.View`
   width: 100%;
@@ -19,9 +19,9 @@ const PanelWrapper = styled.View`
 const TopPanel = () => {
   return (
     <PanelWrapper>
-      <Icon type="topMenu" />
-      <Icon type="logo" />
-      <Icon type="person" />
+      <Icon type={TOP_MENU} />
+      <Icon type={LOGO} />
+      <Icon type={PERSON} />
     </PanelWrapper>
   );
 };

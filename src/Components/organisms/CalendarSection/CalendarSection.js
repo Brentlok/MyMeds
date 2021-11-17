@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Calendar from 'molecules/Calendar/Calendar';
-import Icon from 'atoms/Icon/Icon';
+import Icon, {CALENDAR_SMALL} from 'atoms/Icon/Icon';
 import MetroText, {
   REGULAR,
   EXTRA_BOLD,
@@ -46,7 +46,7 @@ const CalendarSection = () => {
         <EditCalendarText size={EXTRA_SMALL} weight={EXTRA_BOLD}>
           Edytuj kalendarz
         </EditCalendarText>
-        <Icon type="calendar-small" />
+        <Icon type={CALENDAR_SMALL} />
       </EditCalendar>
       <Calendar />
     </Wrapper>

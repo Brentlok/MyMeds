@@ -7,23 +7,35 @@ import HomeIcon from 'assets/svg/home.svg';
 import SettingsIcon from 'assets/svg/settings.svg';
 import CalendarIcon from 'assets/svg/calendar.svg';
 import CalendarIconSmall from 'assets/svg/calendar-small.svg';
+import NothingIcon from 'assets/svg/nothing.svg';
+
+export const LOGO = 'LOGO';
+export const TOP_MENU = 'TOP_MENU';
+export const PERSON = 'PERSON';
+export const HOME = 'HOME';
+export const SETTINGS = 'SETTINGS';
+export const CALENDAR = 'CALENDAR';
+export const CALENDAR_SMALL = 'CALENDAR_SMALL';
+export const NOTHING = 'NOTHING';
 
 const getIcon = type => {
   switch (type) {
-    case 'logo':
+    case LOGO:
       return <LogoIcon />;
-    case 'topMenu':
+    case TOP_MENU:
       return <TopMenuIcon />;
-    case 'person':
+    case PERSON:
       return <PersonIcon />;
-    case 'home':
+    case HOME:
       return <HomeIcon />;
-    case 'settings':
+    case SETTINGS:
       return <SettingsIcon />;
-    case 'calendar':
+    case CALENDAR:
       return <CalendarIcon />;
-    case 'calendar-small':
+    case CALENDAR_SMALL:
       return <CalendarIconSmall />;
+    case NOTHING:
+      return <NothingIcon />;
     default:
       return null;
   }
@@ -36,7 +48,7 @@ const Icon = ({type, onPress}) => {
     align-items: center;
   `;
 
-  if (['calendar', 'home', 'settings', 'person'].includes(type)) {
+  if ([CALENDAR, HOME, SETTINGS, PERSON].includes(type)) {
     return <Touchable onPress={onPress}>{getIcon(type)}</Touchable>;
   }
   return getIcon(type);
