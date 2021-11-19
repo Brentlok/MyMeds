@@ -4,9 +4,9 @@ import {LOAD_DATA} from 'src/reducers';
 export const loadData = () => async dispatch => {
   try {
     const response = await axios.get(
-      'https://run.mocky.io/v3/36934bf9-fcd5-498f-88e2-1c3e6c00d0a0',
+      'https://61977158af46280017e7e618.mockapi.io/list',
     );
-    const list = response.data.list.sort(
+    const list = response.data.sort(
       (a, b) => parseInt(a.time.hours, 10) > parseInt(b.time.hours, 10),
     );
     dispatch({
@@ -33,3 +33,5 @@ export const changeInputFocus = value => ({
     inputFocused: value,
   },
 });
+
+export const changeModalTakenOpen = () => ({type: 'CHANGE_MODAL_TAKEN_OPEN'});

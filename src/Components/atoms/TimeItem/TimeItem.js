@@ -7,8 +7,19 @@ import MetroText, {
   EXTRA_SMALL,
 } from 'atoms/MetroText/MetroText';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon, {OPEN_MODAL, RING} from 'atoms/Icon/Icon';
+import {useDispatch} from 'react-redux';
+import {changeModalTakenOpen} from 'src/actions';
 
 const TimeItem = ({last, active, data}) => {
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    if (active) {
+      dispatch(changeModalTakenOpen());
+    }
+  };
+
   const TimeItemWrapper = styled.View`
     width: 100%;
     display: flex;
@@ -29,11 +40,20 @@ const TimeItem = ({last, active, data}) => {
 
   const Meds = styled.View`
     width: 80%;
-    padding: 0 10px;
+    padding: 0 30px 0 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+  `;
+
+  const MedsText = styled.View`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 40px;
   `;
 
   const MedTitle = styled(MetroText)`
@@ -47,7 +67,6 @@ const TimeItem = ({last, active, data}) => {
 
   const MedTime = styled(MetroText)`
     text-align: right;
-    padding-right: 10px;
   `;
 
   const BorderGradient = styled(LinearGradient)`
@@ -68,15 +87,18 @@ const TimeItem = ({last, active, data}) => {
         {hours}:{minutes}
       </MedTimeTitle>
       <Meds>
-        <MedTitle weight={EXTRA_BOLD} size={SMALL}>
-          {medsList[0].name}
-        </MedTitle>
-        <MedQuantity weight={MEDIUM} size={EXTRA_SMALL}>
-          {medsList[0].quantity} {medsList[0].quantityType}
-        </MedQuantity>
-        <MedTime weight={MEDIUM} size={EXTRA_SMALL}>
-          {hours}:{minutes} - {parseInt(hours, 10) + 1}:{minutes}
-        </MedTime>
+        <MedsText>
+          <MedTitle weight={EXTRA_BOLD} size={SMALL}>
+            {medsList[0].name}
+          </MedTitle>
+          <MedQuantity weight={MEDIUM} size={EXTRA_SMALL}>
+            {medsList[0].quantity} {medsList[0].quantityType}
+          </MedQuantity>
+          <MedTime weight={MEDIUM} size={EXTRA_SMALL}>
+            {hours}:{minutes} - {parseInt(hours, 10) + 1}:{minutes}
+          </MedTime>
+        </MedsText>
+        <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
       </Meds>
       {active && (
         <BorderGradient

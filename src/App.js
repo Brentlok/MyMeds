@@ -18,6 +18,7 @@ import CalendarSection from 'organisms/CalendarSection/CalendarSection';
 import TimeSection from 'organisms/TimeSection/TimeSection';
 import TopPanel from 'molecules/TopPanel/TopPanel';
 import BottomPanel from 'molecules/BottomPanel/BottomPanel';
+import ModalTaken from 'organisms/ModalTaken/ModalTaken';
 
 const App = () => {
   const {inputFocused, path, oldPath} = useSelector(state => state);
@@ -26,9 +27,9 @@ const App = () => {
 
   useNotification();
 
-  // useEffect(() => {
-  //   dispatch(loadData());
-  // }, []);
+  useEffect(() => {
+    dispatch(loadData());
+  }, [dispatch]);
 
   useBackHandler(() => {
     if (oldPath && path !== '/') {
@@ -54,6 +55,8 @@ const App = () => {
       <CalendarSection />
       <TimeSection />
       <BottomPanel />
+      <ModalTaken />
+      {/*  ModalTaken must be at the end, otherwise touch doesnt work */}
     </RootView>
   );
 };
