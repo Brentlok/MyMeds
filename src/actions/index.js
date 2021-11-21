@@ -1,5 +1,10 @@
 import axios from 'axios';
-import {LOAD_DATA} from 'src/reducers';
+import {
+  LOAD_DATA,
+  CHANGE_PATH,
+  CHANGE_INPUT_FOCUS,
+  CHANGE_MODAL_TAKEN_OPEN,
+} from 'src/reducers';
 
 export const loadData = () => async dispatch => {
   try {
@@ -21,17 +26,17 @@ export const loadData = () => async dispatch => {
 };
 
 export const changePath = newPath => ({
-  type: 'CHANGE_PATH',
+  type: CHANGE_PATH,
   payload: {
     newPath,
   },
 });
 
 export const changeInputFocus = value => ({
-  type: 'CHANGE_INPUT_FOCUS',
+  type: CHANGE_INPUT_FOCUS,
   payload: {
     inputFocused: value,
   },
 });
 
-export const changeModalTakenOpen = () => ({type: 'CHANGE_MODAL_TAKEN_OPEN'});
+export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
