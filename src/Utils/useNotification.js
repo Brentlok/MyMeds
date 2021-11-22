@@ -5,6 +5,29 @@ import notifee, {
   TriggerType,
   RepeatFrequency,
 } from '@notifee/react-native';
+import {Alert} from 'react-native';
+
+const checkForBatteryPermission = async () => {
+  const batteryOptimizationEnabled =
+    await notifee.isBatteryOptimizationEnabled();
+  if (batteryOptimizationEnabled) {
+    Alert.alert(
+      'Wykryto restrykcje w ustawieniach',
+      'Aby zapewnić prawidłowe działanie aplikacji wyłącz optymalizacje bateri w ustawieniach telefonu',
+      [
+        {
+          text: 'Otwórz ustawienia',
+          onPress: async () => await notifee.openBatteryOptimizationSettings(),
+        },
+        {
+          text: 'Anuluj',
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
+  }
+};
 
 const channelId = 'MyMeds-notifications';
 
@@ -30,6 +53,7 @@ const useNotification = () => {
   };
 
   useEffect(() => {
+    checkForBatteryPermission();
     createChannel();
   }, []);
 };
