@@ -5651,11 +5651,6 @@ react-native-notification-sounds@^0.5.3:
   resolved "https://registry.yarnpkg.com/react-native-notification-sounds/-/react-native-notification-sounds-0.5.3.tgz#69a8be1b97819de58590b80083d21bdecc951f6b"
   integrity sha512-gt5i1ymGF1Jd063lxG5lp1ThFJNLfqmUa0Un86us2HTlVxrk94C2c7/G3rcVIWnNoM9MPuo1dr5IaC4WMBI68g==
 
-react-native-push-notification@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#a41d20c70ea5a7709417e96261b225461f8dc73a"
-  integrity sha512-XpBtG/w+a6WXTxu6l1dNYyTiHnbgnvjoc3KxPTxYkaIABRmvuJZkFxqruyGvfCw7ELAlZEAJO+dthdTabCe1XA==
-
 react-native-svg-transformer@^0.14.3:
   version "0.14.3"
   resolved "https://registry.yarnpkg.com/react-native-svg-transformer/-/react-native-svg-transformer-0.14.3.tgz#43c8e176f5a11f16f39b87a64018e0ac090ffbdb"
