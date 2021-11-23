@@ -3,7 +3,7 @@
     {
       "id": "1",
       "time": {
-        "hours": "7",
+        "hours": "8",
         "minutes": "00"
       },
       "medsList": [
@@ -39,6 +39,34 @@
           "name": "Magnez",
           "quantity": 1,
           "quantityType": "tabletka"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "time": {
+        "hours": "7",
+        "minutes": "30"
+      },
+      "medsList": [
+        {
+          "name": "Tran",
+          "quantity": 10,
+          "quantityType": "ml"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "time": {
+        "hours": "21",
+        "minutes": "30"
+      },
+      "medsList": [
+        {
+          "name": "Kreatyna",
+          "quantity": 1,
+          "quantityType": "porcja"
         }
       ]
     }

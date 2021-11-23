@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import notifee, {
   AndroidImportance,
   AndroidVisibility,
+  AndroidCategory,
   TriggerType,
   RepeatFrequency,
 } from '@notifee/react-native';
@@ -29,7 +30,7 @@ const checkForBatteryPermission = async () => {
   }
 };
 
-const channelId = 'MyMeds-notifications';
+const channelId = 'MyMeds_notifications';
 
 const useNotification = () => {
   const createChannel = async () => {
@@ -47,7 +48,7 @@ const useNotification = () => {
         name: 'Powiadomienia MyMeds',
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
-        sound: 'default',
+        sound: 'mymeds',
       });
     }
   };
@@ -71,6 +72,11 @@ export const addNotification = async (title, body) => {
       body,
       android: {
         channelId: channelId,
+        category: AndroidCategory.REMINDER,
+        importance: AndroidImportance.HIGH,
+        sound: 'mymeds',
+        autoCancel: false,
+        ongoing: true,
       },
     },
     trigger,
