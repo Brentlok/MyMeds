@@ -34,12 +34,6 @@ const channelId = 'MyMeds_notifications';
 
 const useNotification = () => {
   const createChannel = async () => {
-    //delete older channels if any exists
-    await (
-      await notifee.getChannels()
-    ).forEach(({id}) => {
-      notifee.deleteChannel(id);
-    });
     // Create a channel
     const isCreated = await notifee.isChannelCreated(channelId);
     if (!isCreated) {
@@ -74,6 +68,7 @@ export const addNotification = async (title, body) => {
         channelId: channelId,
         category: AndroidCategory.REMINDER,
         importance: AndroidImportance.HIGH,
+        visibility: AndroidVisibility.PUBLIC,
         sound: 'mymeds',
         autoCancel: false,
         ongoing: true,
