@@ -39,10 +39,10 @@ const useNotification = () => {
     if (!isCreated) {
       await notifee.createChannel({
         id: channelId,
-        name: 'Powiadomienia MyMeds',
+        name: 'Powiadomienia',
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
-        sound: 'mymeds',
+        sound: 'mymeds_powiadomienia',
       });
     }
   };
@@ -56,7 +56,7 @@ const useNotification = () => {
 export const addNotification = async (title, body) => {
   const trigger = {
     type: TriggerType.TIMESTAMP,
-    timestamp: Date.now() + 2000,
+    timestamp: Date.now() + 5000,
     // repeatFrequency: RepeatFrequency.DAILY,
   };
 
@@ -69,13 +69,15 @@ export const addNotification = async (title, body) => {
         category: AndroidCategory.REMINDER,
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
-        sound: 'mymeds',
-        autoCancel: false,
-        ongoing: true,
+        sound: 'mymeds_powiadomienia',
+        // autoCancel: false,
+        // ongoing: true,
       },
     },
     trigger,
   );
 };
+
+notifee.onBackgroundEvent(async () => null);
 
 export default useNotification;
