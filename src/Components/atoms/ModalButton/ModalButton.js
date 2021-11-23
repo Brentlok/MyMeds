@@ -15,7 +15,8 @@ const ModalButton = ({yes}) => {
     flex-direction: row;
     justify-content: space-between;
     padding: 0 25px;
-    ${!yes && 'border: 3px solid #ff5252'}
+    elevation: 4;
+    ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5'}
     overflow: hidden;
   `;
   const YesGradient = styled(LinearGradient)`

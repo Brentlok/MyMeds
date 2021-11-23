@@ -5,12 +5,16 @@ const initialState = {
   path: '/',
   oldPath: null,
   modalTakenOpen: false,
+  batteryOptimizationChecked: false,
+  dataLoaded: false,
 };
 
 export const CHANGE_PATH = 'CHANGE_PATH';
 export const CHANGE_INPUT_FOCUS = 'CHANGE_INPUT_FOCUS';
 export const LOAD_DATA = 'LOAD_DATA';
 export const CHANGE_MODAL_TAKEN_OPEN = 'CHANGE_MODAL_TAKEN_OPEN';
+export const DATA_LOADED = 'DATA_LOADED';
+export const LOAD_LOCAL_DATA = 'LOAD_LOCAL_DATA';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,6 +40,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload.list,
+      };
+    }
+    case DATA_LOADED: {
+      return {
+        ...state,
+        dataLoaded: action.payload.dataLoaded,
       };
     }
     default:

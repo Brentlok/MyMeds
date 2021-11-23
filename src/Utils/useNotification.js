@@ -1,64 +1,83 @@
 import {useEffect} from 'react';
-import PushNotification, {Importance} from 'react-native-push-notification';
+import notifee, {
+  AndroidImportance,
+  AndroidVisibility,
+  AndroidCategory,
+  TriggerType,
+  RepeatFrequency,
+} from '@notifee/react-native';
+import {Alert} from 'react-native';
+
+const checkForBatteryPermission = async () => {
+  const batteryOptimizationEnabled =
+    await notifee.isBatteryOptimizationEnabled();
+  if (batteryOptimizationEnabled) {
+    Alert.alert(
+      'Wykryto restrykcje w ustawieniach',
+      'Aby zapewnić prawidłowe działanie aplikacji wyłącz optymalizacje bateri w ustawieniach telefonu',
+      [
+        {
+          text: 'Otwórz ustawienia',
+          onPress: async () => await notifee.openBatteryOptimizationSettings(),
+        },
+        {
+          text: 'Anuluj',
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
+  }
+};
+
+const channelId = 'MyMeds_notifications';
 
 const useNotification = () => {
-  const channelId = 'my-meds-notifications';
-  const channelName = 'Powiadomienia';
-
-  const createChannel = () => {
-    PushNotification.channelExists(channelId, exists => {
-      if (!exists) {
-        PushNotification.createChannel({
-          channelId: channelId,
-          channelName: channelName,
-          playSound: true,
-          soundName: 'default',
-          importance: Importance.HIGH,
-          vibrate: true,
-        });
-      }
-    });
-  };
-
-  const getDate = () => {
-    const date = new Date();
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-    };
-  };
-
-  const getDiff = time => {
-    const {year, month, day} = getDate();
-    const hours = time.slice(0, 2);
-    const minutes = time.slice(3, 5);
-    const now = new Date(year, month, day, hours, minutes);
-    return now.getTime() - new Date().getTime();
-  };
-
-  const handleNotification = (time, itemId) => {
-    // let diff = getDiff(time);
-    // if (diff < 0) {
-    //   diff += 86400000;
-    // }
-    const date = new Date(Date.now() + 1000);
-    PushNotification.localNotificationSchedule({
-      id: '123',
-      userInfo: {id: '123'},
-      channelId: channelId,
-      title: 'Przypomnienie',
-      message: 'pora na leki',
-      date: date,
-      repeatType: 'day',
-      repeatTime: 1,
-      soundName: 'default',
-    });
+  const createChannel = async () => {
+    // Create a channel
+    const isCreated = await notifee.isChannelCreated(channelId);
+    if (!isCreated) {
+      await notifee.createChannel({
+        id: channelId,
+        name: 'Powiadomienia',
+        importance: AndroidImportance.HIGH,
+        visibility: AndroidVisibility.PUBLIC,
+        sound: 'mymeds_powiadomienia',
+      });
+    }
   };
 
   useEffect(() => {
+    checkForBatteryPermission();
     createChannel();
   }, []);
 };
+
+export const addNotification = async (title, body) => {
+  const trigger = {
+    type: TriggerType.TIMESTAMP,
+    timestamp: Date.now() + 5000,
+    // repeatFrequency: RepeatFrequency.DAILY,
+  };
+
+  await notifee.createTriggerNotification(
+    {
+      title,
+      body,
+      android: {
+        channelId: channelId,
+        category: AndroidCategory.REMINDER,
+        importance: AndroidImportance.HIGH,
+        visibility: AndroidVisibility.PUBLIC,
+        sound: 'mymeds_powiadomienia',
+        // autoCancel: false,
+        // ongoing: true,
+      },
+    },
+    trigger,
+  );
+};
+
+notifee.onBackgroundEvent(async () => null);
 
 export default useNotification;

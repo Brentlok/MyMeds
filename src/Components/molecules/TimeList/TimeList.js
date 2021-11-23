@@ -11,7 +11,7 @@ import MetroText, {
 } from 'atoms/MetroText/MetroText';
 
 const TimeList = () => {
-  const {list} = useSelector(state => state);
+  const {list, dataLoaded} = useSelector(state => state);
 
   const TimeListWrapper = styled.ScrollView`
     width: ${Dimensions.get('window').width - 30}px;
@@ -24,7 +24,7 @@ const TimeList = () => {
   const NothingWrapper = styled.View`
     display: flex;
     flex-direction: row;
-    padding: 50px 30px;
+    padding: 50px 15px;
     align-items: center;
     justify-content: space-around;
   `;
@@ -33,7 +33,8 @@ const TimeList = () => {
     text-align: left;
   `;
 
-  return (
+  //wait for api
+  return dataLoaded ? (
     <TimeListWrapper>
       {list.length > 0 ? (
         list.map((data, index) => (
@@ -48,11 +49,17 @@ const TimeList = () => {
         <NothingWrapper>
           <Icon type={NOTHING} />
           <NothingText size={EXTRA_SMALL} weight={SEMI_BOLD} color={DARK_GREY}>
-            Ups nic tu nie ma,{'\n'}najpierw coś dodaj
+            {
+              dataLoaded === 'error'
+                ? 'Coś poszło nie tak,\nspróbuj ponownie później' //in case of api error
+                : 'Ups nic tu nie ma,\nnajpierw coś dodaj' //empty list
+            }
           </NothingText>
         </NothingWrapper>
       )}
     </TimeListWrapper>
+  ) : (
+    <TimeListWrapper />
   );
 };
 
