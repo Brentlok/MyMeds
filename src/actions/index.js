@@ -1,6 +1,8 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   LOAD_DATA,
+  LOAD_LOCAL_DATA,
   CHANGE_PATH,
   CHANGE_INPUT_FOCUS,
   CHANGE_MODAL_TAKEN_OPEN,
@@ -35,6 +37,44 @@ export const loadData = () => async dispatch => {
         dataLoaded: 'error',
       },
     });
+  }
+};
+
+const storageKey = 'testingKey';
+
+export const saveLocalData = data => async () => {
+  try {
+    const jsonValue = JSON.stringify(data);
+    await AsyncStorage.setItem(storageKey, jsonValue);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const readLocalData = async () => {
+  try {
+    const storageData = await AsyncStorage.getItem(storageKey);
+    if (storageData === null) {
+      //if there is no saved data localy just return this object with some default values
+      return {batteryOptimizationChecked: false};
+    }
+    return JSON.parse(storageData);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const loadLocalData = () => async dispatch => {
+  try {
+    const {batteryOptimizationChecked} = await readLocalData();
+    dispatch({
+      type: LOAD_LOCAL_DATA,
+      payload: {
+        batteryOptimizationChecked,
+      },
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
 

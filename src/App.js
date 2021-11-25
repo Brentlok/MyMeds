@@ -6,6 +6,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {NativeRouter, Switch, Route} from 'react-router-native';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 
+import useBattery from 'src/Utils/useBattery';
 import useNotification from 'src/Utils/useNotification';
 
 import store from 'src/store';
@@ -25,6 +26,7 @@ const App = () => {
 
   const dispatch = useDispatch();
 
+  useBattery();
   useNotification();
 
   useEffect(() => {
