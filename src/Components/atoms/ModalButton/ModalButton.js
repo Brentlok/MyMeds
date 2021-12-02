@@ -14,7 +14,7 @@ const ModalButton = ({yes}) => {
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 25px;
+    padding: 0 22.5px;
     elevation: 4;
     ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5'}
     overflow: hidden;
@@ -26,6 +26,7 @@ const ModalButton = ({yes}) => {
     top: 0;
     left: 0;
   `;
+
   return (
     <ModalButtonWrapper>
       {yes && (

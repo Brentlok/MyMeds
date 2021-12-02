@@ -15,7 +15,7 @@ const TimeList = () => {
 
   const TimeListWrapper = styled.ScrollView`
     width: ${Dimensions.get('window').width - 30}px;
-    margin: 0 auto 80px auto;
+    margin: 0 auto 70px auto;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     background-color: #f5f5f5;

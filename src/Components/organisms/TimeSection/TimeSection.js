@@ -20,9 +20,8 @@ const TimeSection = () => {
     <>
       <TimeSectionTop>
         <TimeSectionTitleText size={REGULAR} weight={EXTRA_BOLD}>
-          Terminarz
+          Twój terminarz
         </TimeSectionTitleText>
-        <AddItem />
       </TimeSectionTop>
       <TimeList />
     </>

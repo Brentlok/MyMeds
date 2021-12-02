@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,7 +20,7 @@ const CalendarCard = ({active, date, month}) => {
   const isDay = 'isDay';
   const isToday = 'isToday';
 
-  const CardBox = styled(active ? View : TouchableOpacity)`
+  const CardBox = styled.View`
     overflow: hidden;
     padding: 5px 0 15px 0;
     background-color: #fff;

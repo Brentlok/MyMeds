@@ -1,10 +1,7 @@
 const initialState = {
   list: [],
   logged: false,
-  inputFocused: false,
-  path: '/',
-  oldPath: null,
-  modalTakenOpen: false,
+  modalTakenOpen: true,
   batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,

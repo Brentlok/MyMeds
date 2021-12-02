@@ -5,7 +5,9 @@ import MetroText, {
   EXTRA_BOLD,
   MEDIUM,
   EXTRA_SMALL,
+  DARK_GREY,
 } from 'atoms/MetroText/MetroText';
+import {Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon, {OPEN_MODAL, RING} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
@@ -65,12 +67,8 @@ const TimeItem = ({last, active, data}) => {
     text-align: left;
   `;
 
-  const MedTime = styled(MetroText)`
-    text-align: right;
-  `;
-
   const BorderGradient = styled(LinearGradient)`
-    width: 100%;
+    width: ${Dimensions.get('window').width.toFixed()}px;
     position: absolute;
     bottom: 0;
     height: 3px;
@@ -91,12 +89,9 @@ const TimeItem = ({last, active, data}) => {
           <MedTitle weight={EXTRA_BOLD} size={SMALL}>
             {medsList[0].name}
           </MedTitle>
-          <MedQuantity weight={MEDIUM} size={EXTRA_SMALL}>
+          <MedQuantity weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
             {medsList[0].quantity} {medsList[0].quantityType}
           </MedQuantity>
-          <MedTime weight={MEDIUM} size={EXTRA_SMALL}>
-            {hours}:{minutes} - {parseInt(hours, 10) + 1}:{minutes}
-          </MedTime>
         </MedsText>
         <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
       </Meds>
