@@ -41,34 +41,6 @@
           "quantityType": "tabletka"
         }
       ]
-    },
-    {
-      "id": "4",
-      "time": {
-        "hours": "7",
-        "minutes": "30"
-      },
-      "medsList": [
-        {
-          "name": "Tran",
-          "quantity": 10,
-          "quantityType": "ml"
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "time": {
-        "hours": "21",
-        "minutes": "30"
-      },
-      "medsList": [
-        {
-          "name": "Kreatyna",
-          "quantity": 1,
-          "quantityType": "porcja"
-        }
-      ]
     }
   ]
 }

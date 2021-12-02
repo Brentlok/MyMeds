@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
-import {Dimensions} from 'react-native';
-import {useSelector} from 'react-redux';
+import {Dimensions, ScrollView, Pressable} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {loadData} from 'src/actions';
 import Icon, {NOTHING} from 'atoms/Icon/Icon';
 import MetroText, {
   EXTRA_SMALL,
@@ -13,8 +14,13 @@ import MetroText, {
 const TimeList = () => {
   const {list, dataLoaded} = useSelector(state => state);
 
-  const TimeListWrapper = styled.ScrollView`
+  const dispatch = useDispatch();
+
+  const ScrollOrPress = dataLoaded === 'loaded' ? ScrollView : Pressable;
+
+  const TimeListWrapper = styled(ScrollOrPress)`
     width: ${Dimensions.get('window').width - 30}px;
+    height: 100%;
     margin: 0 auto 70px auto;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -35,7 +41,7 @@ const TimeList = () => {
 
   //wait for api
   return dataLoaded ? (
-    <TimeListWrapper>
+    <TimeListWrapper onPress={() => dispatch(loadData())}>
       {list.length > 0 ? (
         list.map((data, index) => (
           <TimeItem

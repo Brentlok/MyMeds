@@ -1,7 +1,7 @@
 const initialState = {
   list: [],
   logged: false,
-  modalTakenOpen: true,
+  modalTakenOpen: false,
   batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,

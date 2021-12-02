@@ -11,6 +11,7 @@ const PanelWrapper = styled.View`
   background-color: #f5f5f5;
   display: flex;
   justify-content: space-between;
+  elevation: 1;
   align-items: center;
   flex-direction: row;
   border: 0px solid #cdcdcd;
