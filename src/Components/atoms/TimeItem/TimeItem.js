@@ -33,14 +33,12 @@ const TimeItem = ({last, active, data}) => {
   `;
 
   const MedTimeTitle = styled(MetroText)`
-    border: 0px solid #c4c4c4;
-    border-right-width: 2px;
     width: 20%;
-    height: 100%;
-    line-height: 60px;
   `;
 
   const Meds = styled.View`
+    border: 0px solid #c4c4c4;
+    border-left-width: 2px;
     width: 80%;
     padding: 0 30px 0 10px;
     display: flex;
@@ -56,6 +54,12 @@ const TimeItem = ({last, active, data}) => {
     flex-direction: row;
     flex-wrap: wrap;
     padding-right: 40px;
+  `;
+
+  const MedItemWrapper = styled.View`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   `;
 
   const MedTitle = styled(MetroText)`
@@ -86,12 +90,16 @@ const TimeItem = ({last, active, data}) => {
       </MedTimeTitle>
       <Meds>
         <MedsText>
-          <MedTitle weight={EXTRA_BOLD} size={SMALL}>
-            {medsList[0].name}
-          </MedTitle>
-          <MedQuantity weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
-            {medsList[0].quantity} {medsList[0].quantityType}
-          </MedQuantity>
+          {medsList.map(item => (
+            <MedItemWrapper key={item.name}>
+              <MedTitle weight={EXTRA_BOLD} size={SMALL}>
+                {item.name}
+              </MedTitle>
+              <MedQuantity weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
+                {item.quantity} {item.quantityType}
+              </MedQuantity>
+            </MedItemWrapper>
+          ))}
         </MedsText>
         <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
       </Meds>

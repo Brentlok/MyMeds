@@ -3,8 +3,17 @@ import styled from 'styled-components/native';
 import MetroText, {BOLD, SMALL} from 'atoms/MetroText/MetroText';
 import Icon, {YES, NO} from 'atoms/Icon/Icon';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch} from 'react-redux';
+import {removeItem, changeModalTakenOpen} from 'src/actions';
 
 const ModalButton = ({yes}) => {
+  const dispatch = useDispatch();
+
+  const handlePress = () => {
+    dispatch(changeModalTakenOpen());
+    dispatch(removeItem());
+  };
+
   const ModalButtonWrapper = styled.TouchableOpacity`
     margin: ${yes ? '25px 15px 0 20px' : '25px 20px 0 0'};
     width: 40%;
@@ -19,6 +28,7 @@ const ModalButton = ({yes}) => {
     ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5'}
     overflow: hidden;
   `;
+
   const YesGradient = styled(LinearGradient)`
     width: 500px;
     height: 45px;
@@ -28,7 +38,7 @@ const ModalButton = ({yes}) => {
   `;
 
   return (
-    <ModalButtonWrapper>
+    <ModalButtonWrapper onPress={handlePress}>
       {yes && (
         <YesGradient
           start={{x: 0, y: 0}}

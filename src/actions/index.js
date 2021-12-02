@@ -3,17 +3,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   LOAD_DATA,
   LOAD_LOCAL_DATA,
-  CHANGE_PATH,
-  CHANGE_INPUT_FOCUS,
   CHANGE_MODAL_TAKEN_OPEN,
   DATA_LOADED,
+  REMOVE_ITEM,
 } from 'src/reducers';
+
+const API_URL = 'https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1';
+//'https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8'
 
 export const loadData = () => async dispatch => {
   try {
-    const response = await axios.get(
-      'https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8',
-    );
+    const response = await axios.get(API_URL);
     const list = response.data.list.sort(
       (a, b) => parseInt(a.time.hours, 10) > parseInt(b.time.hours, 10),
     );
@@ -79,3 +79,5 @@ export const loadLocalData = () => async dispatch => {
 };
 
 export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
+
+export const removeItem = () => ({type: REMOVE_ITEM});
