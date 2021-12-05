@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
 
 import LinearGradient from 'react-native-linear-gradient';
 import MetroText, {
@@ -81,12 +80,6 @@ const CalendarCard = ({active, date, month}) => {
       </CardText>
     </CardBox>
   );
-};
-
-CalendarCard.propTypes = {
-  active: PropTypes.bool.isRequired,
-  date: PropTypes.number.isRequired,
-  month: PropTypes.string.isRequired,
 };
 
 export default CalendarCard;

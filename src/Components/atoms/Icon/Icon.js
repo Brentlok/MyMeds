@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
 
 import LogoIcon from 'assets/svg/logo.svg';
 import PersonIcon from 'assets/svg/avatar.svg';
@@ -81,11 +80,6 @@ const Icon = ({type, onPress, active}) => {
     return <Touchable onPress={onPress}>{getIcon(type, active)}</Touchable>;
   }
   return getIcon(type);
-};
-
-Icon.propTypes = {
-  type: PropTypes.string.isRequired,
-  onPress: PropTypes.func,
 };
 
 export default Icon;
