@@ -58,7 +58,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={HomeView} />
         <Route exact path="/calendar" component={CalendarView} />
-        <Route exact path="/modify" component={ModifyView} />
+        <Route exact path="/add" component={ModifyView} />
       </Switch>
     </RootView>
   );

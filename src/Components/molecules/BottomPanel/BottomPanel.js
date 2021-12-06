@@ -27,9 +27,9 @@ const BottomPanel = () => {
   return (
     <PanelWrapper>
       <Icon
-        onPress={() => history.push('/modify')}
+        onPress={() => history.push('/add')}
         type={ADD}
-        active={pathname === '/modify'}
+        active={pathname === '/add'}
       />
       <Icon
         onPress={() => history.push('/')}

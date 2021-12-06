@@ -16,6 +16,7 @@ import AddIcon from 'assets/svg/add.svg';
 import AddIconActive from 'assets/svg/add-active.svg';
 import CalendarIcon from 'assets/svg/calendar.svg';
 import CalendarIconActive from 'assets/svg/calendar-active.svg';
+import RefreshIcon from 'assets/svg/refresh.svg';
 
 export const LOGO = 'LOGO';
 export const PERSON = 'PERSON';
@@ -31,6 +32,7 @@ export const CALENDAR = 'CALENDAR';
 export const HOME = 'HOME';
 export const ADD = 'ADD';
 export const ACTIVE = 'ACTIVE';
+export const REFRESH = 'REFRESH';
 
 const getIcon = (type, active) => {
   switch (type) {
@@ -60,6 +62,8 @@ const getIcon = (type, active) => {
       return active ? <CalendarIconActive /> : <CalendarIcon />;
     case ADD:
       return active ? <AddIconActive /> : <AddIcon />;
+    case REFRESH:
+      return <RefreshIcon />;
     default:
       return null;
   }
@@ -73,9 +77,17 @@ const Icon = ({type, onPress, active}) => {
   `;
 
   if (
-    [CALENDAR, HOME, SETTINGS, PERSON, CLOSE, RING, OPEN_MODAL, ADD].includes(
-      type,
-    )
+    [
+      CALENDAR,
+      HOME,
+      SETTINGS,
+      PERSON,
+      CLOSE,
+      RING,
+      OPEN_MODAL,
+      ADD,
+      REFRESH,
+    ].includes(type)
   ) {
     return <Touchable onPress={onPress}>{getIcon(type, active)}</Touchable>;
   }

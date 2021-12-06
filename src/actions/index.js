@@ -8,8 +8,11 @@ import {
   REMOVE_ITEM,
 } from 'src/reducers';
 
+//https://run.mocky.io/v3/f1658bd6-a680-4f1b-8631-a47139293916 - empty list
+//https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1 - standard
+//https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8 - long
+
 const API_URL = 'https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1';
-//'https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8'
 
 export const loadData = () => async dispatch => {
   try {
