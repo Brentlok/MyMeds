@@ -1,21 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {Dimensions} from 'react-native';
-import {useSelector} from 'react-redux';
-import Icon, {NOTHING} from 'atoms/Icon/Icon';
-import MetroText, {
-  EXTRA_SMALL,
-  SEMI_BOLD,
-  DARK_GREY,
-} from 'atoms/MetroText/MetroText';
+import {useSelector, useDispatch} from 'react-redux';
+import {loadData} from 'src/actions';
+import Icon, {NOTHING, REFRESH, ADD} from 'atoms/Icon/Icon';
+import MetroText, {SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
+import {useHistory} from 'react-router-native';
 
 const TimeList = () => {
   const {list, dataLoaded} = useSelector(state => state);
 
+  const [listHeight, setListHeight] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const TimeListWrapper = styled.ScrollView`
     width: ${Dimensions.get('window').width - 30}px;
-    margin: 0 auto 80px auto;
+    margin: 0 auto 70px auto;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     background-color: #f5f5f5;
@@ -23,19 +27,25 @@ const TimeList = () => {
 
   const NothingWrapper = styled.View`
     display: flex;
-    flex-direction: row;
-    padding: 50px 15px;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    padding: 10px 0;
+    height: ${listHeight}px;
   `;
 
   const NothingText = styled(MetroText)`
     text-align: left;
   `;
 
+  const getHeight = ({nativeEvent: {layout}}) => {
+    const {height} = layout;
+    setListHeight(height);
+  };
+
   //wait for api
   return dataLoaded ? (
-    <TimeListWrapper>
+    <TimeListWrapper onLayout={getHeight}>
       {list.length > 0 ? (
         list.map((data, index) => (
           <TimeItem
@@ -47,14 +57,26 @@ const TimeList = () => {
         ))
       ) : (
         <NothingWrapper>
-          <Icon type={NOTHING} />
-          <NothingText size={EXTRA_SMALL} weight={SEMI_BOLD} color={DARK_GREY}>
+          <NothingText size={SMALL} weight={SEMI_BOLD}>
             {
               dataLoaded === 'error'
-                ? 'Coś poszło nie tak,\nspróbuj ponownie później' //in case of api error
-                : 'Ups nic tu nie ma,\nnajpierw coś dodaj' //empty list
+                ? 'Ups coś poszło nie tak...' //in case of api error
+                : 'Ups nic tutaj nie ma...' //empty list
             }
           </NothingText>
+          <Icon type={NOTHING} />
+          <NothingText size={SMALL} weight={SEMI_BOLD}>
+            {
+              dataLoaded === 'error'
+                ? 'Spróbuj ponownie później' //in case of api error
+                : 'Dodaj coś już teraz!' //empty list
+            }
+          </NothingText>
+          {dataLoaded === 'error' ? (
+            <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
+          ) : (
+            <Icon type={ADD} onPress={() => history.push('/add')} active />
+          )}
         </NothingWrapper>
       )}
     </TimeListWrapper>

@@ -8,9 +8,14 @@
       },
       "medsList": [
         {
-          "name": "Witamina C",
-          "quantity": 2,
-          "quantityType": "tabletki"
+          "name": "Witamina D",
+          "quantity": 3,
+          "quantityType": "krople"
+        },
+        {
+          "name": "Tran",
+          "quantity": 10,
+          "quantityType": "ml"
         }
       ]
     },
@@ -22,9 +27,9 @@
       },
       "medsList": [
         {
-          "name": "Witamina D",
-          "quantity": 4,
-          "quantityType": "krople"
+          "name": "Probiotyk",
+          "quantity": 1,
+          "quantityType": "tabletka"
         }
       ]
     },
@@ -39,34 +44,6 @@
           "name": "Magnez",
           "quantity": 1,
           "quantityType": "tabletka"
-        }
-      ]
-    },
-    {
-      "id": "4",
-      "time": {
-        "hours": "7",
-        "minutes": "30"
-      },
-      "medsList": [
-        {
-          "name": "Tran",
-          "quantity": 10,
-          "quantityType": "ml"
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "time": {
-        "hours": "21",
-        "minutes": "30"
-      },
-      "medsList": [
-        {
-          "name": "Kreatyna",
-          "quantity": 1,
-          "quantityType": "porcja"
         }
       ]
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TimeList from 'molecules/TimeList/TimeList';
 import MetroText, {REGULAR, EXTRA_BOLD} from 'atoms/MetroText/MetroText';
-import AddItem from 'atoms/AddItem/AddItem';
 
 const TimeSection = () => {
   const TimeSectionTop = styled.View`
@@ -20,9 +19,8 @@ const TimeSection = () => {
     <>
       <TimeSectionTop>
         <TimeSectionTitleText size={REGULAR} weight={EXTRA_BOLD}>
-          Terminarz
+          Twój terminarz
         </TimeSectionTitleText>
-        <AddItem />
       </TimeSectionTop>
       <TimeList />
     </>

@@ -5,7 +5,9 @@ import MetroText, {
   EXTRA_BOLD,
   MEDIUM,
   EXTRA_SMALL,
+  DARK_GREY,
 } from 'atoms/MetroText/MetroText';
+import {Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon, {OPEN_MODAL, RING} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
@@ -31,14 +33,12 @@ const TimeItem = ({last, active, data}) => {
   `;
 
   const MedTimeTitle = styled(MetroText)`
-    border: 0px solid #c4c4c4;
-    border-right-width: 2px;
     width: 20%;
-    height: 100%;
-    line-height: 60px;
   `;
 
   const Meds = styled.View`
+    border: 0px solid #c4c4c4;
+    border-left-width: 2px;
     width: 80%;
     padding: 0 30px 0 10px;
     display: flex;
@@ -56,6 +56,12 @@ const TimeItem = ({last, active, data}) => {
     padding-right: 40px;
   `;
 
+  const MedItemWrapper = styled.View`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  `;
+
   const MedTitle = styled(MetroText)`
     width: 100%;
     text-align: left;
@@ -65,12 +71,8 @@ const TimeItem = ({last, active, data}) => {
     text-align: left;
   `;
 
-  const MedTime = styled(MetroText)`
-    text-align: right;
-  `;
-
   const BorderGradient = styled(LinearGradient)`
-    width: 100%;
+    width: ${Dimensions.get('window').width.toFixed()}px;
     position: absolute;
     bottom: 0;
     height: 3px;
@@ -88,15 +90,16 @@ const TimeItem = ({last, active, data}) => {
       </MedTimeTitle>
       <Meds>
         <MedsText>
-          <MedTitle weight={EXTRA_BOLD} size={SMALL}>
-            {medsList[0].name}
-          </MedTitle>
-          <MedQuantity weight={MEDIUM} size={EXTRA_SMALL}>
-            {medsList[0].quantity} {medsList[0].quantityType}
-          </MedQuantity>
-          <MedTime weight={MEDIUM} size={EXTRA_SMALL}>
-            {hours}:{minutes} - {parseInt(hours, 10) + 1}:{minutes}
-          </MedTime>
+          {medsList.map(item => (
+            <MedItemWrapper key={item.name}>
+              <MedTitle weight={EXTRA_BOLD} size={SMALL}>
+                {item.name}
+              </MedTitle>
+              <MedQuantity weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
+                {item.quantity} {item.quantityType}
+              </MedQuantity>
+            </MedItemWrapper>
+          ))}
         </MedsText>
         <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
       </Meds>
