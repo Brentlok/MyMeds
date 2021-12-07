@@ -46,10 +46,10 @@ const ModalBox = () => {
     background-color: #f5f5f5;
     border-radius: 25px;
     elevation: 7;
-    padding: 20px 35px;
+    padding: 20px 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
   `;
 
