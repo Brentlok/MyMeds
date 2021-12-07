@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {Dimensions} from 'react-native';
@@ -11,13 +11,14 @@ import {useHistory} from 'react-router-native';
 const TimeList = () => {
   const {list, dataLoaded} = useSelector(state => state);
 
+  const [listHeight, setListHeight] = useState(0);
+
   const dispatch = useDispatch();
 
   const history = useHistory();
 
   const TimeListWrapper = styled.ScrollView`
     width: ${Dimensions.get('window').width - 30}px;
-    height: 100%;
     margin: 0 auto 70px auto;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -30,16 +31,21 @@ const TimeList = () => {
     align-items: center;
     justify-content: space-around;
     padding: 10px 0;
+    height: ${listHeight}px;
   `;
 
   const NothingText = styled(MetroText)`
     text-align: left;
-    margin: 10px 0;
   `;
+
+  const getHeight = ({nativeEvent: {layout}}) => {
+    const {height} = layout;
+    setListHeight(height);
+  };
 
   //wait for api
   return dataLoaded ? (
-    <TimeListWrapper>
+    <TimeListWrapper onLayout={getHeight}>
       {list.length > 0 ? (
         list.map((data, index) => (
           <TimeItem

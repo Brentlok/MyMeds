@@ -21,7 +21,8 @@ import {loadData} from 'src/actions';
 import RootView from 'src/Views/RootView';
 import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
-import ModifyView from 'src/Views/ModifyView';
+import AddView from 'src/Views/AddView';
+import CameraView from 'src/Views/CameraView';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,9 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={HomeView} />
         <Route exact path="/calendar" component={CalendarView} />
-        <Route exact path="/add" component={ModifyView} />
+        <Route exact path="/add" component={AddView} />
+        <Route exact path="/add/:id" component={AddView} />
+        <Route exact path="/camera" component={CameraView} />
       </Switch>
     </RootView>
   );

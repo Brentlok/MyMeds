@@ -29,7 +29,7 @@ const BottomPanel = () => {
       <Icon
         onPress={() => history.push('/add')}
         type={ADD}
-        active={pathname === '/add'}
+        active={pathname.includes('/add')}
       />
       <Icon
         onPress={() => history.push('/')}
