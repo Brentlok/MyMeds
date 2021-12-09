@@ -1,18 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {Button} from 'react-native';
+import React from 'react';
+import List from 'atoms/List/List';
 
 const AddView = ({match, history}) => {
-  const [scan, setScan] = useState('');
-
-  const openCamera = () => {
-    history.push('/camera');
-  };
-
-  useEffect(() => {
-    setScan(match.params.id);
-  }, [match.params.id]);
-
-  return <Button title={scan || 'Skanuj'} onPress={openCamera} />;
+  return <List openText="--:--" options={['szt.', 'ml', 'g']} />;
 };
 
 export default AddView;
