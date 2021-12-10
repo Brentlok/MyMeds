@@ -1,8 +1,8 @@
 import React from 'react';
-import List from 'atoms/List/List';
+import AmountInput from 'molecules/AmountInput/AmountInput';
 
 const AddView = ({match, history}) => {
-  return <List openText="--:--" options={['szt.', 'ml', 'g']} />;
+  return <AmountInput />;
 };
 
 export default AddView;
