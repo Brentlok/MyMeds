@@ -20,7 +20,6 @@ const Wrapper = styled.View`
 
 const TitleText = styled(MetroText)`
   width: 50%;
-  text-align: left;
 `;
 
 const EditCalendar = styled.TouchableOpacity`

@@ -34,6 +34,7 @@ const CalendarCard = ({active, date, month}) => {
   `;
 
   const CardText = styled(MetroText)`
+    text-align: center;
     ${({type}) => type === isDay && !active && 'margin-bottom: 10px;'}
     ${({type}) =>
       [isMonth, isDay].includes(type) && active && 'margin-top: -5px;'}

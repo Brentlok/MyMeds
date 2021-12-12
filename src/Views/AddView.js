@@ -1,8 +1,12 @@
 import React from 'react';
-import AmountInput from 'molecules/AmountInput/AmountInput';
+import AddMeds from 'organisms/AddMeds/AddMeds';
 
-const AddView = ({match, history}) => {
-  return <AmountInput />;
+const AddView = () => {
+  return (
+    <>
+      <AddMeds />
+    </>
+  );
 };
 
 export default AddView;

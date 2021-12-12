@@ -6,8 +6,6 @@ import {
   CHANGE_MODAL_TAKEN_OPEN,
   DATA_LOADED,
   REMOVE_ITEM,
-  INPUT_FOCUSED,
-  INPUT_BLURED,
 } from 'src/reducers';
 
 //https://run.mocky.io/v3/f1658bd6-a680-4f1b-8631-a47139293916 - empty list
@@ -86,7 +84,3 @@ export const loadLocalData = () => async dispatch => {
 export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
 
 export const removeItem = () => ({type: REMOVE_ITEM});
-
-export const setInputFocused = () => ({type: INPUT_FOCUSED});
-
-export const setInputBlured = () => ({type: INPUT_BLURED});

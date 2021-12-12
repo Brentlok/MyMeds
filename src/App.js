@@ -60,7 +60,7 @@ const App = () => {
         <Route exact path="/" component={HomeView} />
         <Route exact path="/calendar" component={CalendarView} />
         <Route exact path="/add" component={AddView} />
-        <Route exact path="/add/:id" component={AddView} />
+        <Route exact path="/add/:scan" component={AddView} />
         <Route exact path="/camera" component={CameraView} />
       </Switch>
     </RootView>

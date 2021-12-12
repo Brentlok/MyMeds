@@ -49,7 +49,6 @@ const getFontSize = size => {
 };
 
 const MetroText = styled.Text`
-  text-align: center;
   color: ${({color}) => (color ? color : '#1f1f1f')};
   font-family: Metropolis-${({weight}) => getFontWeight(weight)};
   font-size: ${({size}) => getFontSize(size)}px;

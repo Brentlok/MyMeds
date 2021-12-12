@@ -1,47 +1,74 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {setInputFocused} from 'src/actions';
+import {useParams} from 'react-router-native';
 
-const Input = () => {
-  const [inputValue, changeInputValue] = useState('');
+const Input = forwardRef(({border, number}, ref) => {
+  const [borderColor, setBorderColor] = useState('rgba(31,31,31,0.5)');
+  const [inputValue, setInputValue] = useState('');
 
-  const inputRef = useRef(null);
-  const dispatch = useDispatch();
-  const {inputFocused} = useSelector(state => state);
+  const {scan} = useParams();
 
   useEffect(() => {
-    if (!inputFocused) {
-      inputRef.current.blur();
+    if (scan) {
+      setInputValue(scan);
     }
-  }, [inputFocused]);
+  }, [scan]);
 
-  const handleFocus = () => {
-    dispatch(setInputFocused());
+  useImperativeHandle(ref, () => ({
+    getValue: () => inputValue,
+    setValue: value => {
+      setInputValue(value);
+    },
+  }));
+
+  const handleChange = value => {
+    if (number) {
+      if (/[0-9]/.test(value[value.length - 1]) || value === '') {
+        setInputValue(value);
+      }
+      return;
+    }
+    setInputValue(value);
   };
 
   //for some reasons input from styled-components wont work properly
   const styles = StyleSheet.create({
     input: {
-      width: '50%',
+      flexShrink: 1,
+      width: '100%',
       height: 50,
       borderWidth: 0,
       padding: 15,
       fontFamily: 'Metropolis-Medium',
       color: '#1f1f1f',
-      maxWidth: 320,
+    },
+  });
+
+  const stylesWithBorder = StyleSheet.create({
+    input: {
+      ...styles.input,
+      borderWidth: 2,
+      borderColor: borderColor,
+      borderRadius: 9,
+      backgroundColor: '#f5f5f5',
     },
   });
 
   return (
     <TextInput
-      style={styles.input}
-      onChangeText={changeInputValue}
+      style={border ? stylesWithBorder.input : styles.input}
+      onChangeText={handleChange}
       value={inputValue}
-      ref={inputRef}
-      onFocus={handleFocus}
+      onFocus={() => setBorderColor('#11d8a5')}
+      onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
+      keyboardType={number ? 'numeric' : 'default'}
     />
   );
-};
+});
 
 export default Input;

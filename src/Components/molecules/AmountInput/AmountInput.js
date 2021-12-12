@@ -1,29 +1,21 @@
-import React from 'react';
-import List from 'atoms/List/List';
-import Input from 'atoms/Input/Input';
+import React, {useState} from 'react';
+import InputWithList from 'atoms/InputWithList/InputWithList';
 import styled from 'styled-components/native';
+import MetroText, {MEDIUM, EXTRA_SMALL} from 'atoms/MetroText/MetroText';
 
-const AmountInput = () => {
+const AmountInput = ({getValue}) => {
   const AmountWrapper = styled.View`
-    display: flex;
-    flex-direction: row;
-    border: 2px solid #1f1f1f;
-    border-radius: 9px;
-    max-width: 140px;
-    height: 50px;
-    background-color: #f5f5f5;
-  `;
-  const Line = styled.View`
-    width: 2px;
-    background-color: #1f1f1f;
-    height: 48px;
+    margin: 15px 0 40px 0;
   `;
   return (
-    <AmountWrapper>
-      <Input />
-      <Line />
-      <List openText="szt." options={['ml', 'g']} />
-    </AmountWrapper>
+    <>
+      <MetroText weight={MEDIUM} size={EXTRA_SMALL}>
+        Podaj ilość...
+      </MetroText>
+      <AmountWrapper>
+        <InputWithList ref={getValue} number options={['szt.', 'ml', 'g']} />
+      </AmountWrapper>
+    </>
   );
 };
 
