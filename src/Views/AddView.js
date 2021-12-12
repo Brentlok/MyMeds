@@ -1,18 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Button} from 'react-native';
+import React from 'react';
+import AddMeds from 'organisms/AddMeds/AddMeds';
 
-const AddView = ({match, history}) => {
-  const [scan, setScan] = useState('');
-
-  const openCamera = () => {
-    history.push('/camera');
-  };
-
-  useEffect(() => {
-    setScan(match.params.id);
-  }, [match.params.id]);
-
-  return <Button title={scan || 'Skanuj'} onPress={openCamera} />;
+const AddView = () => {
+  return (
+    <>
+      <AddMeds />
+    </>
+  );
 };
 
 export default AddView;

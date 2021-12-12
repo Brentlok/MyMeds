@@ -16,16 +16,17 @@ const ModalButton = ({yes}) => {
 
   const ModalButtonWrapper = styled.TouchableOpacity`
     margin: ${yes ? '25px 15px 0 20px' : '25px 20px 0 0'};
-    width: 40%;
+    width: 50%;
+    max-width: 145px;
     height: 45px;
-    border-radius: 10px;
+    border-radius: 100px;
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 0 22.5px;
+    justify-content: space-evenly;
+    padding: 0 25px;
     elevation: 4;
-    ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5'}
+    ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5;'}
     overflow: hidden;
   `;
 

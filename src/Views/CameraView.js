@@ -14,7 +14,6 @@ const Scaner = styled(RNCamera)`
 
 const CameraView = ({history}) => {
   const cameraRef = useRef(null);
-
   const handleScan = ({data}) => {
     history.push(`/add/${data}`);
   };

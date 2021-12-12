@@ -33,6 +33,7 @@ const TimeItem = ({last, active, data}) => {
   `;
 
   const MedTimeTitle = styled(MetroText)`
+    text-align: center;
     width: 20%;
   `;
 
@@ -64,11 +65,6 @@ const TimeItem = ({last, active, data}) => {
 
   const MedTitle = styled(MetroText)`
     width: 100%;
-    text-align: left;
-  `;
-
-  const MedQuantity = styled(MetroText)`
-    text-align: left;
   `;
 
   const BorderGradient = styled(LinearGradient)`
@@ -95,9 +91,9 @@ const TimeItem = ({last, active, data}) => {
               <MedTitle weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
               </MedTitle>
-              <MedQuantity weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
+              <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
                 {item.quantity} {item.quantityType}
-              </MedQuantity>
+              </MetroText>
             </MedItemWrapper>
           ))}
         </MedsText>

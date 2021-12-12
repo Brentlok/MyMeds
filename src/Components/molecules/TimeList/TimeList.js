@@ -34,10 +34,6 @@ const TimeList = () => {
     height: ${listHeight}px;
   `;
 
-  const NothingText = styled(MetroText)`
-    text-align: left;
-  `;
-
   const getHeight = ({nativeEvent: {layout}}) => {
     const {height} = layout;
     setListHeight(height);
@@ -57,21 +53,21 @@ const TimeList = () => {
         ))
       ) : (
         <NothingWrapper>
-          <NothingText size={SMALL} weight={SEMI_BOLD}>
+          <MetroText size={SMALL} weight={SEMI_BOLD}>
             {
               dataLoaded === 'error'
                 ? 'Ups coś poszło nie tak...' //in case of api error
                 : 'Ups nic tutaj nie ma...' //empty list
             }
-          </NothingText>
+          </MetroText>
           <Icon type={NOTHING} />
-          <NothingText size={SMALL} weight={SEMI_BOLD}>
+          <MetroText size={SMALL} weight={SEMI_BOLD}>
             {
               dataLoaded === 'error'
                 ? 'Spróbuj ponownie później' //in case of api error
                 : 'Dodaj coś już teraz!' //empty list
             }
-          </NothingText>
+          </MetroText>
           {dataLoaded === 'error' ? (
             <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
           ) : (

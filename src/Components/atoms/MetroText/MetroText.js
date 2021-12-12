@@ -4,6 +4,7 @@ export const SEMI_BOLD = 'SEMI_BOLD';
 export const BOLD = 'BOLD';
 export const EXTRA_BOLD = 'EXTRA_BOLD';
 
+export const INPUT = 'INPUT';
 export const EXTRA_SMALL = 'EXTRA_SMALL';
 export const SMALL = 'SMALL';
 export const MEDIUM = 'MEDIUM';
@@ -30,6 +31,8 @@ const getFontWeight = (weight = BOLD) => {
 
 const getFontSize = size => {
   switch (size) {
+    case INPUT:
+      return '15';
     case EXTRA_SMALL:
       return '17';
     case SMALL:
@@ -46,7 +49,6 @@ const getFontSize = size => {
 };
 
 const MetroText = styled.Text`
-  text-align: center;
   color: ${({color}) => (color ? color : '#1f1f1f')};
   font-family: Metropolis-${({weight}) => getFontWeight(weight)};
   font-size: ${({size}) => getFontSize(size)}px;

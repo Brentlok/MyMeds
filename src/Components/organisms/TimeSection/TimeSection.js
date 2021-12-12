@@ -11,7 +11,6 @@ const TimeSection = () => {
     flex-direction: row;
   `;
   const TimeSectionTitleText = styled(MetroText)`
-    text-align: left;
     padding-left: 15px;
     margin: 20px 0 15px 0;
   `;
