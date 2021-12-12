@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 import NameInput from 'molecules/NameInput/NameInput';
@@ -11,7 +11,6 @@ const AddMeds = () => {
   const amount = useRef();
   const time = useRef();
 
-  const [height, setHeight] = useState(0);
   const submit = () => {
     alert(
       name.current.getValue() +
@@ -26,14 +25,9 @@ const AddMeds = () => {
     time.current.closeList();
   };
 
-  const getHeight = ({nativeEvent: {layout}}) => {
-    //70 is bottomPanel height value
-    setHeight(Dimensions.get('window').height - layout.y - 70);
-  };
-
   const AddMedsWrapper = styled.View`
     width: 100%;
-    height: ${height}px;
+    height: ${Dimensions.get('window').height - 190}px;
     padding: 20px 30px 0 15px;
   `;
 
@@ -59,7 +53,7 @@ const AddMeds = () => {
   `;
 
   return (
-    <AddMedsWrapper onLayout={getHeight}>
+    <AddMedsWrapper>
       <Title size={REGULAR}>Dodaj lek / suplement</Title>
       <NameInput getValue={name} />
       <AmountInput getValue={amount} />
