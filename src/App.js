@@ -10,7 +10,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-native';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 
 import useBattery from 'src/Utils/useBattery';
 import useNotification from 'src/Utils/useNotification';
@@ -19,23 +19,31 @@ import store from 'src/store';
 import {loadData} from 'src/actions';
 
 import RootView from 'src/Views/RootView';
+import LoginView from 'src/Views/LoginView';
 import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
 import CameraView from 'src/Views/CameraView';
 
 const App = () => {
+  const {logged} = useSelector(state => state);
   const dispatch = useDispatch();
+
+  const history = useHistory();
+  const {pathname} = useLocation();
 
   useBattery();
   useNotification();
 
   useEffect(() => {
     dispatch(loadData());
+    if (logged) {
+      history.push('/home');
+    } else {
+      history.push('/start/start');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
-
-  const history = useHistory();
-  const {pathname} = useLocation();
 
   useBackHandler(() => {
     if (pathname !== '/') {
@@ -57,7 +65,8 @@ const App = () => {
   return (
     <RootView>
       <Switch>
-        <Route exact path="/" component={HomeView} />
+        <Route exact path="/start/:where" component={LoginView} />
+        <Route exact path="/home" component={HomeView} />
         <Route exact path="/calendar" component={CalendarView} />
         <Route exact path="/add" component={AddView} />
         <Route exact path="/add/:scan" component={AddView} />

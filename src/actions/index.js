@@ -69,11 +69,12 @@ const readLocalData = async () => {
 
 export const loadLocalData = () => async dispatch => {
   try {
-    const {batteryOptimizationChecked} = await readLocalData();
+    const {batteryOptimizationChecked, logged} = await readLocalData();
     dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
         batteryOptimizationChecked,
+        logged: !!logged,
       },
     });
   } catch (err) {

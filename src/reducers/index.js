@@ -36,6 +36,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         batteryOptimizationChecked: action.payload.batteryOptimizationChecked,
+        logged: action.payload.logged,
         localDataLoaded: true,
       };
     }
