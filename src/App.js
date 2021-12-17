@@ -26,7 +26,7 @@ import AddView from 'src/Views/AddView';
 import CameraView from 'src/Views/CameraView';
 
 const App = () => {
-  const {logged} = useSelector(state => state);
+  const {accessToken} = useSelector(state => state);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -37,17 +37,20 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadData());
-    if (logged) {
+    if (accessToken) {
       history.push('/home');
     } else {
       history.push('/start/start');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, accessToken, history]);
 
   useBackHandler(() => {
-    if (pathname !== '/') {
-      history.push('/');
+    if (pathname.match(/\b(?:add|calendar)\b/) !== null) {
+      history.push('/home');
+      return true;
+    }
+    if (pathname.match(/\b(?:login|register)\b/) !== null) {
+      history.push('/start/start');
       return true;
     }
 

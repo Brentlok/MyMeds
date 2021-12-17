@@ -11,7 +11,8 @@ const StartPanel = () => {
     margin-top: 150px;
   `;
   const Title = styled(MetroText)`
-    margin-bottom: 35px;
+    margin-bottom: 20px;
+    text-align: center;
   `;
   return (
     <StartPanelWrapper>

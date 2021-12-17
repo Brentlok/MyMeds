@@ -7,9 +7,10 @@ import React, {
 import {StyleSheet, TextInput} from 'react-native';
 import {useParams} from 'react-router-native';
 
-const Input = forwardRef(({border, number}, ref) => {
+const Input = forwardRef(({border, number, password}, ref) => {
   const [borderColor, setBorderColor] = useState('rgba(31,31,31,0.5)');
   const [inputValue, setInputValue] = useState('');
+  const [hidePassword, setHidePassword] = useState(!!password);
 
   const {scan} = useParams();
 
@@ -40,7 +41,6 @@ const Input = forwardRef(({border, number}, ref) => {
   const styles = StyleSheet.create({
     input: {
       flexShrink: 1,
-      width: '100%',
       height: 50,
       borderWidth: 0,
       padding: 15,
@@ -67,6 +67,7 @@ const Input = forwardRef(({border, number}, ref) => {
       onFocus={() => setBorderColor('#11d8a5')}
       onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
       keyboardType={number ? 'numeric' : 'default'}
+      secureTextEntry={hidePassword}
     />
   );
 });

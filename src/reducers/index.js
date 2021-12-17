@@ -1,10 +1,10 @@
 const initialState = {
   list: [],
-  logged: false,
   modalTakenOpen: false,
   batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,
+  accessToken: null,
 };
 
 export const LOAD_DATA = 'LOAD_DATA';
@@ -12,9 +12,15 @@ export const LOAD_LOCAL_DATA = 'LOAD_LOCAL_DATA';
 export const CHANGE_MODAL_TAKEN_OPEN = 'CHANGE_MODAL_TAKEN_OPEN';
 export const DATA_LOADED = 'DATA_LOADED';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const LOGIN = 'LOGIN';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGIN:
+      return {
+        ...state,
+        accessToken: action.payload.accessToken,
+      };
     case REMOVE_ITEM:
       return {
         ...state,
@@ -35,8 +41,8 @@ const rootReducer = (state = initialState, action) => {
     case LOAD_LOCAL_DATA: {
       return {
         ...state,
+        accessToken: action.payload.accessToken,
         batteryOptimizationChecked: action.payload.batteryOptimizationChecked,
-        logged: action.payload.logged,
         localDataLoaded: true,
       };
     }

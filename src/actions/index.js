@@ -6,11 +6,26 @@ import {
   CHANGE_MODAL_TAKEN_OPEN,
   DATA_LOADED,
   REMOVE_ITEM,
+  LOGIN,
 } from 'src/reducers';
 
-//https://run.mocky.io/v3/f1658bd6-a680-4f1b-8631-a47139293916 - empty list
-//https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1 - standard
-//https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8 - long
+export const login = (email, password) => async dispatch => {
+  try {
+    const {data} = await axios.post('http://51.38.131.160:8080/api/login', {
+      email,
+      password,
+    });
+    dispatch(saveLocalData({accessToken: data.access_token}));
+    dispatch({
+      type: LOGIN,
+      payload: {
+        accessToken: data.access_token,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const API_URL = 'https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1';
 
@@ -47,7 +62,9 @@ const storageKey = 'testingKey';
 
 export const saveLocalData = data => async () => {
   try {
-    const jsonValue = JSON.stringify(data);
+    const oldData = await readLocalData();
+    const jsonValue = JSON.stringify({...oldData, ...data});
+    console.log(data);
     await AsyncStorage.setItem(storageKey, jsonValue);
   } catch (err) {
     console.log(err);
@@ -59,7 +76,7 @@ const readLocalData = async () => {
     const storageData = await AsyncStorage.getItem(storageKey);
     if (storageData === null) {
       //if there is no saved data localy just return this object with some default values
-      return {batteryOptimizationChecked: false};
+      return {batteryOptimizationChecked: false, accessToken: null};
     }
     return JSON.parse(storageData);
   } catch (err) {
@@ -69,12 +86,12 @@ const readLocalData = async () => {
 
 export const loadLocalData = () => async dispatch => {
   try {
-    const {batteryOptimizationChecked, logged} = await readLocalData();
+    const {batteryOptimizationChecked, accessToken} = await readLocalData();
     dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
         batteryOptimizationChecked,
-        logged: !!logged,
+        accessToken,
       },
     });
   } catch (err) {

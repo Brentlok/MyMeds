@@ -6,6 +6,7 @@ import MetroText, {REGULAR, WHITE, BLACK} from 'atoms/MetroText/MetroText';
 
 const Button = ({value, primary, secondary, onPress}) => {
   const ButtonWrapper = styled.TouchableOpacity`
+    margin-top: 15px;
     height: 55px;
     display: flex;
     justify-content: center;
@@ -22,7 +23,7 @@ const Button = ({value, primary, secondary, onPress}) => {
     ${secondary && 'transform: rotate(180deg)'}
   `;
   const Secondary = styled.View`
-    width: ${Dimensions.get('window').width - 64}px;
+    width: ${Dimensions.get('window').width - 36}px;
     height: 49px;
     position: absolute;
     top: 3px;

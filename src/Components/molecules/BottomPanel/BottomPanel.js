@@ -32,9 +32,9 @@ const BottomPanel = () => {
         active={pathname.includes('/add')}
       />
       <Icon
-        onPress={() => history.push('/')}
+        onPress={() => history.push('/home')}
         type={HOME}
-        active={pathname === '/'}
+        active={pathname === '/home'}
       />
       <Icon
         onPress={() => history.push('/calendar')}
