@@ -3,6 +3,7 @@ import notifee from '@notifee/react-native';
 import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {loadLocalData, saveLocalData} from 'src/actions';
+import {useLocation} from 'react-router-native';
 
 const checkForBatteryPermission = async () => {
   const batteryOptimizationEnabled =
@@ -27,6 +28,7 @@ const checkForBatteryPermission = async () => {
 };
 
 const useBattery = () => {
+  const {pathname} = useLocation();
   const {localDataLoaded, batteryOptimizationChecked} = useSelector(
     state => state,
   );
@@ -38,11 +40,16 @@ const useBattery = () => {
       //load local data
       dispatch(loadLocalData());
     }
-    if (localDataLoaded && !batteryOptimizationChecked) {
+    if (
+      localDataLoaded &&
+      !batteryOptimizationChecked &&
+      !/start/.test(pathname) &&
+      pathname !== '/'
+    ) {
       checkForBatteryPermission();
       dispatch(saveLocalData({batteryOptimizationChecked: true}));
     }
-  }, [batteryOptimizationChecked, dispatch, localDataLoaded]);
+  }, [batteryOptimizationChecked, dispatch, localDataLoaded, pathname]);
 };
 
 export default useBattery;

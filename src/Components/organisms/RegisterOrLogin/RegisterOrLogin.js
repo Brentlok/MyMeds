@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import Button from 'atoms/Button/Button';
 import MetroText, {BIG} from 'atoms/MetroText/MetroText';
-import {login} from 'src/actions';
+import {login, register} from 'src/actions';
 
 const ROLWrapper = styled.View`
   margin-top: 50px;
@@ -24,7 +24,10 @@ const RegisterOrLogin = ({where}) => {
       const mail = mailRef.current.getValue();
       const password1 = password1Ref.current.getValue();
       const password2 = password2Ref.current.getValue();
-      console.log(mail, password1, password2);
+      if (password1 !== password2) {
+        return;
+      }
+      register(mail, password1, 'anonymous');
       return;
     }
     const mail = mailRef.current.getValue();

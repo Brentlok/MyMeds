@@ -7,11 +7,27 @@ import {
   DATA_LOADED,
   REMOVE_ITEM,
   LOGIN,
+  CHANGE_PATH,
 } from 'src/reducers';
+import store from 'src/store';
+
+const API_URL = 'http://51.38.131.160:8080/api/';
+
+export const register = async (email, password, name) => {
+  try {
+    await axios.post(`${API_URL}register`, {
+      email,
+      password,
+      name,
+    });
+  } catch (error) {
+    alert(JSON.stringify(error));
+  }
+};
 
 export const login = (email, password) => async dispatch => {
   try {
-    const {data} = await axios.post('http://51.38.131.160:8080/api/login', {
+    const {data} = await axios.post(`${API_URL}login`, {
       email,
       password,
     });
@@ -22,19 +38,45 @@ export const login = (email, password) => async dispatch => {
         accessToken: data.access_token,
       },
     });
-  } catch (err) {
-    console.log(err);
+    dispatch(changePath('/home'));
+  } catch (error) {
+    alert(JSON.stringify(error));
   }
 };
 
-const API_URL = 'https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1';
+export const createMed =
+  (name, quantity, quantity_type, hour) => async dispatch => {
+    const {accessToken} = store.getState();
+    try {
+      await axios.post(
+        `${API_URL}meds`,
+        {
+          name,
+          quantity,
+          quantity_type,
+          taking_date: `01.01.2000 ${hour}`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      dispatch(loadData());
+    } catch (error) {
+      alert(JSON.stringify(error));
+    }
+  };
 
 export const loadData = () => async dispatch => {
   try {
-    const response = await axios.get(API_URL);
-    const list = response.data.list.sort(
-      (a, b) => parseInt(a.time.hours, 10) > parseInt(b.time.hours, 10),
-    );
+    const {accessToken} = store.getState();
+    const {
+      data: {list},
+    } = await axios.get(`${API_URL}meds/01.01.2000`, {
+      headers: {Authorization: `Bearer ${accessToken}`},
+    });
+
     dispatch({
       type: LOAD_DATA,
       payload: {
@@ -63,11 +105,11 @@ const storageKey = 'testingKey';
 export const saveLocalData = data => async () => {
   try {
     const oldData = await readLocalData();
-    const jsonValue = JSON.stringify({...oldData, ...data});
-    console.log(data);
+    const newData = {...oldData, ...data};
+    const jsonValue = JSON.stringify(newData);
     await AsyncStorage.setItem(storageKey, jsonValue);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -79,8 +121,8 @@ const readLocalData = async () => {
       return {batteryOptimizationChecked: false, accessToken: null};
     }
     return JSON.parse(storageData);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -94,11 +136,13 @@ export const loadLocalData = () => async dispatch => {
         accessToken,
       },
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
 
 export const removeItem = () => ({type: REMOVE_ITEM});
+
+const changePath = newPath => ({type: CHANGE_PATH, payload: {newPath}});

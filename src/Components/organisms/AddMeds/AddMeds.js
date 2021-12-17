@@ -1,28 +1,26 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
-import NameInput from 'molecules/NameInput/NameInput';
+import {useDispatch} from 'react-redux';
+import TitleInput from 'molecules/TitleInput/TitleInput';
 import AmountInput from 'molecules/AmountInput/AmountInput';
 import TimeInput from 'molecules/TimeInput/TimeInput';
 import MetroText, {SMALL, REGULAR} from 'atoms/MetroText/MetroText';
+import {createMed} from 'src/actions';
 
 const AddMeds = () => {
-  const name = useRef();
-  const amount = useRef();
-  const time = useRef();
+  const dispatch = useDispatch();
+  const nameRef = useRef();
+  const amountRef = useRef();
+  const timeRef = useRef();
 
   const submit = () => {
-    alert(
-      name.current.getValue() +
-        '\n' +
-        amount.current.getValue() +
-        ' ' +
-        amount.current.getValueType() +
-        '\n' +
-        time.current.getValue(),
-    );
-    amount.current.closeList();
-    time.current.closeList();
+    const name = nameRef.current.getValue();
+    const amount = amountRef.current.getValue();
+    const amountType = amountRef.current.getValueType();
+    const time = timeRef.current.getValue();
+    if (name === '' || amount === '') return;
+    dispatch(createMed(name, amount, amountType, time));
   };
 
   const AddMedsWrapper = styled.View`
@@ -55,9 +53,9 @@ const AddMeds = () => {
   return (
     <AddMedsWrapper>
       <Title size={REGULAR}>Dodaj lek / suplement</Title>
-      <NameInput getValue={name} />
-      <AmountInput getValue={amount} />
-      <TimeInput getValue={time} />
+      <TitleInput passRef={nameRef} title="Nazwa leku / suplementu..." />
+      <AmountInput getValue={amountRef} />
+      <TimeInput getValue={timeRef} />
       <SubmitButton onPress={submit}>
         <MetroText size={SMALL}>Zatwierdź</MetroText>
       </SubmitButton>

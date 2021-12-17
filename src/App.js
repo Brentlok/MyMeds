@@ -13,6 +13,7 @@ import {
 import {Provider, useDispatch, useSelector} from 'react-redux';
 
 import useBattery from 'src/Utils/useBattery';
+import useReduxHistory from 'src/Utils/useReduxHistory';
 import useNotification from 'src/Utils/useNotification';
 
 import store from 'src/store';
@@ -24,25 +25,33 @@ import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
 import CameraView from 'src/Views/CameraView';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
-  const {accessToken} = useSelector(state => state);
+  const {accessToken, localDataLoaded} = useSelector(state => state);
   const dispatch = useDispatch();
 
   const history = useHistory();
   const {pathname} = useLocation();
 
+  // AsyncStorage.clear();
+
   useBattery();
   useNotification();
+  useReduxHistory();
 
   useEffect(() => {
+    if (!localDataLoaded) {
+      return;
+    }
     dispatch(loadData());
     if (accessToken) {
       history.push('/home');
     } else {
       history.push('/start/start');
     }
-  }, [dispatch, accessToken, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localDataLoaded]);
 
   useBackHandler(() => {
     if (pathname.match(/\b(?:add|calendar)\b/) !== null) {

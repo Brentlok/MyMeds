@@ -5,6 +5,7 @@ const initialState = {
   localDataLoaded: false,
   dataLoaded: false,
   accessToken: null,
+  newPath: '',
 };
 
 export const LOAD_DATA = 'LOAD_DATA';
@@ -13,6 +14,7 @@ export const CHANGE_MODAL_TAKEN_OPEN = 'CHANGE_MODAL_TAKEN_OPEN';
 export const DATA_LOADED = 'DATA_LOADED';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const LOGIN = 'LOGIN';
+export const CHANGE_PATH = 'CHANGE_PATH';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -50,6 +52,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoaded: action.payload.dataLoaded,
+      };
+    }
+    case CHANGE_PATH: {
+      return {
+        ...state,
+        newPath: action.payload.newPath,
       };
     }
     default:

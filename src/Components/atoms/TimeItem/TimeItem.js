@@ -74,25 +74,23 @@ const TimeItem = ({last, active, data}) => {
     height: 3px;
   `;
 
-  const {
-    time: {hours, minutes},
-    medsList,
-  } = data;
+  const {time, list} = data;
 
   return (
     <TimeItemWrapper>
       <MedTimeTitle size={SMALL} weight={EXTRA_BOLD}>
-        {hours}:{minutes}
+        {time}:00
       </MedTimeTitle>
       <Meds>
         <MedsText>
-          {medsList.map(item => (
+          {list.map(item => (
             <MedItemWrapper key={item.name}>
               <MedTitle weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
               </MedTitle>
               <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
-                {item.quantity} {item.quantityType}
+                {item.quantity}{' '}
+                {item.quantity_type === 'amount' ? 'szt.' : item.quantity_type}
               </MetroText>
             </MedItemWrapper>
           ))}
