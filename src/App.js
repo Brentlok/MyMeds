@@ -44,8 +44,8 @@ const App = () => {
     if (!localDataLoaded) {
       return;
     }
-    dispatch(loadData());
     if (accessToken) {
+      dispatch(loadData());
       history.push('/home');
     } else {
       history.push('/start/start');

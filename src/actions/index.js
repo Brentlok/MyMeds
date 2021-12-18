@@ -13,24 +13,29 @@ import store from 'src/store';
 
 const API_URL = 'http://51.38.131.160:8080/api/';
 
-export const register = async (email, password, name) => {
+export const register = (email, password, name) => async dispatch => {
   try {
-    await axios.post(`${API_URL}register`, {
+    const {status} = await axios.post(`${API_URL}register`, {
       email,
       password,
       name,
     });
+    console.log(status);
+    return status;
   } catch (error) {
-    alert(JSON.stringify(error));
+    return error;
   }
 };
 
 export const login = (email, password) => async dispatch => {
   try {
-    const {data} = await axios.post(`${API_URL}login`, {
+    const {data, status} = await axios.post(`${API_URL}login`, {
       email,
       password,
     });
+    if (status !== 200) {
+      return status;
+    }
     dispatch(saveLocalData({accessToken: data.access_token}));
     dispatch({
       type: LOGIN,
@@ -39,8 +44,9 @@ export const login = (email, password) => async dispatch => {
       },
     });
     dispatch(changePath('/home'));
+    dispatch(loadData(data.access_token));
   } catch (error) {
-    alert(JSON.stringify(error));
+    return error;
   }
 };
 
@@ -68,46 +74,49 @@ export const createMed =
     }
   };
 
-export const loadData = () => async dispatch => {
-  try {
-    const {accessToken} = store.getState();
-    const {
-      data: {list},
-    } = await axios.get(`${API_URL}meds/01.01.2000`, {
-      headers: {Authorization: `Bearer ${accessToken}`},
-    });
+export const loadData =
+  (accessToken = store.getState().accessToken) =>
+  async dispatch => {
+    try {
+      const {
+        data: {list},
+      } = await axios.get(`${API_URL}meds/01.01.2000`, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+      });
 
-    dispatch({
-      type: LOAD_DATA,
-      payload: {
-        list,
-      },
-    });
-    dispatch({
-      type: DATA_LOADED,
-      payload: {
-        dataLoaded: 'loaded',
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: DATA_LOADED,
-      payload: {
-        dataLoaded: 'error',
-      },
-    });
-  }
-};
+      dispatch({
+        type: LOAD_DATA,
+        payload: {
+          list,
+        },
+      });
+      dispatch({
+        type: DATA_LOADED,
+        payload: {
+          dataLoaded: 'loaded',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: DATA_LOADED,
+        payload: {
+          dataLoaded: 'error',
+        },
+      });
+    }
+  };
 
 const storageKey = 'testingKey';
 
-export const saveLocalData = data => async () => {
+export const saveLocalData = data => async dispatch => {
   try {
     const oldData = await readLocalData();
     const newData = {...oldData, ...data};
     const jsonValue = JSON.stringify(newData);
+    console.log(newData);
     await AsyncStorage.setItem(storageKey, jsonValue);
+    dispatch(loadLocalData());
   } catch (error) {
     console.log(error);
   }

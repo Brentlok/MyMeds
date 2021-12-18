@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {memo} from 'react';
 import styled from 'styled-components';
 import Input from 'atoms/Input/Input';
 import MetroText, {MEDIUM, EXTRA_SMALL} from 'atoms/MetroText/MetroText';
 
-const TitleInput = ({passRef, title, password}) => {
+const TitleInput = memo(({passRef, title, password}) => {
   const Title = styled(MetroText)`
     margin-bottom: 15px;
   `;
   const TitleInputWrapper = styled.View`
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   `;
   return (
     <TitleInputWrapper>
@@ -18,6 +18,6 @@ const TitleInput = ({passRef, title, password}) => {
       <Input password={password} border ref={passRef} />
     </TitleInputWrapper>
   );
-};
+});
 
 export default TitleInput;
