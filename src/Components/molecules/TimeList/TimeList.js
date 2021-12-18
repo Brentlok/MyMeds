@@ -57,21 +57,29 @@ const TimeList = () => {
             {
               dataLoaded === 'error'
                 ? 'Ups coś poszło nie tak...' //in case of api error
+                : dataLoaded === 'not_verified'
+                ? 'Zweryfikuj swój adres email...' // email not verified
                 : 'Ups nic tutaj nie ma...' //empty list
             }
           </MetroText>
-          <Icon type={NOTHING} />
-          <MetroText size={SMALL} weight={SEMI_BOLD}>
-            {
-              dataLoaded === 'error'
-                ? 'Spróbuj ponownie później' //in case of api error
-                : 'Dodaj coś już teraz!' //empty list
-            }
-          </MetroText>
-          {dataLoaded === 'error' ? (
+          {dataLoaded === 'not_verified' ? (
             <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
           ) : (
-            <Icon type={ADD} onPress={() => history.push('/add')} active />
+            <>
+              <Icon type={NOTHING} />
+              <MetroText size={SMALL} weight={SEMI_BOLD}>
+                {
+                  dataLoaded === 'error'
+                    ? 'Spróbuj ponownie później' //in case of api error
+                    : 'Dodaj coś już teraz!' //empty list
+                }
+              </MetroText>
+              {dataLoaded === 'error' ? (
+                <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
+              ) : (
+                <Icon type={ADD} onPress={() => history.push('/add')} active />
+              )}
+            </>
           )}
         </NothingWrapper>
       )}

@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Icon, {HOME, CALENDAR, ADD} from 'atoms/Icon/Icon';
 import {useLocation, useHistory} from 'react-router-native';
+import {useSelector} from 'react-redux';
 
 const BottomPanel = () => {
   const history = useHistory();
+
+  const {dataLoaded} = useSelector(state => state);
 
   const {pathname} = useLocation();
 
@@ -24,20 +27,28 @@ const BottomPanel = () => {
     padding: 0 40px;
   `;
 
+  const navigateTo = newPath => {
+    if (dataLoaded === 'not_verified') {
+      return;
+    }
+    console.log(dataLoaded);
+    history.push(newPath);
+  };
+
   return (
     <PanelWrapper>
       <Icon
-        onPress={() => history.push('/add')}
+        onPress={() => navigateTo('/add')}
         type={ADD}
         active={pathname.includes('/add')}
       />
       <Icon
-        onPress={() => history.push('/home')}
+        onPress={() => navigateTo('/home')}
         type={HOME}
         active={pathname === '/home'}
       />
       <Icon
-        onPress={() => history.push('/calendar')}
+        onPress={() => navigateTo('/calendar')}
         type={CALENDAR}
         active={pathname === '/calendar'}
       />

@@ -66,7 +66,7 @@ const RegisterOrLogin = ({where}) => {
     const mail = mailRef.current.getValue();
     const password1 = password1Ref.current.getValue();
     const sendLogin = await dispatch(login(mail, password1));
-    setMessage(JSON.stringify(sendLogin.message));
+    setMessage(JSON.stringify(sendLogin?.message));
   };
 
   return (

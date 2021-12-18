@@ -33,6 +33,7 @@ export const login = (email, password) => async dispatch => {
       email,
       password,
     });
+    console.log(data.accessToken);
     if (status !== 200) {
       return status;
     }
@@ -97,7 +98,15 @@ export const loadData =
         },
       });
     } catch (error) {
-      console.log(error);
+      if (error.message.includes(403)) {
+        dispatch({
+          type: DATA_LOADED,
+          payload: {
+            dataLoaded: 'not_verified',
+          },
+        });
+        return;
+      }
       dispatch({
         type: DATA_LOADED,
         payload: {
