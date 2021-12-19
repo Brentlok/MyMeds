@@ -1,5 +1,6 @@
 const initialState = {
   list: [],
+  takenList: [],
   modalTakenOpen: false,
   batteryOptimizationChecked: false,
   localDataLoaded: false,
@@ -26,7 +27,6 @@ const rootReducer = (state = initialState, action) => {
     case REMOVE_ITEM:
       return {
         ...state,
-        list: state.list.filter((item, idx) => idx !== 0),
       };
     case CHANGE_MODAL_TAKEN_OPEN: {
       return {
@@ -38,6 +38,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload.list,
+        hourList: action.payload.hourList,
       };
     }
     case LOAD_LOCAL_DATA: {

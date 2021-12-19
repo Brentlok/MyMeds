@@ -42,15 +42,17 @@ const TimeList = () => {
   //wait for api
   return dataLoaded ? (
     <TimeListWrapper onLayout={getHeight}>
-      {Object.keys(list).length > 0 ? (
-        Object.keys(list).map((time, index) => (
-          <TimeItem
-            key={index}
-            active={index === 0}
-            last={index === list.length - 1}
-            data={{time, list: list[time]}}
-          />
-        ))
+      {list.length ? (
+        <>
+          {list.map((item, index) => (
+            <TimeItem
+              key={index}
+              active={index === 0}
+              last={index === list.length - 1}
+              data={item}
+            />
+          ))}
+        </>
       ) : (
         <NothingWrapper>
           <MetroText size={SMALL} weight={SEMI_BOLD}>

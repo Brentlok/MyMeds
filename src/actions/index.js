@@ -85,10 +85,18 @@ export const loadData =
         headers: {Authorization: `Bearer ${accessToken}`},
       });
 
+      const hours = Object.keys(list);
+      const items = Object.keys(list).map(item => list[item]);
+      const proccessedList = hours.map((hour, index) => ({
+        hour,
+        list: items[index],
+      }));
+
       dispatch({
         type: LOAD_DATA,
         payload: {
-          list,
+          list: proccessedList,
+          hourList: hours,
         },
       });
       dispatch({

@@ -74,12 +74,12 @@ const TimeItem = ({last, active, data}) => {
     height: 3px;
   `;
 
-  const {time, list} = data;
+  const {hour, list} = data;
 
   return (
     <TimeItemWrapper>
       <MedTimeTitle size={SMALL} weight={EXTRA_BOLD}>
-        {time}:00
+        {hour}:00
       </MedTimeTitle>
       <Meds>
         <MedsText>

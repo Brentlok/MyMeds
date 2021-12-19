@@ -19,7 +19,7 @@ const AddMeds = () => {
     const amount = amountRef.current.getValue();
     const amountType = amountRef.current.getValueType();
     const time = timeRef.current.getValue();
-    if (name === '' || amount === '') return;
+    if (name === '') return;
     dispatch(createMed(name, amount, amountType, time));
   };
 

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 import TitleInput from 'molecules/TitleInput/TitleInput';
@@ -28,6 +28,16 @@ const RegisterOrLogin = ({where}) => {
   const mailRef = useRef(null);
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
+
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const submit = async () => {
     if (where === 'register') {
@@ -66,7 +76,9 @@ const RegisterOrLogin = ({where}) => {
     const mail = mailRef.current.getValue();
     const password1 = password1Ref.current.getValue();
     const sendLogin = await dispatch(login(mail, password1));
-    setMessage(JSON.stringify(sendLogin?.message));
+    if (mounted) {
+      setMessage(JSON.stringify(sendLogin.message));
+    }
   };
 
   return (

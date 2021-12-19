@@ -28,11 +28,9 @@ const BottomPanel = () => {
   `;
 
   const navigateTo = newPath => {
-    if (dataLoaded === 'not_verified') {
-      return;
+    if (dataLoaded === 'loaded') {
+      history.push(newPath);
     }
-    console.log(dataLoaded);
-    history.push(newPath);
   };
 
   return (
