@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 import TitleInput from 'molecules/TitleInput/TitleInput';
@@ -20,7 +20,7 @@ const Message = styled(MetroText)`
 `;
 
 const emailRegex =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const RegisterOrLogin = ({where}) => {
   const [message, setMessage] = useState('');
@@ -29,16 +29,6 @@ const RegisterOrLogin = ({where}) => {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
 
-  const mounted = useRef(false);
-
-  useEffect(() => {
-    mounted.current = true;
-
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-
   const submit = async () => {
     if (where === 'register') {
       const mail = mailRef.current.getValue();
@@ -46,6 +36,7 @@ const RegisterOrLogin = ({where}) => {
       const password2 = password2Ref.current.getValue();
       if (!emailRegex.test(mail)) {
         setMessage('Podaj prawidłowy adres email');
+        mailRef.current.setBorderColor('#FF5252');
         return;
       }
       if (password1 !== password2) {
@@ -75,9 +66,19 @@ const RegisterOrLogin = ({where}) => {
     }
     const mail = mailRef.current.getValue();
     const password1 = password1Ref.current.getValue();
+    if (!emailRegex.test(mail)) {
+      setMessage('Podaj prawidłowy adres email');
+      mailRef.current.setBorderColor('#FF5252');
+      return;
+    }
+    if (!password1) {
+      setMessage('Wpisz hasło');
+      password1Ref.current.setBorderColor('#FF5252');
+      return;
+    }
     const sendLogin = await dispatch(login(mail, password1));
-    if (mounted) {
-      setMessage(JSON.stringify(sendLogin.message));
+    if (sendLogin) {
+      setMessage(sendLogin);
     }
   };
 

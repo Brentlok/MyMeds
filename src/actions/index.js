@@ -20,7 +20,6 @@ export const register = (email, password, name) => async dispatch => {
       password,
       name,
     });
-    console.log(status);
     return status;
   } catch (error) {
     return error;
@@ -33,9 +32,11 @@ export const login = (email, password) => async dispatch => {
       email,
       password,
     });
-    console.log(data.accessToken);
     if (status !== 200) {
       return status;
+    }
+    if (data.message === 'Invalid Credentials') {
+      return 'Podałeś niepoprawne dane';
     }
     dispatch(saveLocalData({accessToken: data.access_token}));
     dispatch({
@@ -71,6 +72,7 @@ export const createMed =
       );
       dispatch(loadData());
     } catch (error) {
+      // eslint-disable-next-line no-alert
       alert(JSON.stringify(error));
     }
   };
@@ -127,11 +129,11 @@ export const loadData =
 const storageKey = 'testingKey';
 
 export const saveLocalData = data => async dispatch => {
+  console.log(data);
   try {
     const oldData = await readLocalData();
     const newData = {...oldData, ...data};
     const jsonValue = JSON.stringify(newData);
-    console.log(newData);
     await AsyncStorage.setItem(storageKey, jsonValue);
     dispatch(loadLocalData());
   } catch (error) {
