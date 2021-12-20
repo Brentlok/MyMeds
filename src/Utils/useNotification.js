@@ -11,31 +11,45 @@ import {useSelector} from 'react-redux';
 const channelId = 'MyMeds_notifications';
 
 const useNotification = () => {
-  const {list} = useSelector(state => state);
+  const {list, dataLoaded} = useSelector(state => state);
 
   useEffect(() => {
     createChannel();
   }, []);
 
   useEffect(() => {
-    checkNotifications(Object.keys(list));
-  }, [list]);
+    if (dataLoaded === 'loaded') {
+      checkNotifications(list);
+    }
+  }, [list, dataLoaded]);
 };
 
 const checkNotifications = async list => {
   const notificationsList = await (
     await notifee.getTriggerNotifications()
-  ).map(({notification}) => notification.body.slice(5, 7));
+  ).map(({notification}) => ({
+    hour: notification.body.slice(5, 7),
+    id: notification.id,
+  }));
 
-  list.forEach(item => {
-    if (notificationsList.includes(item)) {
+  const hourList = list.map(({hour}) => hour);
+
+  hourList.forEach(newHour => {
+    if (notificationsList.map(({hour}) => hour).includes(newHour)) {
       return;
     }
     addNotification(
       'Już czas coś zażyć!',
-      `Jest ${item}:00 sprawdź co powinieneś zażyć...`,
-      item,
+      `Jest ${newHour}:00 sprawdź co powinieneś zażyć...`,
+      newHour,
     );
+  });
+
+  notificationsList.forEach(({hour, id}) => {
+    if (hourList.includes(hour)) {
+      return;
+    }
+    notifee.cancelTriggerNotification(id);
   });
 };
 
@@ -46,9 +60,9 @@ const getTime = hour => {
     date.getFullYear(),
     date.getMonth(),
     date.getDate(),
-    parseInt(hour, 10) + 1,
+    parseInt(hour, 10),
   );
-  return parseInt(hour, 10) + 1 < date.getHours() //if hour is less than actual hour set notification tomorrow
+  return hourDate.getTime() < Date.now()
     ? hourDate.getTime() + 86400000
     : hourDate.getTime();
 };

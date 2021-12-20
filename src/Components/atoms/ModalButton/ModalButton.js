@@ -3,15 +3,19 @@ import styled from 'styled-components/native';
 import MetroText, {BOLD, SMALL} from 'atoms/MetroText/MetroText';
 import Icon, {YES, NO} from 'atoms/Icon/Icon';
 import LinearGradient from 'react-native-linear-gradient';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {removeItem, changeModalTakenOpen} from 'src/actions';
 
 const ModalButton = ({yes}) => {
+  const {itemToRemove, modalText} = useSelector(state => state);
   const dispatch = useDispatch();
 
   const handlePress = () => {
-    dispatch(changeModalTakenOpen());
-    dispatch(removeItem());
+    if (modalText === 'Czy chcesz to usunąć?') {
+      dispatch(removeItem(itemToRemove.id));
+      return;
+    }
+    dispatch(changeModalTakenOpen('close'));
   };
 
   const ModalButtonWrapper = styled.TouchableOpacity`

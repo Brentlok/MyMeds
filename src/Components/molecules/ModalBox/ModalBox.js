@@ -6,9 +6,11 @@ import Icon, {CLOSE, RING} from 'atoms/Icon/Icon';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeModalTakenOpen} from 'src/actions';
+import CloseIcon from 'assets/svg/close.svg';
+import RingIcon from 'assets/svg/ring.svg';
 
 const ModalBox = () => {
-  const {modalTakenOpen} = useSelector(state => state);
+  const {modalTakenOpen, modalText} = useSelector(state => state);
   const positionAnim = useRef(
     new Animated.Value(parseInt(-Dimensions.get('window').width, 10)),
   ).current;
@@ -32,7 +34,7 @@ const ModalBox = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(changeModalTakenOpen());
+    dispatch(changeModalTakenOpen('close'));
   };
 
   const ModalBoxWrapper = styled(Animated.View)`
@@ -53,11 +55,29 @@ const ModalBox = () => {
     flex-wrap: wrap;
   `;
 
+  const CloseIconBox = styled.TouchableOpacity`
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  `;
+
+  const RingIconBox = styled.TouchableOpacity`
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  `;
+
   return (
     <ModalBoxWrapper style={{transform: [{translateX: positionAnim}]}}>
-      <Icon type={CLOSE} onPress={closeModal} />
-      <MetroText size={SMALL}>Czy już przyjąłeś?</MetroText>
-      <Icon type={RING} />
+      <CloseIconBox onPress={closeModal}>
+        <CloseIcon />
+      </CloseIconBox>
+      <MetroText size={SMALL}>{modalText}</MetroText>
+      {modalText === 'Czy już przyjąłeś?' && (
+        <RingIconBox>
+          <RingIcon />
+        </RingIconBox>
+      )}
       <ModalButton yes />
       <ModalButton />
     </ModalBoxWrapper>

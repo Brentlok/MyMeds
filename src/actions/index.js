@@ -5,7 +5,6 @@ import {
   LOAD_LOCAL_DATA,
   CHANGE_MODAL_TAKEN_OPEN,
   DATA_LOADED,
-  REMOVE_ITEM,
   LOGIN,
   CHANGE_PATH,
 } from 'src/reducers';
@@ -62,7 +61,7 @@ export const createMed =
           name,
           quantity,
           quantity_type,
-          taking_date: `01.01.2000 ${hour}`,
+          taking_date: `01.01.2000 ${hour}:00`,
         },
         {
           headers: {
@@ -71,9 +70,9 @@ export const createMed =
         },
       );
       dispatch(loadData());
+      return 'Dodano pomyślnie!';
     } catch (error) {
-      // eslint-disable-next-line no-alert
-      alert(JSON.stringify(error));
+      return error.message;
     }
   };
 
@@ -169,8 +168,34 @@ export const loadLocalData = () => async dispatch => {
   }
 };
 
-export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
+export const changeModalTakenOpen = (type, item) => ({
+  type: CHANGE_MODAL_TAKEN_OPEN,
+  payload: {
+    modalText:
+      type === 'close'
+        ? null
+        : type === 'taken'
+        ? 'Czy już przyjąłeś?'
+        : 'Czy chcesz to usunąć?',
+    itemToRemove: item,
+  },
+});
 
-export const removeItem = () => ({type: REMOVE_ITEM});
+export const removeItem = itemId => async dispatch => {
+  const {accessToken} = store.getState();
+  try {
+    const {status} = await axios.delete(`${API_URL}meds/${itemId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (status === 200) {
+      dispatch(loadData());
+    }
+    dispatch(changeModalTakenOpen('close'));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const changePath = newPath => ({type: CHANGE_PATH, payload: {newPath}});

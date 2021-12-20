@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon, {SETTINGS, LOGO, PERSON} from 'atoms/Icon/Icon';
-import {addNotification} from '../../../Utils/useNotification';
+import notifee from '@notifee/react-native';
 
 const PanelWrapper = styled.View`
   width: 100%;
@@ -17,12 +17,19 @@ const PanelWrapper = styled.View`
   flex-direction: row;
 `;
 
+const getNotifications = async () => {
+  const notificationsList = await (
+    await notifee.getTriggerNotifications()
+  ).map(({notification}) => notification);
+  console.log(notificationsList);
+};
+
 const TopPanel = () => {
   return (
     <PanelWrapper>
       <Icon type={SETTINGS} />
       <Icon type={LOGO} />
-      <Icon onPress={() => addNotification('Tytuł', 'Treść')} type={PERSON} />
+      <Icon onPress={getNotifications} type={PERSON} />
     </PanelWrapper>
   );
 };

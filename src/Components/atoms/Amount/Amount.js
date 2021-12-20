@@ -4,7 +4,7 @@ import MetroText, {EXTRA_SMALL, MEDIUM} from 'atoms/MetroText/MetroText';
 import {TextInput, View, StyleSheet} from 'react-native';
 
 const Amount = forwardRef((props, ref) => {
-  const amountTypes = ['szt.', 'g', 'ml.'];
+  const amountTypes = ['szt.', 'ml', 'g', 'mg'];
 
   const [inputValue, setInputValue] = useState('1');
   const [amountTypeIndex, setAmountTypeIndex] = useState(0);
@@ -49,10 +49,10 @@ const Amount = forwardRef((props, ref) => {
   };
 
   const handleInputChange = value => {
-    if (value.length > 3) {
+    if (value.length > 4) {
       return;
     }
-    if (inputValue[0] === '0' && value !== '') {
+    if (inputValue[0] === '0' && value !== '' && /[0-9]/.test(value.slice(1))) {
       setInputValue(value.slice(1));
       return;
     }
@@ -60,7 +60,9 @@ const Amount = forwardRef((props, ref) => {
       setInputValue(value);
       return;
     }
-    setInputValue('0');
+    if (value === '') {
+      setInputValue('0');
+    }
   };
 
   const AmountType = styled.View`

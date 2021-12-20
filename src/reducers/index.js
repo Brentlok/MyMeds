@@ -2,6 +2,8 @@ const initialState = {
   list: [],
   takenList: [],
   modalTakenOpen: false,
+  idToRemove: 0,
+  modalText: 'Czy już przyjąłeś?',
   batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,
@@ -32,6 +34,8 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         modalTakenOpen: !state.modalTakenOpen,
+        modalText: action.payload.modalText || state.modalText,
+        itemToRemove: action.payload.itemToRemove,
       };
     }
     case LOAD_DATA: {

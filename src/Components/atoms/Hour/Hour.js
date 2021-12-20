@@ -1,6 +1,6 @@
-import React, {forwardRef, useState} from 'react';
+import React, {forwardRef, useState, useImperativeHandle} from 'react';
 import styled from 'styled-components/native';
-import MetroText, {MEDIUM} from 'atoms/MetroText/MetroText';
+import MetroText, {INPUT, MEDIUM} from 'atoms/MetroText/MetroText';
 
 const HourWrapper = styled.View`
   margin-top: 15px;
@@ -42,8 +42,13 @@ const Plus2 = styled(Plus1)`
   transform: rotate(90deg);
 `;
 
+const getNowHour = () => {
+  const date = new Date();
+  return date.getHours();
+};
+
 const Hour = forwardRef((props, ref) => {
-  const [hour, setHour] = useState(12);
+  const [hour, setHour] = useState(getNowHour());
 
   const changeHour = value => {
     const newHour = hour + value;
@@ -58,13 +63,17 @@ const Hour = forwardRef((props, ref) => {
     setHour(newHour);
   };
 
+  useImperativeHandle(ref, () => ({
+    getValue: () => hour,
+  }));
+
   return (
     <HourWrapper>
       <IconBox onPress={() => changeHour(-1)}>
         <Minus />
       </IconBox>
-      <MetroText size={MEDIUM} weight={MEDIUM}>
-        {hour}
+      <MetroText size={INPUT} weight={MEDIUM}>
+        {hour}:00
       </MetroText>
       <IconBox onPress={() => changeHour(1)}>
         <Plus1 />

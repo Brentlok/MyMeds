@@ -16,10 +16,8 @@ import {changeModalTakenOpen} from 'src/actions';
 const TimeItem = ({last, active, data}) => {
   const dispatch = useDispatch();
 
-  const openModal = () => {
-    if (active) {
-      dispatch(changeModalTakenOpen());
-    }
+  const openModal = (type, item) => {
+    dispatch(changeModalTakenOpen(type, item));
   };
 
   const TimeItemWrapper = styled.View`
@@ -57,8 +55,7 @@ const TimeItem = ({last, active, data}) => {
     padding-right: 40px;
   `;
 
-  const MedItemWrapper = styled.View`
-    width: 100%;
+  const MedItemWrapper = styled.Pressable`
     display: flex;
     flex-direction: column;
   `;
@@ -84,7 +81,9 @@ const TimeItem = ({last, active, data}) => {
       <Meds>
         <MedsText>
           {list.map(item => (
-            <MedItemWrapper key={item.name}>
+            <MedItemWrapper
+              onPress={() => openModal('delete', item)}
+              key={item.name}>
               <MedTitle weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
               </MedTitle>
@@ -95,7 +94,10 @@ const TimeItem = ({last, active, data}) => {
             </MedItemWrapper>
           ))}
         </MedsText>
-        <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
+        <Icon
+          onPress={() => openModal('taken')}
+          type={active ? OPEN_MODAL : RING}
+        />
       </Meds>
       {active && (
         <BorderGradient
