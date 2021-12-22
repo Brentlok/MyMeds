@@ -5,12 +5,10 @@ import notifee from '@notifee/react-native';
 
 const PanelWrapper = styled.View`
   width: 100%;
-  height: 120px;
-  background-color: #f5f5f5;
+  height: 100px;
+  background-color: #fff;
+  padding: 10px 30px 0 30px;
   elevation: 6;
-  padding: 20px 30px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;

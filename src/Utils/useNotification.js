@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 const channelId = 'MyMeds_notifications';
 
 const useNotification = () => {
-  const {list, dataLoaded} = useSelector(state => state);
+  const {list, dataLoaded, takenToday} = useSelector(state => state);
 
   useEffect(() => {
     createChannel();
@@ -19,9 +19,9 @@ const useNotification = () => {
 
   useEffect(() => {
     if (dataLoaded === 'loaded') {
-      checkNotifications(list);
+      checkNotifications(list.filter(({hour}) => !takenToday.includes(hour)));
     }
-  }, [list, dataLoaded]);
+  }, [list, dataLoaded, takenToday]);
 };
 
 const checkNotifications = async list => {

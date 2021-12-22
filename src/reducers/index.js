@@ -9,6 +9,8 @@ const initialState = {
   dataLoaded: false,
   accessToken: null,
   newPath: '',
+  takenToday: [],
+  takenTodayDate: null,
 };
 
 export const LOAD_DATA = 'LOAD_DATA';
@@ -18,6 +20,7 @@ export const DATA_LOADED = 'DATA_LOADED';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const LOGIN = 'LOGIN';
 export const CHANGE_PATH = 'CHANGE_PATH';
+export const ADD_TAKEN_TODAY = 'ADD_TAKEN_TODAY';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -50,6 +53,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         accessToken: action.payload.accessToken,
         batteryOptimizationChecked: action.payload.batteryOptimizationChecked,
+        takenToday: action.payload.takenToday,
         localDataLoaded: true,
       };
     }
@@ -63,6 +67,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         newPath: action.payload.newPath,
+      };
+    }
+    case ADD_TAKEN_TODAY: {
+      return {
+        ...state,
+        takenToday: action.payload.newTakenToday,
       };
     }
     default:

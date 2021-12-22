@@ -7,8 +7,10 @@ import {
   DATA_LOADED,
   LOGIN,
   CHANGE_PATH,
+  ADD_TAKEN_TODAY,
 } from 'src/reducers';
 import store from 'src/store';
+import {isToday} from 'src/Utils/getDate';
 
 const API_URL = 'http://51.38.131.160:8080/api/';
 
@@ -145,7 +147,7 @@ const readLocalData = async () => {
     const storageData = await AsyncStorage.getItem(storageKey);
     if (storageData === null) {
       //if there is no saved data localy just return this object with some default values
-      return {batteryOptimizationChecked: false, accessToken: null};
+      return {batteryOptimizationChecked: false};
     }
     return JSON.parse(storageData);
   } catch (error) {
@@ -155,12 +157,24 @@ const readLocalData = async () => {
 
 export const loadLocalData = () => async dispatch => {
   try {
-    const {batteryOptimizationChecked, accessToken} = await readLocalData();
+    const {
+      batteryOptimizationChecked,
+      accessToken,
+      takenToday,
+      takenTodayDate,
+    } = await readLocalData();
+    if (!takenToday && !takenTodayDate) {
+      dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
+    }
+    if (!isToday(takenTodayDate)) {
+      dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
+    }
     dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
         batteryOptimizationChecked,
         accessToken,
+        takenToday,
       },
     });
   } catch (error) {
@@ -181,8 +195,18 @@ export const changeModalTakenOpen = (type, item) => ({
   },
 });
 
+export const addTakenToday = () => async dispatch => {
+  const {list, takenToday} = await store.getState();
+  const newTakenToday = [...takenToday, list[takenToday.length].hour];
+  await dispatch(saveLocalData({takenToday: newTakenToday}));
+  await dispatch({
+    type: ADD_TAKEN_TODAY,
+    payload: {newTakenToday},
+  });
+};
+
 export const removeItem = itemId => async dispatch => {
-  const {accessToken} = store.getState();
+  const {accessToken} = await store.getState();
   try {
     const {status} = await axios.delete(`${API_URL}meds/${itemId}`, {
       headers: {

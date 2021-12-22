@@ -5,6 +5,18 @@ export const getToday = () => {
   return {date, month};
 };
 
+export const isToday = date => {
+  if (!date.getDate) {
+    date = new Date(date);
+  }
+  const today = new Date();
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+};
+
 export const getDateList = date => {
   const dayList = [];
   const dayInMilis = 86400000;

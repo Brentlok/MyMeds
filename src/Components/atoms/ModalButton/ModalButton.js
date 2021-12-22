@@ -4,7 +4,7 @@ import MetroText, {BOLD, SMALL} from 'atoms/MetroText/MetroText';
 import Icon, {YES, NO} from 'atoms/Icon/Icon';
 import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
-import {removeItem, changeModalTakenOpen} from 'src/actions';
+import {removeItem, changeModalTakenOpen, addTakenToday} from 'src/actions';
 
 const ModalButton = ({yes}) => {
   const {itemToRemove, modalText} = useSelector(state => state);
@@ -15,6 +15,7 @@ const ModalButton = ({yes}) => {
       dispatch(removeItem(itemToRemove.id));
       return;
     }
+    dispatch(addTakenToday());
     dispatch(changeModalTakenOpen('close'));
   };
 

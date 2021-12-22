@@ -9,7 +9,7 @@ import MetroText, {SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
 const TimeList = () => {
-  const {list, dataLoaded} = useSelector(state => state);
+  const {list, dataLoaded, takenToday} = useSelector(state => state);
 
   const [listHeight, setListHeight] = useState(0);
 
@@ -44,14 +44,16 @@ const TimeList = () => {
     <TimeListWrapper onLayout={getHeight}>
       {list.length ? (
         <>
-          {list.map((item, index) => (
-            <TimeItem
-              key={index}
-              active={index === 0}
-              last={index === list.length - 1}
-              data={item}
-            />
-          ))}
+          {list
+            .filter(({hour}) => !takenToday.includes(hour))
+            .map((item, index) => (
+              <TimeItem
+                key={index}
+                active={index === 0}
+                last={index === list.length - 1}
+                data={item}
+              />
+            ))}
         </>
       ) : (
         <NothingWrapper>
