@@ -9,7 +9,7 @@ import MetroText, {SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
 const TimeList = () => {
-  const {list, dataLoaded, takenToday} = useSelector(state => state);
+  const {list, dataLoaded, takenToday, muted} = useSelector(state => state);
 
   const [listHeight, setListHeight] = useState(0);
 
@@ -52,6 +52,7 @@ const TimeList = () => {
                 active={index === 0}
                 last={index === list.length - 1}
                 data={item}
+                muted={muted.includes(item.hour)}
               />
             ))}
         </>

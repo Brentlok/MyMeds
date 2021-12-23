@@ -9,11 +9,11 @@ import MetroText, {
 } from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon, {OPEN_MODAL, RING} from 'atoms/Icon/Icon';
+import Icon, {OPEN_MODAL, RING, RING_MUTED} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
-import {changeModalTakenOpen} from 'src/actions';
+import {changeModalTakenOpen, mute} from 'src/actions';
 
-const TimeItem = ({last, active, data}) => {
+const TimeItem = ({last, active, data, muted}) => {
   const dispatch = useDispatch();
 
   const openModal = (type, item) => {
@@ -49,13 +49,10 @@ const TimeItem = ({last, active, data}) => {
 
   const MedsText = styled.View`
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-right: 40px;
+    flex-direction: column;
   `;
 
-  const MedItemWrapper = styled.Pressable`
+  const MedItemWrapper = styled.TouchableOpacity`
     display: flex;
     flex-direction: column;
   `;
@@ -88,15 +85,16 @@ const TimeItem = ({last, active, data}) => {
                 {item.name}
               </MedTitle>
               <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
-                {item.quantity}{' '}
-                {item.quantity_type === 'amount' ? 'szt.' : item.quantity_type}
+                {item.quantity} {item.quantity_type}
               </MetroText>
             </MedItemWrapper>
           ))}
         </MedsText>
         <Icon
-          onPress={() => openModal('taken')}
-          type={active ? OPEN_MODAL : RING}
+          onPress={() =>
+            active ? openModal('taken', hour) : dispatch(mute(hour))
+          }
+          type={active ? OPEN_MODAL : muted ? RING_MUTED : RING}
         />
       </Meds>
       {active && (

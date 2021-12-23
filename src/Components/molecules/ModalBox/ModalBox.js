@@ -2,15 +2,17 @@ import React, {useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
 import {Dimensions, Animated} from 'react-native';
 import ModalButton from 'atoms/ModalButton/ModalButton';
-import Icon, {CLOSE, RING} from 'atoms/Icon/Icon';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeModalTakenOpen} from 'src/actions';
+import {changeModalTakenOpen, mute} from 'src/actions';
 import CloseIcon from 'assets/svg/close.svg';
 import RingIcon from 'assets/svg/ring.svg';
+import RingIconMuted from 'assets/svg/ring_muted.svg';
 
 const ModalBox = () => {
-  const {modalTakenOpen, modalText} = useSelector(state => state);
+  const {modalTakenOpen, modalText, muted, itemToRemove} = useSelector(
+    state => state,
+  );
   const positionAnim = useRef(
     new Animated.Value(parseInt(-Dimensions.get('window').width, 10)),
   ).current;
@@ -36,6 +38,8 @@ const ModalBox = () => {
   const closeModal = () => {
     dispatch(changeModalTakenOpen('close'));
   };
+
+  const isMuted = muted.includes(itemToRemove);
 
   const ModalBoxWrapper = styled(Animated.View)`
     position: absolute;
@@ -63,7 +67,7 @@ const ModalBox = () => {
 
   const RingIconBox = styled.TouchableOpacity`
     position: absolute;
-    right: 15px;
+    right: ${isMuted ? 12 : 15}px;
     top: 15px;
   `;
 
@@ -74,8 +78,8 @@ const ModalBox = () => {
       </CloseIconBox>
       <MetroText size={SMALL}>{modalText}</MetroText>
       {modalText === 'Czy już przyjąłeś?' && (
-        <RingIconBox>
-          <RingIcon />
+        <RingIconBox onPress={() => dispatch(mute(itemToRemove))}>
+          {isMuted ? <RingIconMuted /> : <RingIcon />}
         </RingIconBox>
       )}
       <ModalButton yes />

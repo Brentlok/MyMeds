@@ -9,6 +9,7 @@ import YesIcon from 'assets/svg/yes.svg';
 import NoIcon from 'assets/svg/no.svg';
 import CloseIcon from 'assets/svg/close.svg';
 import RingIcon from 'assets/svg/ring.svg';
+import RingIconMuted from 'assets/svg/ring_muted.svg';
 import OpenModalIcon from 'assets/svg/openModal.svg';
 import HomeIcon from 'assets/svg/home.svg';
 import HomeIconActive from 'assets/svg/home-active.svg';
@@ -27,6 +28,7 @@ export const YES = 'YES';
 export const NO = 'NO';
 export const CLOSE = 'CLOSE';
 export const RING = 'RING';
+export const RING_MUTED = 'RING_MUTED';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CALENDAR = 'CALENDAR';
 export const HOME = 'HOME';
@@ -54,6 +56,8 @@ const getIcon = (type, active) => {
       return <CloseIcon />;
     case RING:
       return <RingIcon />;
+    case RING_MUTED:
+      return <RingIconMuted />;
     case OPEN_MODAL:
       return <OpenModalIcon />;
     case HOME:
@@ -84,6 +88,7 @@ const Icon = ({type, onPress, active}) => {
       PERSON,
       CLOSE,
       RING,
+      RING_MUTED,
       OPEN_MODAL,
       ADD,
       REFRESH,

@@ -162,6 +162,7 @@ export const loadLocalData = () => async dispatch => {
       accessToken,
       takenToday,
       takenTodayDate,
+      muted,
     } = await readLocalData();
     if (!takenToday && !takenTodayDate) {
       dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
@@ -169,12 +170,16 @@ export const loadLocalData = () => async dispatch => {
     if (!isToday(takenTodayDate)) {
       dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
     }
+    if (!muted) {
+      dispatch(saveLocalData({muted: []}));
+    }
     dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
         batteryOptimizationChecked,
         accessToken,
         takenToday,
+        muted,
       },
     });
   } catch (error) {
@@ -206,8 +211,8 @@ export const addTakenToday = () => async dispatch => {
 };
 
 export const removeItem = itemId => async dispatch => {
-  const {accessToken} = await store.getState();
   try {
+    const {accessToken} = await store.getState();
     const {status} = await axios.delete(`${API_URL}meds/${itemId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -219,6 +224,22 @@ export const removeItem = itemId => async dispatch => {
     dispatch(changeModalTakenOpen('close'));
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const mute = hour => async dispatch => {
+  try {
+    const {muted} = await store.getState();
+    let newMuted;
+    if (muted.includes(hour)) {
+      newMuted = muted.filter(mutedHour => mutedHour !== hour);
+    } else {
+      newMuted = [...muted, hour];
+    }
+    newMuted.sort((a, b) => a > b);
+    await dispatch(saveLocalData({muted: newMuted}));
+  } catch (error) {
+    console.log(error);
   }
 };
 

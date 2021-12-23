@@ -2,13 +2,14 @@ const initialState = {
   list: [],
   takenList: [],
   modalTakenOpen: false,
-  idToRemove: 0,
+  itemToRemove: 0,
   modalText: 'Czy już przyjąłeś?',
   batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,
   accessToken: null,
   newPath: '',
+  muted: [],
   takenToday: [],
   takenTodayDate: null,
 };
@@ -54,6 +55,7 @@ const rootReducer = (state = initialState, action) => {
         accessToken: action.payload.accessToken,
         batteryOptimizationChecked: action.payload.batteryOptimizationChecked,
         takenToday: action.payload.takenToday,
+        muted: action.payload.muted,
         localDataLoaded: true,
       };
     }
