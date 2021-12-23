@@ -20,8 +20,7 @@ const TimeItem = ({last, active, data, muted}) => {
     dispatch(changeModalTakenOpen(type, item));
   };
 
-  const TimeItemWrapper = styled.View`
-    width: 100%;
+  const TimeItemWrapper = styled.Pressable`
     display: flex;
     flex-direction: row;
     align-items: center;

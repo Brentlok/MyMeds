@@ -39,15 +39,15 @@ export const login = (email, password) => async dispatch => {
     if (data.message === 'Invalid Credentials') {
       return 'Podałeś niepoprawne dane';
     }
-    dispatch(saveLocalData({accessToken: data.access_token}));
-    dispatch({
+    await dispatch(saveLocalData({accessToken: data.access_token}));
+    await dispatch({
       type: LOGIN,
       payload: {
         accessToken: data.access_token,
       },
     });
-    dispatch(changePath('/home'));
-    dispatch(loadData(data.access_token));
+    await dispatch(changePath('/home'));
+    await dispatch(loadData(data.access_token));
   } catch (error) {
     return error;
   }
@@ -71,7 +71,11 @@ export const createMed =
           },
         },
       );
-      dispatch(loadData());
+      await dispatch(loadData());
+      const hourNow = new Date().getHours();
+      if (hour <= hourNow) {
+        await dispatch(addTakenToday(hour));
+      }
       return 'Dodano pomyślnie!';
     } catch (error) {
       return error.message;
@@ -95,14 +99,14 @@ export const loadData =
         list: items[index],
       }));
 
-      dispatch({
+      await dispatch({
         type: LOAD_DATA,
         payload: {
           list: proccessedList,
           hourList: hours,
         },
       });
-      dispatch({
+      await dispatch({
         type: DATA_LOADED,
         payload: {
           dataLoaded: 'loaded',
@@ -110,7 +114,7 @@ export const loadData =
       });
     } catch (error) {
       if (error.message.includes(403)) {
-        dispatch({
+        await dispatch({
           type: DATA_LOADED,
           payload: {
             dataLoaded: 'not_verified',
@@ -118,7 +122,7 @@ export const loadData =
         });
         return;
       }
-      dispatch({
+      await dispatch({
         type: DATA_LOADED,
         payload: {
           dataLoaded: 'error',
@@ -136,7 +140,7 @@ export const saveLocalData = data => async dispatch => {
     const newData = {...oldData, ...data};
     const jsonValue = JSON.stringify(newData);
     await AsyncStorage.setItem(storageKey, jsonValue);
-    dispatch(loadLocalData());
+    await dispatch(loadLocalData());
   } catch (error) {
     console.log(error);
   }
@@ -146,7 +150,6 @@ const readLocalData = async () => {
   try {
     const storageData = await AsyncStorage.getItem(storageKey);
     if (storageData === null) {
-      //if there is no saved data localy just return this object with some default values
       return {batteryOptimizationChecked: false};
     }
     return JSON.parse(storageData);
@@ -165,15 +168,19 @@ export const loadLocalData = () => async dispatch => {
       muted,
     } = await readLocalData();
     if (!takenToday && !takenTodayDate) {
-      dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
+      await dispatch(
+        saveLocalData({takenToday: [], takenTodayDate: new Date()}),
+      );
     }
     if (!isToday(takenTodayDate)) {
-      dispatch(saveLocalData({takenToday: [], takenTodayDate: new Date()}));
+      await dispatch(
+        saveLocalData({takenToday: [], takenTodayDate: new Date()}),
+      );
     }
     if (!muted) {
-      dispatch(saveLocalData({muted: []}));
+      await dispatch(saveLocalData({muted: []}));
     }
-    dispatch({
+    await dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
         batteryOptimizationChecked,
@@ -219,9 +226,9 @@ export const removeItem = itemId => async dispatch => {
       },
     });
     if (status === 200) {
-      dispatch(loadData());
+      await dispatch(loadData());
     }
-    dispatch(changeModalTakenOpen('close'));
+    await dispatch(changeModalTakenOpen('close'));
   } catch (error) {
     console.error(error);
   }
