@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
-import {Dimensions} from 'react-native';
+import {Dimensions, Animated} from 'react-native';
 import AmountInput from 'molecules/AmountInput/AmountInput';
 import TimeInput from 'molecules/TimeInput/TimeInput';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import MetroText, {SMALL, REGULAR, MEDIUM} from 'atoms/MetroText/MetroText';
 import {createMed} from 'src/actions';
+import SuccessScreen from '../../atoms/SuccessScreen/SuccessScreen';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
@@ -42,6 +43,18 @@ const SubmitButton = styled.TouchableOpacity`
 
 const AddMeds = () => {
   const [message, setMessage] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const successAnim = useRef(new Animated.Value(0)).current;
+
+  successAnim.addListener(({value}) => {
+    if (value === 1) {
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 700);
+    }
+  });
+
   const dispatch = useDispatch();
   const nameRef = useRef(null);
   const amountRef = useRef(null);
@@ -61,23 +74,34 @@ const AddMeds = () => {
       createMed(name, amount, amountType, time),
     );
     if (sendCreateMed) {
-      setMessage(sendCreateMed);
+      if (sendCreateMed === 'success') {
+        setShowSuccess(true);
+        setMessage('');
+        nameRef.current.setValue('');
+        return;
+      } else {
+        setMessage(sendCreateMed);
+        console.log(sendCreateMed);
+      }
     }
   };
 
   return (
-    <AddMedsWrapper>
-      <Title size={REGULAR}>Dodaj lek / suplement</Title>
-      <TitleInput passRef={nameRef} title="Nazwa leku / suplementu..." />
-      <AmountInput getValue={amountRef} />
-      <TimeInput getValue={timeRef} />
-      <Message size={SMALL} weight={MEDIUM}>
-        {message}
-      </Message>
-      <SubmitButton onPress={submit}>
-        <MetroText size={SMALL}>Zatwierdź</MetroText>
-      </SubmitButton>
-    </AddMedsWrapper>
+    <>
+      <SuccessScreen fadeAnim={successAnim} show={showSuccess} />
+      <AddMedsWrapper>
+        <Title size={REGULAR}>Dodaj lek / suplement</Title>
+        <TitleInput passRef={nameRef} title="Nazwa leku / suplementu..." />
+        <AmountInput getValue={amountRef} />
+        <TimeInput getValue={timeRef} />
+        <Message size={SMALL} weight={MEDIUM}>
+          {message}
+        </Message>
+        <SubmitButton onPress={() => (showSuccess ? null : submit())}>
+          <MetroText size={SMALL}>Zatwierdź</MetroText>
+        </SubmitButton>
+      </AddMedsWrapper>
+    </>
   );
 };
 

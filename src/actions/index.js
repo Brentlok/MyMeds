@@ -74,9 +74,9 @@ export const createMed =
       await dispatch(loadData());
       const hourNow = new Date().getHours();
       if (hour <= hourNow) {
-        await dispatch(addTakenToday(hour));
+        await dispatch(addTakenToday(hour.toString()));
       }
-      return 'Dodano pomyślnie!';
+      return 'success';
     } catch (error) {
       return error.message;
     }
@@ -176,6 +176,9 @@ export const loadLocalData = () => async dispatch => {
       await dispatch(
         saveLocalData({takenToday: [], takenTodayDate: new Date()}),
       );
+      //if date has changed, reload local data
+      await dispatch(loadLocalData());
+      return;
     }
     if (!muted) {
       await dispatch(saveLocalData({muted: []}));
@@ -207,9 +210,20 @@ export const changeModalTakenOpen = (type, item) => ({
   },
 });
 
-export const addTakenToday = () => async dispatch => {
+export const addTakenToday = hour => async dispatch => {
   const {list, takenToday} = await store.getState();
-  const newTakenToday = [...takenToday, list[takenToday.length].hour];
+
+  if (hour && takenToday.includes(hour)) {
+    return;
+  }
+
+  let newTakenToday;
+
+  if (hour) {
+    newTakenToday = [...takenToday, hour];
+  } else {
+    newTakenToday = [...takenToday, list[takenToday.length].hour];
+  }
   await dispatch(saveLocalData({takenToday: newTakenToday}));
   await dispatch({
     type: ADD_TAKEN_TODAY,
