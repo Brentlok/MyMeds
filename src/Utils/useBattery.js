@@ -27,6 +27,32 @@ const checkForBatteryPermission = async () => {
   }
 };
 
+const checkPowerManager = async () => {
+  const powerManagerInfo = await notifee.getPowerManagerInfo();
+  if (powerManagerInfo.activity) {
+    Alert.alert(
+      'Wykryto restrykcje w ustawieniach',
+      'Aby zapewnić prawidłowe działanie aplikacji wyłącz power manager dla tej aplikacji w ustawieniach telefonu',
+      [
+        {
+          text: 'Otwórz ustawienia',
+          onPress: async () => await notifee.openPowerManagerSettings(),
+        },
+        {
+          text: 'Anuluj',
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
+  }
+};
+
+const checkSettings = async () => {
+  await checkForBatteryPermission();
+  await checkPowerManager();
+};
+
 const useBattery = () => {
   const {pathname} = useLocation();
   const {localDataLoaded, batteryOptimizationChecked} = useSelector(
@@ -46,7 +72,7 @@ const useBattery = () => {
       !/start/.test(pathname) &&
       pathname !== '/'
     ) {
-      checkForBatteryPermission();
+      checkSettings();
       dispatch(saveLocalData({batteryOptimizationChecked: true}));
     }
   }, [batteryOptimizationChecked, dispatch, localDataLoaded, pathname]);

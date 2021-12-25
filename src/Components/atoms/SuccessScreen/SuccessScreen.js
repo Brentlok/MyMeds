@@ -26,7 +26,7 @@ const SuccessScreen = ({fadeAnim, show}) => {
   const ModalBackgroundView = styled(AnimatedPressable)`
     width: ${Dimensions.get('window').width}px;
     height: ${Dimensions.get('window').height}px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     position: absolute;
     elevation: 7;
     display: flex;
