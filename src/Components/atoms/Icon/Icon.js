@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import LogoIcon from 'assets/svg/logo.svg';
 import PersonIcon from 'assets/svg/avatar.svg';
-import SettingsIcon from 'assets/svg/settings.svg';
+import InfoIcon from 'assets/svg/info.svg';
 import NothingIcon from 'assets/svg/nothing.svg';
 import YesIcon from 'assets/svg/yes.svg';
 import NoIcon from 'assets/svg/no.svg';
@@ -18,10 +18,11 @@ import AddIconActive from 'assets/svg/add-active.svg';
 import CalendarIcon from 'assets/svg/calendar.svg';
 import CalendarIconActive from 'assets/svg/calendar-active.svg';
 import RefreshIcon from 'assets/svg/refresh.svg';
+import BackIcon from 'assets/svg/back.svg';
 
 export const LOGO = 'LOGO';
 export const PERSON = 'PERSON';
-export const SETTINGS = 'SETTINGS';
+export const INFO = 'INFO';
 export const CALENDAR_SMALL = 'CALENDAR_SMALL';
 export const NOTHING = 'NOTHING';
 export const YES = 'YES';
@@ -35,6 +36,7 @@ export const HOME = 'HOME';
 export const ADD = 'ADD';
 export const ACTIVE = 'ACTIVE';
 export const REFRESH = 'REFRESH';
+export const BACK = 'BACK';
 
 const getIcon = (type, active) => {
   switch (type) {
@@ -42,8 +44,8 @@ const getIcon = (type, active) => {
       return <LogoIcon />;
     case PERSON:
       return <PersonIcon />;
-    case SETTINGS:
-      return <SettingsIcon />;
+    case INFO:
+      return <InfoIcon />;
     case CALENDAR_SMALL:
       return <CalendarIcon width={20} />;
     case NOTHING:
@@ -68,6 +70,8 @@ const getIcon = (type, active) => {
       return active ? <AddIconActive /> : <AddIcon />;
     case REFRESH:
       return <RefreshIcon />;
+    case BACK:
+      return <BackIcon />;
     default:
       return null;
   }
@@ -84,7 +88,7 @@ const Icon = ({type, onPress, active}) => {
     [
       CALENDAR,
       HOME,
-      SETTINGS,
+      INFO,
       PERSON,
       CLOSE,
       RING,
@@ -92,6 +96,7 @@ const Icon = ({type, onPress, active}) => {
       OPEN_MODAL,
       ADD,
       REFRESH,
+      BACK,
     ].includes(type)
   ) {
     return <Touchable onPress={onPress}>{getIcon(type, active)}</Touchable>;

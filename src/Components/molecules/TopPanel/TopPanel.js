@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon, {SETTINGS, LOGO, PERSON} from 'atoms/Icon/Icon';
+import Icon, {INFO, BACK, LOGO, PERSON} from 'atoms/Icon/Icon';
 import notifee from '@notifee/react-native';
+import {useHistory, useLocation} from 'react-router-native';
 
 const PanelWrapper = styled.View`
   width: 100%;
@@ -23,9 +24,21 @@ const getNotifications = async () => {
 };
 
 const TopPanel = () => {
+  const history = useHistory();
+
+  const {pathname} = useLocation();
+
+  const handlePress = () => {
+    if (pathname === '/home') {
+      history.push('/info');
+    } else {
+      history.push('/home');
+    }
+  };
+
   return (
     <PanelWrapper>
-      <Icon type={SETTINGS} />
+      <Icon type={pathname === '/home' ? INFO : BACK} onPress={handlePress} />
       <Icon type={LOGO} />
       <Icon onPress={getNotifications} type={PERSON} />
     </PanelWrapper>

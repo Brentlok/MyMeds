@@ -15,7 +15,7 @@ const RootView = ({children}) => {
   const {pathname} = useLocation();
   return (
     <RootViewWrapper onPress={() => Keyboard.dismiss()}>
-      {pathname.match(/\b(?:home|add|calendar|camera)\b/) !== null && (
+      {!pathname.includes('start') && (
         <>
           <TopPanel />
           <BottomPanel />

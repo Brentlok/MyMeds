@@ -20,6 +20,7 @@ import LoginView from 'src/Views/LoginView';
 import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
+import InfoView from 'src/Views/InfoView';
 import CameraView from 'src/Views/CameraView';
 
 import useNotification from 'src/hooks/useNotification';
@@ -53,7 +54,7 @@ const App = () => {
   }, [localDataLoaded]);
 
   useBackHandler(() => {
-    if (pathname.match(/\b(?:add|calendar)\b/) !== null) {
+    if (pathname.match(/\b(?:add|calendar|info)\b/) !== null) {
       history.push('/home');
       return true;
     }
@@ -81,6 +82,7 @@ const App = () => {
         <Route exact path="/calendar" component={CalendarView} />
         <Route exact path="/add" component={AddView} />
         <Route exact path="/add/:scan" component={AddView} />
+        <Route exact path="/info" component={InfoView} />
         <Route exact path="/camera" component={CameraView} />
       </Switch>
     </RootView>
