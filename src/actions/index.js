@@ -8,6 +8,7 @@ import {
   LOGIN,
   CHANGE_PATH,
   ADD_TAKEN_TODAY,
+  ADD_TOMORROW,
 } from 'src/reducers';
 import store from 'src/store';
 import {isToday} from 'src/Utils/getDate';
@@ -74,6 +75,10 @@ export const createMed =
       await dispatch(loadData());
       const hourNow = new Date().getHours();
       if (hour <= hourNow) {
+        await dispatch({
+          type: ADD_TOMORROW,
+          payload: {addedForTomorrow: hour.toString()},
+        });
         await dispatch(addTakenToday(hour.toString()));
       }
       return 'success';
@@ -150,7 +155,7 @@ const readLocalData = async () => {
   try {
     const storageData = await AsyncStorage.getItem(storageKey);
     if (storageData === null) {
-      return {batteryOptimizationChecked: false};
+      return {};
     }
     return JSON.parse(storageData);
   } catch (error) {
@@ -160,13 +165,8 @@ const readLocalData = async () => {
 
 export const loadLocalData = () => async dispatch => {
   try {
-    const {
-      batteryOptimizationChecked,
-      accessToken,
-      takenToday,
-      takenTodayDate,
-      muted,
-    } = await readLocalData();
+    const {accessToken, takenToday, takenTodayDate, muted} =
+      await readLocalData();
     if (!takenToday && !takenTodayDate) {
       await dispatch(
         saveLocalData({takenToday: [], takenTodayDate: new Date()}),
@@ -186,7 +186,6 @@ export const loadLocalData = () => async dispatch => {
     await dispatch({
       type: LOAD_LOCAL_DATA,
       payload: {
-        batteryOptimizationChecked,
         accessToken,
         takenToday,
         muted,

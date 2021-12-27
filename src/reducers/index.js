@@ -4,13 +4,13 @@ const initialState = {
   modalTakenOpen: false,
   itemToRemove: 0,
   modalText: 'Czy już przyjąłeś?',
-  batteryOptimizationChecked: false,
   localDataLoaded: false,
   dataLoaded: false,
   accessToken: null,
   newPath: '',
   muted: [],
   takenToday: [],
+  addedForTomorrow: [],
   takenTodayDate: null,
 };
 
@@ -22,6 +22,7 @@ export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const LOGIN = 'LOGIN';
 export const CHANGE_PATH = 'CHANGE_PATH';
 export const ADD_TAKEN_TODAY = 'ADD_TAKEN_TODAY';
+export const ADD_TOMORROW = 'ADD_TOMORROW';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,7 +54,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         accessToken: action.payload.accessToken,
-        batteryOptimizationChecked: action.payload.batteryOptimizationChecked,
         takenToday: action.payload.takenToday,
         muted: action.payload.muted,
         localDataLoaded: true,
@@ -75,6 +75,15 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         takenToday: action.payload.newTakenToday,
+      };
+    }
+    case ADD_TOMORROW: {
+      return {
+        ...state,
+        addedForTomorrow: [
+          ...state.addedForTomorrow,
+          action.payload.addedForTomorrow,
+        ],
       };
     }
     default:

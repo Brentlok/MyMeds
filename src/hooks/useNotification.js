@@ -54,26 +54,17 @@ const checkNotifications = async list => {
   });
 };
 
-const getTime = hour => {
-  const date = new Date();
-
-  const hourDate = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    parseInt(hour, 10),
-  );
-  return hourDate.getTime() < Date.now()
-    ? hourDate.getTime() + 86400000
-    : hourDate.getTime();
-};
-
 const addNotification = async (title, body, hour) => {
-  const hourTime = getTime(hour);
+  const date = new Date(Date.now());
+  date.setHours(hour);
+
+  const time =
+    date.getTime() < Date.now() ? date.getTime() + 86400000 : date.getTime();
+  //to be sure that timestamp is in the future
 
   const trigger = {
     type: TriggerType.TIMESTAMP,
-    timestamp: hourTime,
+    timestamp: time,
     repeatFrequency: RepeatFrequency.DAILY,
   };
 

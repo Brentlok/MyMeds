@@ -13,7 +13,7 @@ import Icon, {OPEN_MODAL, RING, RING_MUTED} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
 import {changeModalTakenOpen, mute} from 'src/actions';
 
-const TimeItem = ({last, active, data, muted}) => {
+const TimeItem = ({last, active, data, muted, disabled}) => {
   const dispatch = useDispatch();
 
   const openModal = (type, item) => {
@@ -21,6 +21,7 @@ const TimeItem = ({last, active, data, muted}) => {
   };
 
   const TimeItemWrapper = styled.Pressable`
+    ${disabled && 'opacity: 0.5'}
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -12,12 +12,8 @@ import {
 } from 'react-router-native';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 
-import useBattery from 'src/Utils/useBattery';
-import useReduxHistory from 'src/Utils/useReduxHistory';
-import useNotification from 'src/Utils/useNotification';
-
 import store from 'src/store';
-import {loadData} from 'src/actions';
+import {loadData, loadLocalData} from 'src/actions';
 
 import RootView from 'src/Views/RootView';
 import LoginView from 'src/Views/LoginView';
@@ -25,6 +21,10 @@ import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
 import CameraView from 'src/Views/CameraView';
+
+import useNotification from 'src/hooks/useNotification';
+import useReduxHistory from 'src/hooks/useReduxHistory';
+
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
@@ -35,13 +35,12 @@ const App = () => {
   const {pathname} = useLocation();
 
   // AsyncStorage.clear();
-
-  useBattery();
   useNotification();
   useReduxHistory();
 
   useEffect(() => {
     if (!localDataLoaded) {
+      dispatch(loadLocalData());
       return;
     }
     if (accessToken) {

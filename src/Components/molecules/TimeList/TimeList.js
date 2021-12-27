@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {Dimensions} from 'react-native';
@@ -9,9 +9,12 @@ import MetroText, {SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
 const TimeList = () => {
-  const {list, dataLoaded, takenToday, muted} = useSelector(state => state);
+  const {list, dataLoaded, takenToday, muted, addedForTomorrow} = useSelector(
+    state => state,
+  );
 
   const [listHeight, setListHeight] = useState(0);
+  const [firstActive, setFirstActive] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -39,22 +42,45 @@ const TimeList = () => {
     setListHeight(height);
   };
 
+  useEffect(() => {
+    if (!dataLoaded) {
+      return;
+    }
+    const filteredList = list.filter(
+      ({hour}) => addedForTomorrow.includes(hour) || !takenToday.includes(hour),
+    );
+    for (let i = 0; i < filteredList.length; i++) {
+      //if there are some items added for tommorow before first active for today
+      if (!addedForTomorrow.includes(filteredList[i].hour)) {
+        setFirstActive(i);
+        break;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addedForTomorrow]);
+
   //wait for api
   return dataLoaded ? (
     <TimeListWrapper onLayout={getHeight}>
       {list.length ? (
         <>
           {list
-            .filter(({hour}) => !takenToday.includes(hour))
-            .map((item, index) => (
-              <TimeItem
-                key={index}
-                active={index === 0}
-                last={index === list.length - 1}
-                data={item}
-                muted={muted.includes(item.hour)}
-              />
-            ))}
+            .filter(
+              ({hour}) =>
+                addedForTomorrow.includes(hour) || !takenToday.includes(hour),
+            )
+            .map((item, index) => {
+              return (
+                <TimeItem
+                  key={index}
+                  active={index === firstActive}
+                  last={index === list.length - 1}
+                  data={item}
+                  muted={muted.includes(item.hour)}
+                  disabled={addedForTomorrow.includes(item.hour)}
+                />
+              );
+            })}
         </>
       ) : (
         <NothingWrapper>
