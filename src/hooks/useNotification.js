@@ -57,6 +57,7 @@ const checkNotifications = async list => {
 const addNotification = async (title, body, hour) => {
   const date = new Date(Date.now());
   date.setHours(hour);
+  date.setMinutes(0);
 
   const time =
     date.getTime() < Date.now() ? date.getTime() + 86400000 : date.getTime();
