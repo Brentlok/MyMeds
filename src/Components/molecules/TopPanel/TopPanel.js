@@ -40,7 +40,7 @@ const TopPanel = () => {
     <PanelWrapper>
       <Icon type={pathname === '/home' ? INFO : BACK} onPress={handlePress} />
       <Icon type={LOGO} />
-      <Icon onPress={getNotifications} type={PERSON} />
+      <Icon onPress={() => history.push('/account')} type={PERSON} />
     </PanelWrapper>
   );
 };

@@ -21,6 +21,7 @@ import HomeView from 'src/Views/HomeView';
 import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
 import InfoView from 'src/Views/InfoView';
+import AccountView from 'src/Views/AccountView';
 import CameraView from 'src/Views/CameraView';
 
 import useNotification from 'src/hooks/useNotification';
@@ -83,6 +84,7 @@ const App = () => {
         <Route exact path="/add" component={AddView} />
         <Route exact path="/add/:scan" component={AddView} />
         <Route exact path="/info" component={InfoView} />
+        <Route exact path="/account" component={AccountView} />
         <Route exact path="/camera" component={CameraView} />
       </Switch>
     </RootView>

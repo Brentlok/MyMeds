@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import LogoIcon from 'assets/svg/logo.svg';
-import PersonIcon from 'assets/svg/avatar.svg';
+import PersonIcon from 'assets/svg/person.svg';
 import InfoIcon from 'assets/svg/info.svg';
 import NothingIcon from 'assets/svg/nothing.svg';
 import YesIcon from 'assets/svg/yes.svg';
@@ -21,7 +21,9 @@ import RefreshIcon from 'assets/svg/refresh.svg';
 import BackIcon from 'assets/svg/back.svg';
 
 export const LOGO = 'LOGO';
+export const LOGO_BIG = 'LOGO_BIG';
 export const PERSON = 'PERSON';
+export const PERSON_BIG = 'PERSON_BIG';
 export const INFO = 'INFO';
 export const CALENDAR_SMALL = 'CALENDAR_SMALL';
 export const NOTHING = 'NOTHING';
@@ -41,8 +43,12 @@ export const BACK = 'BACK';
 const getIcon = (type, active) => {
   switch (type) {
     case LOGO:
-      return <LogoIcon />;
+      return <LogoIcon width={170} />;
+    case LOGO_BIG:
+      return <LogoIcon width={300} />;
     case PERSON:
+      return <PersonIcon width={32} />;
+    case PERSON_BIG:
       return <PersonIcon />;
     case INFO:
       return <InfoIcon />;

@@ -139,7 +139,6 @@ export const loadData =
 const storageKey = 'testingKey';
 
 export const saveLocalData = data => async dispatch => {
-  console.log(data);
   try {
     const oldData = await readLocalData();
     const newData = {...oldData, ...data};
