@@ -14,7 +14,7 @@ const TimeList = () => {
   );
 
   const [listHeight, setListHeight] = useState(0);
-  const [firstActive, setFirstActive] = useState(0);
+  const [firstActive, setFirstActive] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -57,7 +57,7 @@ const TimeList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addedForTomorrow]);
+  }, [addedForTomorrow, dataLoaded]);
 
   //wait for api
   return dataLoaded ? (

@@ -8,7 +8,7 @@ export const checkForBatteryPermission = async () => {
 export const checkPowerManager = async () => {
   const powerManagerInfo = await notifee.getPowerManagerInfo();
   if (powerManagerInfo.activity) {
-    async () => await notifee.openPowerManagerSettings();
+    await notifee.openPowerManagerSettings();
   } else {
     Alert.alert('Nie znaleziono ustawienia...', '', [
       {
