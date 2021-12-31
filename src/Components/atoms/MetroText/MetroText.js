@@ -13,6 +13,7 @@ export const BIG = 'BIG';
 export const EXTRA_BIG = 'EXTRA_BIG';
 
 export const LIGHT_GREY = '#8B8B8B';
+export const DARK = '#464646';
 export const DARK_GREY = '#545454';
 export const WHITE = 'white';
 

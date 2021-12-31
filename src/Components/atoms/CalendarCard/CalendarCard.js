@@ -3,11 +3,8 @@ import styled from 'styled-components/native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import MetroText, {
-  EXTRA_SMALL,
-  SMALL,
+  INPUT,
   MEDIUM,
-  BIG,
-  EXTRA_BIG,
   BOLD,
   EXTRA_BOLD,
   WHITE,
@@ -21,14 +18,14 @@ const CalendarCard = ({active, date, month}) => {
 
   const CardBox = styled.View`
     overflow: hidden;
-    padding: 5px 0 15px 0;
+    padding: 15px 0;
     background-color: #fff;
     display: flex;
-    width: 60px;
-    height: 115px;
+    width: 45px;
+    height: 100px;
     justify-content: ${() => (active ? 'space-between' : 'flex-end')};
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 100px;
     elevation: 4;
     ${() => !active && 'border: 1px solid #d1d1d1'}
   `;
@@ -61,7 +58,7 @@ const CalendarCard = ({active, date, month}) => {
         <CardText
           type={isToday}
           color={active ? WHITE : LIGHT_GREY}
-          size={SMALL}>
+          size={INPUT}>
           Dziś
         </CardText>
       )}
@@ -69,14 +66,14 @@ const CalendarCard = ({active, date, month}) => {
         type={isDay}
         weight={EXTRA_BOLD}
         color={active ? WHITE : LIGHT_GREY}
-        size={active ? EXTRA_BIG : BIG}>
+        size={MEDIUM}>
         {date}
       </CardText>
       <CardText
         type={isMonth}
         weight={active ? BOLD : EXTRA_BOLD}
         color={active ? WHITE : LIGHT_GREY}
-        size={active ? MEDIUM : EXTRA_SMALL}>
+        size={INPUT}>
         {month}
       </CardText>
     </CardBox>
