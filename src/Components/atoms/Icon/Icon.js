@@ -55,7 +55,7 @@ const getIcon = (type, active) => {
     case CALENDAR_SMALL:
       return <CalendarIcon width={20} />;
     case NOTHING:
-      return <NothingIcon />;
+      return <NothingIcon height={120} />;
     case YES:
       return <YesIcon />;
     case NO:

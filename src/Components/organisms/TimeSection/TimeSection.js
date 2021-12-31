@@ -1,28 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import TimeList from 'molecules/TimeList/TimeList';
-import MetroText, {REGULAR, EXTRA_BOLD} from 'atoms/MetroText/MetroText';
+import MetroText, {REGULAR} from 'atoms/MetroText/MetroText';
+import {Dimensions} from 'react-native';
 
 const TimeSection = () => {
-  const TimeSectionTop = styled.View`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
+  const [height, setHeight] = useState(0);
+
+  const TimeSectionWrapper = styled.View`
+    padding-top: 10px;
+    background-color: #f5f5f5;
+    height: ${height}px;
   `;
-  const TimeSectionTitleText = styled(MetroText)`
-    padding-left: 15px;
-    margin: 20px 0 15px 0;
+
+  const Title = styled(MetroText)`
+    text-align: center;
   `;
+
+  const getHeight = ({
+    nativeEvent: {
+      layout: {y},
+    },
+  }) => {
+    setHeight(Dimensions.get('window').height - y - 70);
+  };
+
   return (
-    <>
-      <TimeSectionTop>
-        <TimeSectionTitleText size={REGULAR} weight={EXTRA_BOLD}>
-          Twój terminarz
-        </TimeSectionTitleText>
-      </TimeSectionTop>
-      <TimeList />
-    </>
+    <TimeSectionWrapper onLayout={getHeight}>
+      <Title size={REGULAR}>Twój terminarz</Title>
+      <TimeList height={height} />
+    </TimeSectionWrapper>
   );
 };
 

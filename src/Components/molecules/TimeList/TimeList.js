@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
-import {Dimensions} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {loadData} from 'src/actions';
 import Icon, {NOTHING, REFRESH, ADD} from 'atoms/Icon/Icon';
-import MetroText, {SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
+import MetroText, {EXTRA_SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
-const TimeList = () => {
+const TimeList = ({height}) => {
   const {list, dataLoaded, takenToday, muted, addedForTomorrow} = useSelector(
     state => state,
   );
 
-  const [listHeight, setListHeight] = useState(0);
   const [firstActive, setFirstActive] = useState(null);
 
   const dispatch = useDispatch();
@@ -21,26 +19,18 @@ const TimeList = () => {
   const history = useHistory();
 
   const TimeListWrapper = styled.ScrollView`
-    width: ${Dimensions.get('window').width - 30}px;
-    margin: 0 auto 70px auto;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    background-color: #f5f5f5;
+    padding: 0 15px;
+    height: ${height - 45}px;
   `;
 
   const NothingWrapper = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    height: ${height - 45}px;
     padding: 10px 0;
-    height: ${listHeight}px;
   `;
-
-  const getHeight = ({nativeEvent: {layout}}) => {
-    const {height} = layout;
-    setListHeight(height);
-  };
 
   useEffect(() => {
     if (!dataLoaded) {
@@ -61,7 +51,7 @@ const TimeList = () => {
 
   //wait for api
   return dataLoaded ? (
-    <TimeListWrapper onLayout={getHeight}>
+    <TimeListWrapper>
       {list.length ? (
         <>
           {list
@@ -69,26 +59,22 @@ const TimeList = () => {
               ({hour}) =>
                 addedForTomorrow.includes(hour) || !takenToday.includes(hour),
             )
-            .map((item, index) => {
-              return (
-                <TimeItem
-                  key={index}
-                  active={index === firstActive}
-                  last={index === list.length - 1}
-                  data={item}
-                  muted={muted.includes(item.hour)}
-                  disabled={addedForTomorrow.includes(item.hour)}
-                />
-              );
-            })}
+            .map((item, index) => (
+              <TimeItem
+                key={index}
+                active={index === firstActive}
+                last={index === list.length - 1}
+                data={item}
+                muted={muted.includes(item.hour)}
+                disabled={addedForTomorrow.includes(item.hour)}
+              />
+            ))}
         </>
       ) : (
         <NothingWrapper>
-          <MetroText size={SMALL} weight={SEMI_BOLD}>
+          <MetroText size={EXTRA_SMALL} weight={SEMI_BOLD}>
             {
-              dataLoaded === 'error'
-                ? 'Ups coś poszło nie tak...' //in case of api error
-                : dataLoaded === 'not_verified'
+              dataLoaded === 'not_verified'
                 ? 'Zweryfikuj swój adres email...' // email not verified
                 : 'Ups nic tutaj nie ma...' //empty list
             }
@@ -98,12 +84,8 @@ const TimeList = () => {
           ) : (
             <>
               <Icon type={NOTHING} />
-              <MetroText size={SMALL} weight={SEMI_BOLD}>
-                {
-                  dataLoaded === 'error'
-                    ? 'Spróbuj ponownie później' //in case of api error
-                    : 'Dodaj coś już teraz!' //empty list
-                }
+              <MetroText size={EXTRA_SMALL} weight={SEMI_BOLD}>
+                Dodaj coś już teraz!
               </MetroText>
               {dataLoaded === 'error' ? (
                 <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
