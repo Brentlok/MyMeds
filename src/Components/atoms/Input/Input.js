@@ -76,6 +76,7 @@ const Input = forwardRef(({border, number, password}, ref) => {
         value={inputValue}
         onFocus={() => setBorderColor('#11d8a5')}
         onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
+        autoComplete={hidePassword ? 'password' : 'email'}
         keyboardType={number ? 'numeric' : 'default'}
         secureTextEntry={hidePassword}
       />

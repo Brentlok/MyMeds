@@ -215,13 +215,11 @@ export const addTakenToday = hour => async dispatch => {
     return;
   }
 
-  let newTakenToday;
-
-  if (hour) {
-    newTakenToday = [...takenToday, hour];
-  } else {
-    newTakenToday = [...takenToday, list[takenToday.length].hour];
+  if (!hour) {
+    hour = list[takenToday.length].hour;
   }
+
+  const newTakenToday = [...takenToday, hour];
   await dispatch(saveLocalData({takenToday: newTakenToday}));
   await dispatch({
     type: ADD_TAKEN_TODAY,

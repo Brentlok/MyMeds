@@ -49,7 +49,7 @@ const checkNotifications = async list => {
     if (hourList.includes(hour)) {
       return;
     }
-    notifee.cancelDisplayedNotifications();
+    notifee.cancelDisplayedNotification(id);
     notifee.cancelTriggerNotification(id);
   });
 };
@@ -58,7 +58,7 @@ const addNotification = async (title, body, hour) => {
   const date = new Date(Date.now());
   date.setHours(hour);
   date.setMinutes(0);
-
+  date.setSeconds(0);
   const time =
     date.getTime() < Date.now() ? date.getTime() + 86400000 : date.getTime();
   //to be sure that timestamp is in the future
@@ -67,6 +67,7 @@ const addNotification = async (title, body, hour) => {
     type: TriggerType.TIMESTAMP,
     timestamp: time,
     repeatFrequency: RepeatFrequency.DAILY,
+    alarmManager: true,
   };
 
   await notifee.createTriggerNotification(
@@ -79,7 +80,7 @@ const addNotification = async (title, body, hour) => {
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
         sound: 'mymeds_powiadomienia',
-        autoCancel: false,
+        autoCancel: true,
         ongoing: true,
         pressAction: {
           id: 'default',
@@ -102,5 +103,9 @@ const createChannel = async () => {
     });
   }
 };
+
+notifee.onBackgroundEvent(async notification => {
+  console.log(notification);
+});
 
 export default useNotification;

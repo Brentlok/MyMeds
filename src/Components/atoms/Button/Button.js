@@ -6,7 +6,6 @@ import MetroText, {REGULAR, WHITE, BLACK} from 'atoms/MetroText/MetroText';
 
 const Button = ({value, primary, secondary, onPress}) => {
   const ButtonWrapper = styled.TouchableOpacity`
-    margin-top: 15px;
     height: 55px;
     display: flex;
     justify-content: center;

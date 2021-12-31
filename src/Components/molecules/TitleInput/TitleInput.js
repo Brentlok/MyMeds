@@ -5,10 +5,10 @@ import MetroText, {MEDIUM, EXTRA_SMALL} from 'atoms/MetroText/MetroText';
 
 const TitleInput = memo(({passRef, title, password}) => {
   const Title = styled(MetroText)`
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   `;
   const TitleInputWrapper = styled.View`
-    margin-bottom: 25px;
+    margin-bottom: 15px;
   `;
   return (
     <TitleInputWrapper>

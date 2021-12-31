@@ -8,7 +8,7 @@ const HorizontalLine = () => {
     opacity: 0.5;
     display: flex;
     padding: 0 15px;
-    margin: 30px 0 15px 0;
+    margin: 15px 0;
     flex-direction: row;
     align-items: center;
   `;

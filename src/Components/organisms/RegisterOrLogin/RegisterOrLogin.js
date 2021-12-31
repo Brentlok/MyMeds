@@ -1,18 +1,31 @@
 import React, {useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
+import {Dimensions} from 'react-native';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import Button from 'atoms/Button/Button';
 import MetroText, {BIG, MEDIUM, SMALL} from 'atoms/MetroText/MetroText';
 import {login, register} from 'src/actions';
+import Icon from 'assets/svg/group.svg';
+
+const GroupIcon = styled(Icon)`
+  position: absolute;
+  bottom: 0;
+`;
 
 const ROLWrapper = styled.View`
-  margin-top: 30px;
+  position: absolute;
+  top: 130px;
+  width: ${Dimensions.get('window').width}px;
+  height: ${Dimensions.get('window').height - 130}px;
+  padding: 0 15px ${0.52 * Dimensions.get('window').width}px 15px;
 `;
+
 const Title = styled(MetroText)`
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
+
 const Message = styled(MetroText)`
   margin-top: -10px;
   margin-bottom: 5px;
@@ -108,6 +121,10 @@ const RegisterOrLogin = ({where}) => {
             {message}
           </Message>
           <Button onPress={submit} primary value="Zaloguj się" />
+          <GroupIcon
+            width={Dimensions.get('window').width}
+            height={0.52 * Dimensions.get('window').width}
+          />
         </>
       )}
     </ROLWrapper>
