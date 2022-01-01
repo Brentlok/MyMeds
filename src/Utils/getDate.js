@@ -17,6 +17,11 @@ export const isToday = date => {
   );
 };
 
+export const getNow = () => {
+  const now = new Date();
+  return {hours: now.getHours(), minutes: now.getMinutes()};
+};
+
 export const getDateList = date => {
   const dayList = [];
   const dayInMilis = 86400000;

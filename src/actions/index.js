@@ -11,11 +11,11 @@ import {
   ADD_TOMORROW,
 } from 'src/reducers';
 import store from 'src/store';
-import {isToday} from 'src/Utils/getDate';
+import {isToday, getNow} from 'src/Utils/getDate';
 
 const API_URL = 'http://51.38.131.160:8080/api/';
 
-export const register = (email, password, name) => async dispatch => {
+export const register = async (email, password, name) => {
   try {
     const {status} = await axios.post(`${API_URL}register`, {
       email,
@@ -104,6 +104,18 @@ export const loadData =
         list: items[index],
       }));
 
+      const lastCheckedTime = getNow();
+
+      //save loaded data to local storage
+      await dispatch(
+        saveLocalData({
+          list: proccessedList,
+          hourList: hours,
+          lastCheckedTime,
+        }),
+      );
+
+      //load data to store
       await dispatch({
         type: LOAD_DATA,
         payload: {
@@ -111,6 +123,8 @@ export const loadData =
           hourList: hours,
         },
       });
+
+      //data is loaded
       await dispatch({
         type: DATA_LOADED,
         payload: {
@@ -127,12 +141,7 @@ export const loadData =
         });
         return;
       }
-      await dispatch({
-        type: DATA_LOADED,
-        payload: {
-          dataLoaded: 'error',
-        },
-      });
+      await dispatch(loadLocalList());
     }
   };
 
@@ -164,16 +173,17 @@ const readLocalData = async () => {
 
 export const loadLocalData = () => async dispatch => {
   try {
-    const {accessToken, takenToday, takenTodayDate, muted} =
-      await readLocalData();
-    if (!takenToday && !takenTodayDate) {
+    const localData = await readLocalData();
+    const {takenToday, lastCheckedDate, muted} = localData;
+    if (!takenToday && !lastCheckedDate) {
       await dispatch(
-        saveLocalData({takenToday: [], takenTodayDate: new Date()}),
+        saveLocalData({takenToday: [], lastCheckedDate: new Date()}),
       );
+      return;
     }
-    if (!isToday(takenTodayDate)) {
+    if (!isToday(lastCheckedDate)) {
       await dispatch(
-        saveLocalData({takenToday: [], takenTodayDate: new Date()}),
+        saveLocalData({takenToday: [], lastCheckedDate: new Date()}),
       );
       //if date has changed, reload local data
       await dispatch(loadLocalData());
@@ -184,10 +194,29 @@ export const loadLocalData = () => async dispatch => {
     }
     await dispatch({
       type: LOAD_LOCAL_DATA,
+      payload: {...localData},
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const loadLocalList = () => async dispatch => {
+  console.log('load local list');
+  try {
+    const {list, hoursList} = await readLocalData();
+    await dispatch({
+      type: LOAD_DATA,
       payload: {
-        accessToken,
-        takenToday,
-        muted,
+        list,
+        hoursList,
+      },
+    });
+
+    await dispatch({
+      type: DATA_LOADED,
+      payload: {
+        dataLoaded: 'loaded',
       },
     });
   } catch (error) {

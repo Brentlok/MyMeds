@@ -11,7 +11,7 @@ const initialState = {
   muted: [],
   takenToday: [],
   addedForTomorrow: [],
-  takenTodayDate: null,
+  lastCheckedTime: {},
 };
 
 export const LOAD_DATA = 'LOAD_DATA';
@@ -56,6 +56,7 @@ const rootReducer = (state = initialState, action) => {
         accessToken: action.payload.accessToken,
         takenToday: action.payload.takenToday,
         muted: action.payload.muted,
+        lastCheckedTime: action.payload.lastCheckedTime,
         localDataLoaded: true,
       };
     }

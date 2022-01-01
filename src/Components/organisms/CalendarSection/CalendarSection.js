@@ -10,6 +10,10 @@ import MetroText, {
 } from 'atoms/MetroText/MetroText';
 import {getToday} from 'src/Utils/getDate';
 import RefreshIcon from 'assets/svg/refresh.svg';
+import {useDispatch, useSelector} from 'react-redux';
+import {loadData} from 'src/actions';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {displayNotification} from 'src/hooks/useNotification';
 
 const Wrapper = styled.View`
   padding: 0 15px;
@@ -30,14 +34,14 @@ const Gradient = styled(LinearGradient)`
   left: 0;
 `;
 
-const StatusBox = styled.View`
+const StatusBox = styled.TouchableOpacity`
   margin-top: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const RefreshBox = styled.TouchableOpacity`
+const RefreshBox = styled.View`
   width: 25px;
   height: 25px;
   display: flex;
@@ -47,6 +51,24 @@ const RefreshBox = styled.TouchableOpacity`
 
 const CalendarSection = () => {
   const {date, month} = getToday();
+
+  const dispatch = useDispatch();
+  const {lastCheckedTime} = useSelector(state => state);
+  const {hours, minutes} = lastCheckedTime;
+
+  const {isInternetReachable} = useNetInfo();
+
+  const handlePress = () => {
+    if (isInternetReachable) {
+      dispatch(loadData());
+      return;
+    }
+    displayNotification(
+      'Nie masz połączenia z internetem',
+      'Spróbuj ponownie później...',
+    );
+  };
+
   return (
     <Wrapper>
       <Gradient
@@ -58,9 +80,9 @@ const CalendarSection = () => {
       <MetroText size={SMALL}>
         {date} {month}
       </MetroText>
-      <StatusBox>
+      <StatusBox onPress={handlePress}>
         <MetroText size={INPUT} color={DARK}>
-          Stan na 14:56
+          Stan na {hours}:{minutes > 9 ? minutes : '0' + minutes}
         </MetroText>
         <RefreshBox>
           <RefreshIcon width={11} height={11} />

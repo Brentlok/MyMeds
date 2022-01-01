@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Icon, {HOME, CALENDAR, ADD} from 'atoms/Icon/Icon';
 import {useLocation, useHistory} from 'react-router-native';
-import {useSelector} from 'react-redux';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {displayNotification} from 'src/hooks/useNotification';
 
 const BottomPanel = () => {
   const history = useHistory();
 
-  const {dataLoaded} = useSelector(state => state);
+  const {isInternetReachable} = useNetInfo();
 
   const {pathname} = useLocation();
 
@@ -16,10 +17,9 @@ const BottomPanel = () => {
     bottom: 0;
     width: 100%;
     height: 70px;
-    background-color: #f5f5f5;
+    background-color: #fff;
     display: flex;
     justify-content: space-between;
-    elevation: 1;
     align-items: center;
     flex-direction: row;
     border: 0px solid #cdcdcd;
@@ -28,9 +28,14 @@ const BottomPanel = () => {
   `;
 
   const navigateTo = newPath => {
-    if (dataLoaded === 'loaded') {
-      history.push(newPath);
+    if (newPath === '/add' && !isInternetReachable) {
+      displayNotification(
+        'Nie masz połączenia z internetem',
+        'Spróbuj ponownie później...',
+      );
+      return;
     }
+    history.push(newPath);
   };
 
   return (

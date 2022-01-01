@@ -54,6 +54,21 @@ const checkNotifications = async list => {
   });
 };
 
+export const displayNotification = async (title, body) => {
+  await notifee.displayNotification({
+    title,
+    body,
+    android: {
+      channelId: channelId,
+      category: AndroidCategory.ALARM,
+      importance: AndroidImportance.HIGH,
+      visibility: AndroidVisibility.PUBLIC,
+      autoCancel: true,
+      timeoutAfter: 1000,
+    },
+  });
+};
+
 const addNotification = async (title, body, hour) => {
   const date = new Date(Date.now());
   date.setHours(hour);

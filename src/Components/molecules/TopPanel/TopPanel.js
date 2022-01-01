@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon, {INFO, BACK, LOGO, PERSON} from 'atoms/Icon/Icon';
-import notifee from '@notifee/react-native';
 import {useHistory, useLocation} from 'react-router-native';
 
 const PanelWrapper = styled.View`
@@ -15,13 +14,6 @@ const PanelWrapper = styled.View`
   align-items: center;
   flex-direction: row;
 `;
-
-const getNotifications = async () => {
-  const notificationsList = await (
-    await notifee.getTriggerNotifications()
-  ).map(({notification}) => notification);
-  console.log(notificationsList);
-};
 
 const TopPanel = () => {
   const history = useHistory();
