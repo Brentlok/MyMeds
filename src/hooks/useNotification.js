@@ -5,10 +5,14 @@ import notifee, {
   AndroidCategory,
   TriggerType,
   RepeatFrequency,
+  AndroidStyle,
 } from '@notifee/react-native';
 import {useSelector} from 'react-redux';
+import store from 'src/store';
+import {addTakenToday} from '../actions';
 
 const channelId = 'MyMeds_notifications';
+const {dispatch} = store;
 
 const useNotification = () => {
   const {list, dataLoaded, muted} = useSelector(state => state);
@@ -25,12 +29,12 @@ const useNotification = () => {
 };
 
 const checkNotifications = async list => {
-  const notificationsList = await (
-    await notifee.getTriggerNotifications()
-  ).map(({notification}) => ({
-    hour: notification.body.slice(5, 7),
-    id: notification.id,
-  }));
+  const notificationsList = (await notifee.getTriggerNotifications()).map(
+    ({notification}) => ({
+      hour: notification.title.slice(9, 11),
+      id: notification.id,
+    }),
+  );
 
   const hourList = list.map(({hour}) => hour);
 
@@ -38,9 +42,12 @@ const checkNotifications = async list => {
     if (notificationsList.map(({hour}) => hour).includes(newHour)) {
       return;
     }
+    const listToDisplay = list
+      .filter(({hour}) => hour === newHour)[0]
+      .list.map(({name}) => name);
     addNotification(
-      'Już czas coś zażyć!',
-      `Jest ${newHour}:00 sprawdź co powinieneś zażyć...`,
+      `<b>Jest już ${newHour}:00 sprawdź co powinieneś zażyć...</b>`,
+      listToDisplay,
       newHour,
     );
   });
@@ -69,7 +76,7 @@ export const displayNotification = async (title, body) => {
   });
 };
 
-const addNotification = async (title, body, hour) => {
+const addNotification = async (title, list, hour) => {
   const date = new Date(Date.now());
   date.setHours(hour);
   date.setMinutes(0);
@@ -88,18 +95,32 @@ const addNotification = async (title, body, hour) => {
   await notifee.createTriggerNotification(
     {
       title,
-      body,
       android: {
         channelId: channelId,
         category: AndroidCategory.REMINDER,
         importance: AndroidImportance.HIGH,
         visibility: AndroidVisibility.PUBLIC,
         sound: 'mymeds_powiadomienia',
-        autoCancel: true,
+        autoCancel: false,
         ongoing: true,
         pressAction: {
           id: 'default',
         },
+        largeIcon: require('../../android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png'),
+        style: {
+          type: AndroidStyle.INBOX,
+          lines: list,
+        },
+        actions: [
+          {
+            title: '✅ Przyjąłem',
+            pressAction: {id: 'taken'},
+          },
+          {
+            title: '❌ Anuluj',
+            pressAction: {id: 'cancel'},
+          },
+        ],
       },
     },
     trigger,
@@ -119,8 +140,22 @@ const createChannel = async () => {
   }
 };
 
-notifee.onBackgroundEvent(async notification => {
-  console.log(notification);
-});
+const handleEvent = async notification => {
+  if (!notification.detail.pressAction) {
+    return;
+  }
+  const notificationId = notification.detail.notification.id;
+  const {id} = notification.detail.pressAction;
+  const hour = notification.detail.notification.title.slice(9, 11);
+  if (id !== 'default') {
+    if (id === 'taken') {
+      await dispatch(addTakenToday(hour));
+    }
+    await notifee.cancelDisplayedNotification(notificationId);
+  }
+};
+
+notifee.onForegroundEvent(handleEvent);
+notifee.onBackgroundEvent(handleEvent);
 
 export default useNotification;

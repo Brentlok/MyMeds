@@ -10,7 +10,7 @@ const CalendarBox = styled.View`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  margin: 20px 0;
+  margin-top: 15px;
 `;
 
 const Calendar = () => {

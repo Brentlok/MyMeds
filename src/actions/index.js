@@ -177,7 +177,11 @@ export const loadLocalData = () => async dispatch => {
     const {takenToday, lastCheckedDate, muted} = localData;
     if (!takenToday && !lastCheckedDate) {
       await dispatch(
-        saveLocalData({takenToday: [], lastCheckedDate: new Date()}),
+        saveLocalData({
+          takenToday: [],
+          lastCheckedDate: new Date(),
+          lastCheckedTime: {hours: 0, minutes: 0},
+        }),
       );
       return;
     }

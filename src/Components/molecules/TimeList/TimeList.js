@@ -19,7 +19,6 @@ const TimeList = ({height}) => {
   const history = useHistory();
 
   const TimeListWrapper = styled.ScrollView`
-    padding: 0 15px;
     height: ${height - 45}px;
   `;
 
@@ -45,6 +44,7 @@ const TimeList = ({height}) => {
         setFirstActive(i);
         break;
       }
+      setFirstActive(-1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addedForTomorrow, dataLoaded]);
@@ -54,21 +54,24 @@ const TimeList = ({height}) => {
     <TimeListWrapper>
       {list.length ? (
         <>
-          {list
-            .filter(
-              ({hour}) =>
-                addedForTomorrow.includes(hour) || !takenToday.includes(hour),
-            )
-            .map((item, index) => (
-              <TimeItem
-                key={index}
-                active={index === firstActive}
-                last={index === list.length - 1}
-                data={item}
-                muted={muted.includes(item.hour)}
-                disabled={addedForTomorrow.includes(item.hour)}
-              />
-            ))}
+          {firstActive === null
+            ? null
+            : list
+                .filter(
+                  ({hour}) =>
+                    addedForTomorrow.includes(hour) ||
+                    !takenToday.includes(hour),
+                )
+                .map((item, index) => (
+                  <TimeItem
+                    key={index}
+                    active={index === firstActive}
+                    last={index === list.length - 1}
+                    data={item}
+                    muted={muted.includes(item.hour)}
+                    disabled={addedForTomorrow.includes(item.hour)}
+                  />
+                ))}
         </>
       ) : (
         <NothingWrapper>
