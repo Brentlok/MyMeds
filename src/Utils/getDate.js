@@ -5,8 +5,8 @@ export const getToday = () => {
   return {date, month};
 };
 
-export const isToday = date => {
-  if (!date.getDate) {
+export const isToday = (date = new Date()) => {
+  if (typeof date === 'string') {
     date = new Date(date);
   }
   const today = new Date();

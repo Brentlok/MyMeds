@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {useSelector, useDispatch} from 'react-redux';
-import {loadData} from 'src/actions';
+import {loadData} from 'src/actions/api_actions';
 import Icon, {NOTHING, REFRESH, ADD} from 'atoms/Icon/Icon';
 import MetroText, {EXTRA_SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';

@@ -6,8 +6,8 @@ import AmountInput from 'molecules/AmountInput/AmountInput';
 import TimeInput from 'molecules/TimeInput/TimeInput';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import MetroText, {SMALL, REGULAR, MEDIUM} from 'atoms/MetroText/MetroText';
-import {createMed} from 'src/actions';
-import SuccessScreen from '../../atoms/SuccessScreen/SuccessScreen';
+import {createMed} from 'src/actions/api_actions';
+import SuccessScreen from 'atoms/SuccessScreen/SuccessScreen';
 
 const AddMedsWrapper = styled.View`
   width: 100%;

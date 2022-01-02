@@ -5,7 +5,7 @@ import MetroText, {REGULAR, INPUT, DARK} from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
 import RefreshIcon from 'assets/svg/refresh.svg';
 import {useDispatch, useSelector} from 'react-redux';
-import {loadData} from 'src/actions';
+import {loadData} from 'src/actions/api_actions';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
 

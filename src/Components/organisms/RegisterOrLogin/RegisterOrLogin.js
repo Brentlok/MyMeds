@@ -5,7 +5,7 @@ import {Dimensions} from 'react-native';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import Button from 'atoms/Button/Button';
 import MetroText, {BIG, MEDIUM, SMALL} from 'atoms/MetroText/MetroText';
-import {login, register} from 'src/actions';
+import {login, register} from 'src/actions/api_actions';
 import Icon from 'assets/svg/group.svg';
 
 const GroupIcon = styled(Icon)`

@@ -1,6 +1,10 @@
 const initialState = {
   list: [],
   takenList: [],
+  muted: [],
+  takenToday: [],
+  addedForTomorrow: [],
+  lastCheckedTime: {hours: 0, minutes: 0},
   modalTakenOpen: false,
   itemToRemove: 0,
   modalText: 'Czy już przyjąłeś?',
@@ -8,10 +12,6 @@ const initialState = {
   dataLoaded: false,
   accessToken: null,
   newPath: '',
-  muted: [],
-  takenToday: [],
-  addedForTomorrow: [],
-  lastCheckedTime: {},
 };
 
 export const LOAD_DATA = 'LOAD_DATA';

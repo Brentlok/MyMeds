@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch} from 'react-redux';
-import {saveLocalData} from 'src/actions';
+import {saveLocalData} from 'src/actions/local_storage_actions';
 import {useHistory} from 'react-router-native';
 
 const OptionListWrapper = styled.View`

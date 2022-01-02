@@ -13,7 +13,8 @@ import {
 import {Provider, useDispatch, useSelector} from 'react-redux';
 
 import store from 'src/store';
-import {loadData, loadLocalData} from 'src/actions';
+import {loadData} from 'src/actions/api_actions';
+import {loadLocalData} from 'src/actions/local_storage_actions';
 
 import RootView from 'src/Views/RootView';
 import LoginView from 'src/Views/LoginView';

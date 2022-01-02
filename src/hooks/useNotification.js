@@ -9,7 +9,7 @@ import notifee, {
 } from '@notifee/react-native';
 import {useSelector} from 'react-redux';
 import store from 'src/store';
-import {addTakenToday} from '../actions';
+import {addTakenToday} from 'src/actions';
 
 const channelId = 'MyMeds_notifications';
 const {dispatch} = store;
