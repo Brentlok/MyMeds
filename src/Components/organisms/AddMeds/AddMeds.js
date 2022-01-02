@@ -91,7 +91,11 @@ const AddMeds = () => {
       <SuccessScreen fadeAnim={successAnim} show={showSuccess} />
       <AddMedsWrapper>
         <Title size={REGULAR}>Dodaj lek / suplement</Title>
-        <TitleInput passRef={nameRef} title="Nazwa leku / suplementu..." />
+        <TitleInput
+          passRef={nameRef}
+          title="Nazwa leku / suplementu..."
+          autoComplete="off"
+        />
         <AmountInput getValue={amountRef} />
         <TimeInput getValue={timeRef} />
         <Message size={SMALL} weight={MEDIUM}>

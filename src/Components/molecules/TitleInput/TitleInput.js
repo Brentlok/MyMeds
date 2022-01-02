@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Input from 'atoms/Input/Input';
 import MetroText, {MEDIUM, EXTRA_SMALL} from 'atoms/MetroText/MetroText';
 
-const TitleInput = memo(({passRef, title, password}) => {
+const TitleInput = memo(({passRef, title, password, autoComplete}) => {
   const Title = styled(MetroText)`
     margin-bottom: 10px;
   `;
@@ -15,7 +15,12 @@ const TitleInput = memo(({passRef, title, password}) => {
       <Title weight={MEDIUM} size={EXTRA_SMALL}>
         {title}
       </Title>
-      <Input password={password} border ref={passRef} />
+      <Input
+        password={password}
+        border
+        ref={passRef}
+        autoComplete={autoComplete}
+      />
     </TitleInputWrapper>
   );
 });

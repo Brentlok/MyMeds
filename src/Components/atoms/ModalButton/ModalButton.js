@@ -16,7 +16,9 @@ const ModalButton = ({yes}) => {
       dispatch(removeItem(itemToRemove.id));
       return;
     }
-    dispatch(addTakenToday());
+    if (yes) {
+      dispatch(addTakenToday());
+    }
     dispatch(changeModalTakenOpen('close'));
   };
 

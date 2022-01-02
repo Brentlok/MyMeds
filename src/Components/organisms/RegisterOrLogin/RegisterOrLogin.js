@@ -100,11 +100,21 @@ const RegisterOrLogin = ({where}) => {
       <Title size={BIG}>
         {where === 'register' ? 'Utwórz konto...' : 'Zaloguj się...'}
       </Title>
-      <TitleInput title="Podaj swój adres e-mail..." passRef={mailRef} />
+      <TitleInput
+        autoComplete="email"
+        title="Podaj swój adres e-mail..."
+        passRef={mailRef}
+      />
       {where === 'register' ? (
         <>
-          <TitleInput password title="Utwórz hasło..." passRef={password1Ref} />
           <TitleInput
+            password
+            autoComplete="password-new"
+            title="Utwórz hasło..."
+            passRef={password1Ref}
+          />
+          <TitleInput
+            autoComplete="password-new"
             password
             title="Powtórz hasło..."
             passRef={password2Ref}
@@ -116,7 +126,12 @@ const RegisterOrLogin = ({where}) => {
         </>
       ) : (
         <>
-          <TitleInput password title="Podaj hasło..." passRef={password1Ref} />
+          <TitleInput
+            autoComplete="password"
+            password
+            title="Podaj hasło..."
+            passRef={password1Ref}
+          />
           <Message size={SMALL} weight={MEDIUM}>
             {message}
           </Message>

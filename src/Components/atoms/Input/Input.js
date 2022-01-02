@@ -8,7 +8,7 @@ import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {useParams} from 'react-router-native';
 import TogglePasswordIcon from 'assets/svg/password.svg';
 
-const Input = forwardRef(({border, number, password}, ref) => {
+const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
   const [borderColor, setBorderColor] = useState('rgba(31,31,31,0.5)');
   const [inputValue, setInputValue] = useState('');
   const [hidePassword, setHidePassword] = useState(!!password);
@@ -76,7 +76,7 @@ const Input = forwardRef(({border, number, password}, ref) => {
         value={inputValue}
         onFocus={() => setBorderColor('#11d8a5')}
         onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
-        autoComplete={hidePassword ? 'password' : 'email'}
+        autoComplete={autoComplete}
         keyboardType={number ? 'numeric' : 'default'}
         secureTextEntry={hidePassword}
       />
