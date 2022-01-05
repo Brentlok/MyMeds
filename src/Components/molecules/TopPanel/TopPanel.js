@@ -16,7 +16,7 @@ const PanelWrapper = styled.View`
 
 const TopPanel = () => {
   return (
-    <PanelWrapper>
+    <PanelWrapper pointerEvents="none">
       <Icon type={LOGO} />
     </PanelWrapper>
   );
