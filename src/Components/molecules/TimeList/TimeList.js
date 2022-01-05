@@ -26,9 +26,13 @@ const TimeList = ({height}) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: ${height - 45}px;
     padding: 10px 0;
+  `;
+
+  const NothingText = styled(MetroText)`
+    margin: 15px;
   `;
 
   useEffect(() => {
@@ -75,21 +79,21 @@ const TimeList = ({height}) => {
         </>
       ) : (
         <NothingWrapper>
-          <MetroText size={EXTRA_SMALL} weight={SEMI_BOLD}>
+          <NothingText size={EXTRA_SMALL} weight={SEMI_BOLD}>
             {
               dataLoaded === 'not_verified'
                 ? 'Zweryfikuj swój adres email...' // email not verified
                 : 'Ups nic tutaj nie ma...' //empty list
             }
-          </MetroText>
+          </NothingText>
           {dataLoaded === 'not_verified' ? (
             <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
           ) : (
             <>
               <Icon type={NOTHING} />
-              <MetroText size={EXTRA_SMALL} weight={SEMI_BOLD}>
+              <NothingText size={EXTRA_SMALL} weight={SEMI_BOLD}>
                 Dodaj coś już teraz!
-              </MetroText>
+              </NothingText>
               {dataLoaded === 'error' ? (
                 <Icon type={REFRESH} onPress={() => dispatch(loadData())} />
               ) : (

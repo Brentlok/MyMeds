@@ -5,13 +5,13 @@ import MetroText, {
   EXTRA_BOLD,
   MEDIUM,
   EXTRA_SMALL,
-  DARK_GREY,
 } from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon, {OPEN_MODAL, RING, RING_MUTED} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
 import {changeModalTakenOpen, mute} from 'src/actions';
+import {grey, dark_grey} from 'src/colors';
 
 const TimeItem = ({last, active, data, muted, disabled}) => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const TimeItem = ({last, active, data, muted, disabled}) => {
     flex-direction: row;
     align-items: center;
     padding: 15px 5px;
-    border: 0px solid #cdcdcd;
+    border: 0px solid ${grey};
     ${() => !last && !active && 'border-bottom-width: 3px;'}
   `;
 
@@ -36,7 +36,7 @@ const TimeItem = ({last, active, data, muted, disabled}) => {
   `;
 
   const Meds = styled.View`
-    border: 0px solid #c4c4c4;
+    border: 0px solid ${grey};
     border-left-width: 2px;
     width: 80%;
     padding: 0 30px 0 10px;
@@ -84,7 +84,7 @@ const TimeItem = ({last, active, data, muted, disabled}) => {
               <MedTitle weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
               </MedTitle>
-              <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
+              <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={dark_grey}>
                 {item.quantity} {item.quantity_type}
               </MetroText>
             </MedItemWrapper>

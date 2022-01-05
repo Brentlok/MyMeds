@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 import {Dimensions} from 'react-native';
-import MetroText, {REGULAR, WHITE, BLACK} from 'atoms/MetroText/MetroText';
+import MetroText, {REGULAR} from 'atoms/MetroText/MetroText';
+import {black, white} from 'src/colors';
 
 const Button = ({value, primary, secondary, onPress}) => {
   const ButtonWrapper = styled.TouchableOpacity`
@@ -28,7 +29,7 @@ const Button = ({value, primary, secondary, onPress}) => {
     top: 3px;
     left: 3px;
     border-radius: 100px;
-    background-color: #fff;
+    background-color: ${white};
   `;
   return (
     <ButtonWrapper onPress={onPress}>
@@ -38,7 +39,7 @@ const Button = ({value, primary, secondary, onPress}) => {
         colors={['#17C79A', '#00FFBE']}
       />
       {secondary && <Secondary />}
-      <MetroText size={REGULAR} color={primary ? WHITE : BLACK}>
+      <MetroText size={REGULAR} color={primary ? white : black}>
         {value}
       </MetroText>
     </ButtonWrapper>

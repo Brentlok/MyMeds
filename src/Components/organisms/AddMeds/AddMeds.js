@@ -8,6 +8,7 @@ import TitleInput from 'molecules/TitleInput/TitleInput';
 import MetroText, {SMALL, REGULAR, MEDIUM} from 'atoms/MetroText/MetroText';
 import {createMed} from 'src/actions/api_actions';
 import SuccessScreen from 'atoms/SuccessScreen/SuccessScreen';
+import {primary, red, white} from 'src/colors';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
@@ -35,9 +36,9 @@ const SubmitButton = styled.TouchableOpacity`
   width: 185px;
   height: 60px;
   margin: auto;
-  border: 3px solid #11d8a5;
+  border: 3px solid ${primary};
   elevation: 3;
-  background-color: #fff;
+  background-color: ${white};
   border-radius: 100px;
 `;
 
@@ -67,7 +68,7 @@ const AddMeds = () => {
     const time = timeRef.current.getValue();
     if (name === '') {
       setMessage('Musisz coś wpisać...');
-      nameRef.current.setBorderColor('#FF5252');
+      nameRef.current.setBorderColor(red);
       return;
     }
     const sendCreateMed = await dispatch(

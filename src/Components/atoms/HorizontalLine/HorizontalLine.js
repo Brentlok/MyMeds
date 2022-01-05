@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import MetroText, {SMALL, LIGHT_GREY} from 'atoms/MetroText/MetroText';
+import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
+import {dark_grey} from 'src/colors';
 
 const HorizontalLine = () => {
   const HorizontalLineWrapper = styled.View`
@@ -17,13 +18,13 @@ const HorizontalLine = () => {
     margin: 0 10px;
     height: 3px;
     width: ${(Dimensions.get('window').width - 285) / 2}px;
-    background-color: ${LIGHT_GREY};
+    background-color: ${dark_grey};
     border-radius: 100px;
   `;
   return (
     <HorizontalLineWrapper>
       <Line />
-      <MetroText size={SMALL} color={LIGHT_GREY}>
+      <MetroText size={SMALL} color={dark_grey}>
         już mam konto
       </MetroText>
       <Line />

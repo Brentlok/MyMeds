@@ -8,6 +8,7 @@ import {changeModalTakenOpen, mute} from 'src/actions';
 import CloseIcon from 'assets/svg/close.svg';
 import RingIcon from 'assets/svg/ring.svg';
 import RingIconMuted from 'assets/svg/ring_muted.svg';
+import {light_grey} from 'src/colors';
 
 const ModalBox = () => {
   const {modalTakenOpen, modalText, muted, itemToRemove} = useSelector(
@@ -49,7 +50,7 @@ const ModalBox = () => {
     margin-left: -${(Dimensions.get('window').width - 30) / 2}px;
     width: ${Dimensions.get('window').width - 30}px;
     height: 140px;
-    background-color: #f5f5f5;
+    background-color: ${light_grey};
     border-radius: 25px;
     elevation: 7;
     padding: 20px 0;

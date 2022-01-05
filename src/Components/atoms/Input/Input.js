@@ -7,9 +7,10 @@ import React, {
 import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {useParams} from 'react-router-native';
 import TogglePasswordIcon from 'assets/svg/password.svg';
+import {black, primary, light_grey, grey} from 'src/colors';
 
 const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
-  const [borderColor, setBorderColor] = useState('rgba(31,31,31,0.5)');
+  const [borderColor, setBorderColor] = useState(grey);
   const [inputValue, setInputValue] = useState('');
   const [hidePassword, setHidePassword] = useState(!!password);
 
@@ -49,7 +50,7 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
       borderWidth: 0,
       padding: 15,
       fontFamily: 'Metropolis-Medium',
-      color: '#1f1f1f',
+      color: black,
     },
   });
 
@@ -59,7 +60,7 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
       borderWidth: 2,
       borderColor: borderColor,
       borderRadius: 9,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: light_grey,
     },
     togglePassword: {
       position: 'absolute',
@@ -74,8 +75,8 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
         style={border ? stylesWithBorder.input : styles.input}
         onChangeText={handleChange}
         value={inputValue}
-        onFocus={() => setBorderColor('#11d8a5')}
-        onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
+        onFocus={() => setBorderColor(primary)}
+        onBlur={() => setBorderColor(inputValue ? black : grey)}
         autoComplete={autoComplete}
         keyboardType={number ? 'numeric' : 'default'}
         secureTextEntry={hidePassword}

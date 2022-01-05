@@ -7,9 +7,8 @@ import MetroText, {
   MEDIUM,
   BOLD,
   EXTRA_BOLD,
-  WHITE,
-  LIGHT_GREY,
 } from 'atoms/MetroText/MetroText';
+import {grey, dark_grey, white} from 'src/colors';
 
 const CalendarCard = ({active, date, month}) => {
   const isMonth = 'isMonth';
@@ -19,7 +18,7 @@ const CalendarCard = ({active, date, month}) => {
   const CardBox = styled.View`
     overflow: hidden;
     padding: 15px 0;
-    background-color: #fff;
+    background-color: ${white};
     display: flex;
     width: 45px;
     height: 100px;
@@ -27,7 +26,7 @@ const CalendarCard = ({active, date, month}) => {
     flex-direction: column;
     border-radius: 100px;
     elevation: 4;
-    ${() => !active && 'border: 1px solid #d1d1d1'}
+    ${() => !active && `border: 1px solid ${grey}`}
   `;
 
   const CardText = styled(MetroText)`
@@ -57,7 +56,7 @@ const CalendarCard = ({active, date, month}) => {
       {active && (
         <CardText
           type={isToday}
-          color={active ? WHITE : LIGHT_GREY}
+          color={active ? white : dark_grey}
           size={INPUT}>
           Dziś
         </CardText>
@@ -65,14 +64,14 @@ const CalendarCard = ({active, date, month}) => {
       <CardText
         type={isDay}
         weight={EXTRA_BOLD}
-        color={active ? WHITE : LIGHT_GREY}
+        color={active ? white : dark_grey}
         size={MEDIUM}>
         {date}
       </CardText>
       <CardText
         type={isMonth}
         weight={active ? BOLD : EXTRA_BOLD}
-        color={active ? WHITE : LIGHT_GREY}
+        color={active ? white : dark_grey}
         size={INPUT}>
         {month}
       </CardText>

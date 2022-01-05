@@ -4,6 +4,7 @@ import Icon, {HOME, CALENDAR, ADD, MESSAGE, PERSON} from 'atoms/Icon/Icon';
 import {useLocation, useHistory} from 'react-router-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
+import {grey, white} from 'src/colors';
 
 const BottomPanel = () => {
   const history = useHistory();
@@ -17,12 +18,12 @@ const BottomPanel = () => {
     bottom: 0;
     width: 100%;
     height: 70px;
-    background-color: #fff;
+    background-color: ${white};
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    border: 0px solid #cdcdcd;
+    border: 0px solid ${grey};
     border-top-width: 1px;
     padding: 0 40px;
   `;

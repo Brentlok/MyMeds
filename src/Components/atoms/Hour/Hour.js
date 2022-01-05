@@ -1,14 +1,15 @@
 import React, {forwardRef, useState, useImperativeHandle} from 'react';
 import styled from 'styled-components/native';
 import MetroText, {INPUT, MEDIUM} from 'atoms/MetroText/MetroText';
+import {black, light_grey} from 'src/colors';
 
 const HourWrapper = styled.View`
   margin-top: 15px;
   width: 140px;
   height: 50px;
-  background-color: #f5f5f5;
+  background-color: ${light_grey};
   border-radius: 9px;
-  border: 2px solid #1f1f1f;
+  border: 2px solid ${black};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -27,7 +28,7 @@ const Line = styled.View`
   width: 16px;
   height: 3px;
   border-radius: 10px;
-  background-color: #1f1f1f;
+  background-color: ${black};
 `;
 
 const Minus = styled(Line)`

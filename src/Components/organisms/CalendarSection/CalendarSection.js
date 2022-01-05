@@ -3,10 +3,11 @@ import styled from 'styled-components/native';
 import Calendar from 'molecules/Calendar/Calendar';
 import MetroText, {REGULAR} from 'atoms/MetroText/MetroText';
 import {getToday} from 'src/Utils/getDate';
+import {grey} from 'src/colors';
 
 const Wrapper = styled.View`
   padding: 20px 15px;
-  border: 0 solid #d1d1d1;
+  border: 0 solid ${grey};
   border-bottom-width: 1px;
 `;
 

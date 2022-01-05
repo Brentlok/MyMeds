@@ -2,6 +2,7 @@ import React, {forwardRef, useState, useImperativeHandle} from 'react';
 import styled from 'styled-components/native';
 import MetroText, {EXTRA_SMALL, MEDIUM} from 'atoms/MetroText/MetroText';
 import {TextInput, View, StyleSheet} from 'react-native';
+import {black, light_grey} from 'src/colors';
 
 const Amount = forwardRef((props, ref) => {
   const amountTypes = ['szt', 'ml', 'g', 'mg'];
@@ -17,15 +18,15 @@ const Amount = forwardRef((props, ref) => {
       display: 'flex',
       flexDirection: 'row',
       height: 50,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: light_grey,
       borderRadius: 9,
       borderWidth: 2,
-      borderColor: '#1f1f1f',
+      borderColor: black,
     },
     input: {
       textAlign: 'center',
       fontFamily: 'Metropolis-Medium',
-      color: '#1f1f1f',
+      color: black,
       width: 68,
     },
   });
@@ -67,7 +68,7 @@ const Amount = forwardRef((props, ref) => {
 
   const AmountType = styled.View`
     width: 68px;
-    border: 0px solid #1f1f1f;
+    border: 0px solid ${black};
     border-left-width: 2px;
     display: flex;
     align-items: center;
@@ -93,12 +94,12 @@ const Amount = forwardRef((props, ref) => {
 
   const Triangle1 = styled(Triangle)`
     border-right-width: 7.5px;
-    border-right-color: #1f1f1f;
+    border-right-color: ${black};
   `;
 
   const Triangle2 = styled(Triangle)`
     border-left-width: 7.5px;
-    border-left-color: #1f1f1f;
+    border-left-color: ${black};
   `;
 
   return (

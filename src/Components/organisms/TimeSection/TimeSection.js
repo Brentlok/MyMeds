@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import TimeList from 'molecules/TimeList/TimeList';
-import MetroText, {REGULAR, INPUT, DARK} from 'atoms/MetroText/MetroText';
+import MetroText, {REGULAR, INPUT} from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
 import RefreshIcon from 'assets/svg/refresh.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {loadData} from 'src/actions/api_actions';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
+import {light_grey} from 'src/colors';
 
 const StatusBox = styled.TouchableOpacity`
   margin-top: 5px;
@@ -53,7 +54,7 @@ const TimeSection = () => {
 
   const TimeSectionWrapper = styled.View`
     padding: 10px 15px 0 15px;
-    background-color: #f5f5f5;
+    background-color: ${light_grey};
     height: ${height}px;
   `;
 
@@ -70,7 +71,7 @@ const TimeSection = () => {
       <Header>
         <MetroText size={REGULAR}>Terminarz</MetroText>
         <StatusBox onPress={handlePress}>
-          <MetroText size={INPUT} color={DARK}>
+          <MetroText size={INPUT}>
             Stan na {hours}:{minutes > 9 ? minutes : '0' + minutes}
           </MetroText>
           <RefreshBox>

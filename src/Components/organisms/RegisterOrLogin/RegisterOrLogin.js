@@ -7,6 +7,7 @@ import Button from 'atoms/Button/Button';
 import MetroText, {BIG, MEDIUM, SMALL} from 'atoms/MetroText/MetroText';
 import {login, register} from 'src/actions/api_actions';
 import Icon from 'assets/svg/group.svg';
+import {red} from 'src/colors';
 
 const GroupIcon = styled(Icon)`
   position: absolute;
@@ -49,18 +50,18 @@ const RegisterOrLogin = ({where}) => {
       const password2 = password2Ref.current.getValue();
       if (!emailRegex.test(mail)) {
         setMessage('Podaj prawidłowy adres email');
-        mailRef.current.setBorderColor('#FF5252');
+        mailRef.current.setBorderColor(red);
         return;
       }
       if (password1 !== password2) {
-        password1Ref.current.setBorderColor('#FF5252');
-        password2Ref.current.setBorderColor('#FF5252');
+        password1Ref.current.setBorderColor(red);
+        password2Ref.current.setBorderColor(red);
         setMessage('Podane hasła nie są identyczne');
         return;
       }
       if (password1.length < 8) {
-        password1Ref.current.setBorderColor('#FF5252');
-        password2Ref.current.setBorderColor('#FF5252');
+        password1Ref.current.setBorderColor(red);
+        password2Ref.current.setBorderColor(red);
         setMessage('Proszę podaj dłuższe hasło');
         return;
       }
@@ -81,12 +82,12 @@ const RegisterOrLogin = ({where}) => {
     const password1 = password1Ref.current.getValue();
     if (!emailRegex.test(mail)) {
       setMessage('Podaj prawidłowy adres email');
-      mailRef.current.setBorderColor('#FF5252');
+      mailRef.current.setBorderColor(red);
       return;
     }
     if (!password1) {
       setMessage('Wpisz hasło');
-      password1Ref.current.setBorderColor('#FF5252');
+      password1Ref.current.setBorderColor(red);
       return;
     }
     const sendLogin = await dispatch(login(mail, password1));

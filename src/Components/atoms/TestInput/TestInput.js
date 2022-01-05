@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
+import {black, light_grey} from 'src/colors';
 
 const Input = ({value, setValue}) => {
   const styles = StyleSheet.create({
@@ -9,11 +10,11 @@ const Input = ({value, setValue}) => {
       height: 50,
       padding: 15,
       fontFamily: 'Metropolis-Medium',
-      color: '#1f1f1f',
+      color: black,
       borderWidth: 2,
-      borderColor: 'black',
+      borderColor: black,
       borderRadius: 9,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: light_grey,
     },
   });
 
