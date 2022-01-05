@@ -109,12 +109,12 @@ const RegisterOrLogin = ({where}) => {
         <>
           <TitleInput
             password
-            autoComplete="password-new"
+            autoComplete="password"
             title="Utwórz hasło..."
             passRef={password1Ref}
           />
           <TitleInput
-            autoComplete="password-new"
+            autoComplete="password"
             password
             title="Powtórz hasło..."
             passRef={password2Ref}

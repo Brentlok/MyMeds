@@ -4,7 +4,7 @@ import MetroText, {EXTRA_SMALL, MEDIUM} from 'atoms/MetroText/MetroText';
 import {TextInput, View, StyleSheet} from 'react-native';
 
 const Amount = forwardRef((props, ref) => {
-  const amountTypes = ['szt.', 'ml', 'g', 'mg'];
+  const amountTypes = ['szt', 'ml', 'g', 'mg'];
 
   const [inputValue, setInputValue] = useState('1');
   const [amountTypeIndex, setAmountTypeIndex] = useState(0);

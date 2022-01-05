@@ -15,6 +15,7 @@
     "@react-native-community/datetimepicker": "^3.0.2",
     "@react-native-community/hooks": "^2.8.0",
     "@react-native-community/netinfo": "^7.1.7",
+    "@svgr/core": "^6.1.2",
     "axios": "0.21.4",
     "react": "17.0.2",
     "react-native": "0.66.2",

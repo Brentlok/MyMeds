@@ -4,10 +4,15 @@ import {isToday} from 'src/Utils/getDate';
 
 const storageKey = 'MyMedsKey';
 
-export const saveLocalData = data => async dispatch => {
+export const saveLocalData = (data, firstSave) => async dispatch => {
   try {
-    const oldData = await dispatch(readLocalData());
-    const newData = {...oldData, ...data};
+    let newData;
+    if (firstSave) {
+      newData = data;
+    } else {
+      const oldData = await dispatch(readLocalData());
+      newData = {...oldData, ...data};
+    }
     const jsonValue = JSON.stringify(newData);
     await AsyncStorage.setItem(storageKey, jsonValue);
     await dispatch(loadLocalData());
@@ -21,13 +26,16 @@ const readLocalData = () => async dispatch => {
     const storageData = await AsyncStorage.getItem(storageKey);
     if (storageData === null) {
       await dispatch(
-        saveLocalData({
-          takenToday: [],
-          muted: [],
-          accessToken: null,
-          lastCheckedDate: new Date(),
-          lastCheckedTime: {hours: 0, minutes: 0},
-        }),
+        saveLocalData(
+          {
+            takenToday: [],
+            muted: [],
+            accessToken: null,
+            lastCheckedDate: new Date(),
+            lastCheckedTime: {hours: 0, minutes: 0},
+          },
+          true,
+        ),
       );
       return null;
     }

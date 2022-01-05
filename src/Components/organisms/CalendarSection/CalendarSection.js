@@ -7,7 +7,7 @@ import {getToday} from 'src/Utils/getDate';
 const Wrapper = styled.View`
   padding: 20px 15px;
   border: 0 solid #d1d1d1;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
 `;
 
 const TitleText = styled(MetroText)`
