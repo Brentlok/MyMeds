@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import TimeList from 'molecules/TimeList/TimeList';
 import MetroText, {REGULAR, INPUT} from 'atoms/MetroText/MetroText';
@@ -33,11 +33,12 @@ const Header = styled.View`
 `;
 
 const TimeSection = () => {
-  const [height, setHeight] = useState(0);
-
   const dispatch = useDispatch();
   const {lastCheckedTime} = useSelector(state => state);
   const {hours, minutes} = lastCheckedTime;
+
+  //262 - y position, 70 height of bottom panel
+  const height = Dimensions.get('window').height - 262 - 70;
 
   const {isInternetReachable} = useNetInfo();
 
@@ -58,16 +59,8 @@ const TimeSection = () => {
     height: ${height}px;
   `;
 
-  const getHeight = ({
-    nativeEvent: {
-      layout: {y},
-    },
-  }) => {
-    setHeight(Dimensions.get('window').height - y - 70);
-  };
-
   return (
-    <TimeSectionWrapper onLayout={getHeight}>
+    <TimeSectionWrapper>
       <Header>
         <MetroText size={REGULAR}>Terminarz</MetroText>
         <StatusBox onPress={handlePress}>
