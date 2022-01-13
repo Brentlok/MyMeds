@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {Linking} from 'react-native';
-import {
-  checkPowerManager,
-  checkForBatteryPermission,
-} from 'src/Utils/powerSettings';
+import {checkForBatteryPermission} from 'src/Utils/powerSettings';
 import MetroText, {EXTRA_SMALL, SMALL, MEDIUM} from 'atoms/MetroText/MetroText';
+import {primary} from 'src/colors';
 
 const InfoList = styled.View`
   padding: 0 15px;
@@ -33,12 +31,6 @@ const infoData = [
     openAction: checkForBatteryPermission,
   },
   {
-    title: 'Sprawdź power manager',
-    body: 'Power manager działa podobnie jak optymalizacja baterii, wygląda inaczej w zależności od modelu twojego telefonu.',
-    open: 'Sprawdź to ustawienie',
-    openAction: checkPowerManager,
-  },
-  {
     title: 'Pozostałe ustawienia',
     body: 'Warto sprawdzić również inne ustawienia aplikacji, dotyczące powiadomień, dostępu do aparatu, i wielu innych.',
     open: 'Otwórz wszystkie ustawienia',
@@ -56,7 +48,7 @@ const InfoSection = () => {
             {body}
           </BodyText>
           <Open onPress={openAction}>
-            <OpenText size={EXTRA_SMALL} weight={MEDIUM}>
+            <OpenText size={EXTRA_SMALL} weight={MEDIUM} color={primary}>
               {open}
             </OpenText>
           </Open>

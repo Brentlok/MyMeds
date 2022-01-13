@@ -14,7 +14,7 @@ const AboutText = styled(MetroText)`
 `;
 
 const aboutText =
-  'The external scars tell only part of the story. Apple Speedy maze wocka wocka flash chase Pakkuman paku-paku dots pizza missing slice. Orange fickle blue guy maze chase. Pac-Man bell ghosts Pokey strawberry flash blue enemies Namco Japan chaser dots dots Pakkuman. Ghosts dots cherry Blinky Pac-Man Power Pellets fruit. He had a hidden stash underneath the floorboards in the back room of the house.';
+  "Odpowiednia, stała pora przyjmowania leków gwarantuje ich skuteczność. Dla osób, które przyjmują ich dużo, regularność może być szczególnie trudna. Chcieliśmy zwrócić uwagę na ten problem i pomóc wszystkim, których on dotyka, zarówno starszym jak i młodszym, więc stworzyliśmy aplikacje - ,,MyMeds''. Ma ona na celu ułatwienie systematyczności osobom, które przyjmują leki/suplementy.";
 
 const AboutSection = () => {
   return (

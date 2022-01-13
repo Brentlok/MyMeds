@@ -146,10 +146,10 @@ const handleEvent = async notification => {
   }
   const notificationId = notification.detail.notification.id;
   const {id} = notification.detail.pressAction;
-  const hour = notification.detail.notification.title.slice(9, 11);
+  const hour = notification.detail.notification.title.slice(12, 14);
   if (id !== 'default') {
     if (id === 'taken') {
-      await dispatch(addTakenToday(hour));
+      await dispatch(addTakenToday(hour, true));
     }
     await notifee.cancelDisplayedNotification(notificationId);
   }

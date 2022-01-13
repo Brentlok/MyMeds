@@ -17,6 +17,7 @@ import AddIcon from 'assets/svg/add.svg';
 import CalendarIcon from 'assets/svg/calendar.svg';
 import RefreshIcon from 'assets/svg/refresh.svg';
 import MessageIcon from 'assets/svg/message.svg';
+import GreatIcon from 'assets/svg/great.svg';
 
 export const LOGO = 'LOGO';
 export const LOGO_BIG = 'LOGO_BIG';
@@ -37,6 +38,7 @@ export const HOME = 'HOME';
 export const ADD = 'ADD';
 export const ACTIVE = 'ACTIVE';
 export const REFRESH = 'REFRESH';
+export const GREAT = 'GREAT';
 
 const getIcon = (type, active) => {
   switch (type) {
@@ -45,7 +47,7 @@ const getIcon = (type, active) => {
     case LOGO_BIG:
       return <LogoIcon width={300} />;
     case PERSON_BIG:
-      return <PersonIcon />;
+      return <PersonIcon fill={black} />;
     case INFO:
       return <InfoIcon />;
     case CALENDAR_SMALL:
@@ -76,6 +78,8 @@ const getIcon = (type, active) => {
       return <AddIcon width={34} fill={active ? primary : black} />;
     case REFRESH:
       return <RefreshIcon />;
+    case GREAT:
+      return <GreatIcon />;
     default:
       return null;
   }
@@ -92,7 +96,6 @@ const Icon = ({type, onPress, active}) => {
     [
       CALENDAR,
       HOME,
-      INFO,
       PERSON,
       CLOSE,
       RING,

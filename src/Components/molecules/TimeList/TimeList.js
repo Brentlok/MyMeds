@@ -3,13 +3,21 @@ import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {useSelector, useDispatch} from 'react-redux';
 import {loadData} from 'src/actions/api_actions';
-import Icon, {NOTHING, REFRESH, ADD} from 'atoms/Icon/Icon';
-import MetroText, {EXTRA_SMALL, SEMI_BOLD} from 'atoms/MetroText/MetroText';
+import Icon, {NOTHING, REFRESH, ADD, GREAT} from 'atoms/Icon/Icon';
+import MetroText, {
+  EXTRA_SMALL,
+  SMALL,
+  SEMI_BOLD,
+} from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
 const TimeList = ({height}) => {
   const {list, dataLoaded, takenToday, muted, addedForTomorrow} = useSelector(
     state => state,
+  );
+
+  const filteredList = list.filter(
+    ({hour}) => addedForTomorrow.includes(hour) || !takenToday.includes(hour),
   );
 
   const [firstActive, setFirstActive] = useState(null);
@@ -39,9 +47,6 @@ const TimeList = ({height}) => {
     if (!dataLoaded) {
       return;
     }
-    const filteredList = list.filter(
-      ({hour}) => addedForTomorrow.includes(hour) || !takenToday.includes(hour),
-    );
     for (let i = 0; i < filteredList.length; i++) {
       //if there are some items added for tommorow before first active for today
       if (!addedForTomorrow.includes(filteredList[i].hour)) {
@@ -58,24 +63,25 @@ const TimeList = ({height}) => {
     <TimeListWrapper>
       {list.length ? (
         <>
-          {firstActive === null
-            ? null
-            : list
-                .filter(
-                  ({hour}) =>
-                    addedForTomorrow.includes(hour) ||
-                    !takenToday.includes(hour),
-                )
-                .map((item, index) => (
-                  <TimeItem
-                    key={index}
-                    active={index === firstActive}
-                    last={index === list.length - 1}
-                    data={item}
-                    muted={muted.includes(item.hour)}
-                    disabled={addedForTomorrow.includes(item.hour)}
-                  />
-                ))}
+          {firstActive === null ? (
+            <NothingWrapper>
+              <Icon type={GREAT} />
+              <NothingText size={SMALL} weight={SEMI_BOLD}>
+                To już wszystko na dziś!
+              </NothingText>
+            </NothingWrapper>
+          ) : (
+            filteredList.map((item, index) => (
+              <TimeItem
+                key={index}
+                active={index === firstActive}
+                last={index === list.length - 1}
+                data={item}
+                muted={muted.includes(item.hour)}
+                disabled={addedForTomorrow.includes(item.hour)}
+              />
+            ))
+          )}
         </>
       ) : (
         <NothingWrapper>

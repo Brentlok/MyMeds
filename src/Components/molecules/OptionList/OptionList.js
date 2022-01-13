@@ -4,6 +4,7 @@ import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch} from 'react-redux';
 import {saveLocalData} from 'src/actions/local_storage_actions';
 import {useHistory} from 'react-router-native';
+import {Alert} from 'react-native';
 
 const OptionListWrapper = styled.View`
   padding-top: 15px;
@@ -23,9 +24,22 @@ const OptionList = () => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(saveLocalData({accessToken: null}));
-    history.push('/start/start');
+    Alert.alert('Czy chcesz się wylogować?', '', [
+      {
+        text: 'Anuluj',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Wyloguj',
+        onPress: () => {
+          dispatch(saveLocalData({accessToken: null}));
+          history.push('/start/start');
+        },
+      },
+    ]);
   };
+
   return (
     <OptionListWrapper>
       <Option>
@@ -36,7 +50,7 @@ const OptionList = () => {
       <Option>
         <OptionText size={SMALL}>Konta pod nadzorem</OptionText>
       </Option>
-      <Option>
+      <Option onPress={() => history.push('/message')}>
         <OptionText size={SMALL}>Napisz do...</OptionText>
       </Option>
     </OptionListWrapper>

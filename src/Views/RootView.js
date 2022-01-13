@@ -17,7 +17,6 @@ const RootView = ({children}) => {
   const {pathname} = useLocation();
   return (
     <RootViewWrapper onPress={() => Keyboard.dismiss()}>
-      <GoBack show={!['/', '/home', '/start/start'].includes(pathname)} />
       {!pathname.includes('start') && pathname !== '/' && (
         <>
           <TopPanel />
@@ -25,6 +24,7 @@ const RootView = ({children}) => {
         </>
       )}
       {children}
+      <GoBack show={!['/', '/home', '/start/start'].includes(pathname)} />
     </RootViewWrapper>
   );
 };

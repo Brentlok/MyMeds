@@ -4,7 +4,7 @@ import {
   ADD_TAKEN_TODAY,
 } from 'src/reducers';
 import store from 'src/store';
-import {saveLocalData} from './local_storage_actions';
+import {saveLocalData, loadLocalData} from './local_storage_actions';
 
 export const changeModalTakenOpen = (type, item) => ({
   type: CHANGE_MODAL_TAKEN_OPEN,
@@ -19,7 +19,10 @@ export const changeModalTakenOpen = (type, item) => ({
   },
 });
 
-export const addTakenToday = hour => async dispatch => {
+export const addTakenToday = (hour, notification) => async dispatch => {
+  if (notification) {
+    await dispatch(loadLocalData());
+  }
   const {list, takenToday} = await store.getState();
 
   if (hour && takenToday.includes(hour)) {

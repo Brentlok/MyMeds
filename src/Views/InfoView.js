@@ -1,11 +1,23 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import InfoSection from 'organisms/InfoSection/InfoSection';
-import MetroText, {REGULAR} from 'atoms/MetroText/MetroText';
+import MetroText, {REGULAR, INPUT, MEDIUM} from 'atoms/MetroText/MetroText';
+import {Dimensions} from 'react-native';
 
 const InfoTitle = styled(MetroText)`
-  margin: 10px 0 15px 0;
+  margin: 30px 0;
   text-align: center;
+`;
+
+const License = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 80px;
+  width: ${Dimensions.get('window').width}px;
+`;
+
+const LicenseText = styled(MetroText)`
+  text-align: center;
+  text-decoration: underline;
 `;
 
 const InfoView = () => {
@@ -13,6 +25,11 @@ const InfoView = () => {
     <>
       <InfoTitle size={REGULAR}>Informacje</InfoTitle>
       <InfoSection />
+      <License onPress={() => null}>
+        <LicenseText size={INPUT} weight={MEDIUM}>
+          Tło plik wektorowy utworzone przez freepik - pl.freepik.com
+        </LicenseText>
+      </License>
     </>
   );
 };

@@ -11,7 +11,7 @@ const PressBox = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  elevation: 100;
+  elevation: 10;
   left: 15px;
 `;
 

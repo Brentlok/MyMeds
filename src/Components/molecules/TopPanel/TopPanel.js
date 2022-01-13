@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon, {LOGO} from 'atoms/Icon/Icon';
+import Icon, {LOGO, INFO} from 'atoms/Icon/Icon';
 import {white} from 'src/colors';
+import {useHistory} from 'react-router-native';
 
 const PanelWrapper = styled.View`
   width: 100%;
@@ -14,10 +15,25 @@ const PanelWrapper = styled.View`
   flex-direction: row;
 `;
 
+const Info = styled.TouchableOpacity`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TopPanel = () => {
+  const history = useHistory();
   return (
-    <PanelWrapper pointerEvents="none">
+    <PanelWrapper>
       <Icon type={LOGO} />
+      <Info onPress={() => history.push('/info')}>
+        <Icon type={INFO} />
+      </Info>
     </PanelWrapper>
   );
 };

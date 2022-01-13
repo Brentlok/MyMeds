@@ -28,7 +28,7 @@ const SuccessScreen = ({fadeAnim, show}) => {
     height: ${Dimensions.get('window').height}px;
     background-color: rgba(255, 255, 255, 0.95);
     position: absolute;
-    elevation: 7;
+    elevation: 100;
     display: flex;
     align-items: center;
     justify-content: center;

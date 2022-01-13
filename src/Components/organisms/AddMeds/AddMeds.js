@@ -12,7 +12,7 @@ import {primary, red, white} from 'src/colors';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
-  height: ${Dimensions.get('window').height - 190}px;
+  height: ${Dimensions.get('window').height - 140}px;
   padding: 20px 30px 0 15px;
 `;
 
