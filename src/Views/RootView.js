@@ -23,8 +23,8 @@ const RootView = ({children}) => {
           <BottomPanel />
         </>
       )}
-      {children}
       <GoBack show={!['/', '/home', '/start/start'].includes(pathname)} />
+      {children}
     </RootViewWrapper>
   );
 };

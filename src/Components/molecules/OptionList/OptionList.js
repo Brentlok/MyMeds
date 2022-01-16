@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch} from 'react-redux';
-import {saveLocalData} from 'src/actions/local_storage_actions';
+import {saveLocalData, emptyData} from 'src/actions/local_storage_actions';
 import {useHistory} from 'react-router-native';
 import {Alert} from 'react-native';
 
@@ -33,7 +33,7 @@ const OptionList = () => {
       {
         text: 'Wyloguj',
         onPress: () => {
-          dispatch(saveLocalData({accessToken: null}));
+          dispatch(saveLocalData(emptyData));
           history.push('/start/start');
         },
       },

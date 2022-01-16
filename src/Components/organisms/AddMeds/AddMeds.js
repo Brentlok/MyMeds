@@ -89,7 +89,6 @@ const AddMeds = () => {
 
   return (
     <>
-      <SuccessScreen fadeAnim={successAnim} show={showSuccess} />
       <AddMedsWrapper>
         <Title size={REGULAR}>Dodaj lek / suplement</Title>
         <TitleInput
@@ -107,6 +106,7 @@ const AddMeds = () => {
           <MetroText size={SMALL}>Zatwierdź</MetroText>
         </SubmitButton>
       </AddMedsWrapper>
+      <SuccessScreen fadeAnim={successAnim} show={showSuccess} />
     </>
   );
 };

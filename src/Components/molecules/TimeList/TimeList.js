@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {useSelector, useDispatch} from 'react-redux';
@@ -12,6 +12,8 @@ import MetroText, {
 import {useHistory} from 'react-router-native';
 
 const TimeList = ({height}) => {
+  const [firstActive, setFirstActive] = useState(null);
+
   const {list, dataLoaded, takenToday, muted, addedForTomorrow} = useSelector(
     state => state,
   );
@@ -19,8 +21,6 @@ const TimeList = ({height}) => {
   const filteredList = list.filter(
     ({hour}) => addedForTomorrow.includes(hour) || !takenToday.includes(hour),
   );
-
-  const [firstActive, setFirstActive] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -53,24 +53,22 @@ const TimeList = ({height}) => {
         setFirstActive(i);
         break;
       }
+    }
+    if (firstActive !== null) {
+      return;
+    }
+    if (!filteredList.length || addedForTomorrow.length) {
+      //if list is empty
       setFirstActive(-1);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addedForTomorrow, dataLoaded]);
+  }, [addedForTomorrow, dataLoaded, filteredList, firstActive]);
 
   //wait for api
-  return dataLoaded ? (
+  return dataLoaded && firstActive !== null ? (
     <TimeListWrapper>
       {list.length ? (
         <>
-          {firstActive === null ? (
-            <NothingWrapper>
-              <Icon type={GREAT} />
-              <NothingText size={SMALL} weight={SEMI_BOLD}>
-                To już wszystko na dziś!
-              </NothingText>
-            </NothingWrapper>
-          ) : (
+          {filteredList.length ? (
             filteredList.map((item, index) => (
               <TimeItem
                 key={index}
@@ -81,6 +79,13 @@ const TimeList = ({height}) => {
                 disabled={addedForTomorrow.includes(item.hour)}
               />
             ))
+          ) : (
+            <NothingWrapper>
+              <Icon type={GREAT} />
+              <NothingText size={SMALL} weight={SEMI_BOLD}>
+                To już wszystko na dziś!
+              </NothingText>
+            </NothingWrapper>
           )}
         </>
       ) : (

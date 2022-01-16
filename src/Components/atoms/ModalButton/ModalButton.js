@@ -13,12 +13,12 @@ const ModalButton = ({yes}) => {
   const dispatch = useDispatch();
 
   const handlePress = () => {
-    if (modalText === 'Czy chcesz to usunąć?') {
+    if (modalText === 'Czy chcesz to usunąć?' && yes) {
       dispatch(removeItem(itemToRemove.id));
       return;
     }
     if (yes) {
-      dispatch(addTakenToday());
+      dispatch(addTakenToday(itemToRemove));
     }
     dispatch(changeModalTakenOpen('close'));
   };
