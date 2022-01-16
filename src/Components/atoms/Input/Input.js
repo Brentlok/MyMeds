@@ -45,6 +45,8 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
   //for some reasons input from styled-components wont work properly
   const styles = StyleSheet.create({
     input: {
+      width: '100%',
+      marginRight: 15,
       flexShrink: 1,
       height: 50,
       borderWidth: 0,

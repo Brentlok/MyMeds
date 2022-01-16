@@ -56,6 +56,10 @@ const App = () => {
   }, [localDataLoaded]);
 
   useBackHandler(() => {
+    if (pathname === '/camera') {
+      history.push('/add');
+      return true;
+    }
     if (pathname.match(/\b(?:add|calendar|info)\b/) !== null) {
       history.push('/home');
       return true;

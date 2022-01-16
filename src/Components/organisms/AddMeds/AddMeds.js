@@ -13,7 +13,7 @@ import {primary, red, white} from 'src/colors';
 const AddMedsWrapper = styled.View`
   width: 100%;
   height: ${Dimensions.get('window').height - 140}px;
-  padding: 20px 30px 0 15px;
+  padding: 20px 15px 0 15px;
 `;
 
 const Title = styled(MetroText)`
@@ -96,6 +96,7 @@ const AddMeds = () => {
           passRef={nameRef}
           title="Nazwa leku / suplementu..."
           autoComplete="off"
+          scaner
         />
         <AmountInput getValue={amountRef} />
         <TimeInput getValue={timeRef} />
