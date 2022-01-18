@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {primary, black} from 'src/colors';
 
 import LogoIcon from 'assets/svg/logo.svg';
-import PersonIcon from 'assets/svg/person.svg';
+import PersonIcon from 'assets/svg/avatar.svg';
 import InfoIcon from 'assets/svg/info.svg';
 import NothingIcon from 'assets/svg/nothing.svg';
 import YesIcon from 'assets/svg/yes.svg';
@@ -18,6 +18,9 @@ import CalendarIcon from 'assets/svg/calendar.svg';
 import RefreshIcon from 'assets/svg/refresh.svg';
 import MessageIcon from 'assets/svg/message.svg';
 import GreatIcon from 'assets/svg/great.svg';
+import LogoutIcon from 'assets/svg/logout.svg';
+import ConnectedAccountsIcon from 'assets/svg/accounts.svg';
+import SettingsIcon from 'assets/svg/settings.svg';
 
 export const LOGO = 'LOGO';
 export const LOGO_BIG = 'LOGO_BIG';
@@ -39,13 +42,16 @@ export const ADD = 'ADD';
 export const ACTIVE = 'ACTIVE';
 export const REFRESH = 'REFRESH';
 export const GREAT = 'GREAT';
+export const LOGOUT = 'LOGOUT';
+export const ACCOUNTS = 'ACCOUNTS';
+export const SETTINGS = 'SETTINGS';
 
 const getIcon = (type, active) => {
   switch (type) {
     case LOGO:
       return <LogoIcon width={130} />;
     case LOGO_BIG:
-      return <LogoIcon width={300} />;
+      return <LogoIcon width={250} />;
     case PERSON_BIG:
       return <PersonIcon fill={black} />;
     case INFO:
@@ -65,7 +71,7 @@ const getIcon = (type, active) => {
     case RING_MUTED:
       return <RingIconMuted />;
     case OPEN_MODAL:
-      return <OpenModalIcon />;
+      return <OpenModalIcon fill={black} />;
     case PERSON:
       return <PersonIcon width={34} fill={active ? primary : black} />;
     case MESSAGE:
@@ -80,6 +86,12 @@ const getIcon = (type, active) => {
       return <RefreshIcon />;
     case GREAT:
       return <GreatIcon />;
+    case LOGOUT:
+      return <LogoutIcon fill={black} />;
+    case ACCOUNTS:
+      return <ConnectedAccountsIcon />;
+    case SETTINGS:
+      return <SettingsIcon />;
     default:
       return null;
   }

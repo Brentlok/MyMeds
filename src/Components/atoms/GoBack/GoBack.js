@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import BackIcon from 'assets/svg/back.svg';
-import {useHistory} from 'react-router-native';
+import {useHistory, useLocation} from 'react-router-native';
 
 const PressBox = styled.TouchableOpacity`
   position: absolute;
@@ -18,10 +18,14 @@ const PressBox = styled.TouchableOpacity`
 const GoBack = ({show}) => {
   const history = useHistory();
 
+  const {pathname} = useLocation();
+
   const handlePress = () => {
-    const previousLocation =
-      history.entries[history.entries.length - 2].pathname;
-    history.push(previousLocation);
+    if (['/calendar', '/add', '/message', '/account'].includes(pathname)) {
+      history.push('/home');
+    } else {
+      history.goBack();
+    }
   };
 
   return show ? (

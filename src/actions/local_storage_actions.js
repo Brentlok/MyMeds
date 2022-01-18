@@ -5,6 +5,8 @@ import {isToday} from 'src/Utils/getDate';
 const storageKey = 'MyMedsKey';
 
 export const emptyData = {
+  hoursList: [],
+  list: [],
   takenToday: [],
   muted: [],
   accessToken: null,
@@ -71,7 +73,7 @@ export const loadLocalData = () => async dispatch => {
 
 export const loadLocalList = () => async dispatch => {
   try {
-    const {list, hoursList} = await readLocalData();
+    const {list, hoursList} = await dispatch(readLocalData)();
     await dispatch({
       type: LOAD_DATA,
       payload: {

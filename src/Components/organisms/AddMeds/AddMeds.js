@@ -82,7 +82,6 @@ const AddMeds = () => {
         return;
       } else {
         setMessage(sendCreateMed);
-        console.log(sendCreateMed);
       }
     }
   };

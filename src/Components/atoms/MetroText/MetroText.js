@@ -49,6 +49,8 @@ const MetroText = styled.Text`
   color: ${({color}) => (color ? color : black)};
   font-family: Metropolis-${({weight}) => getFontWeight(weight)};
   font-size: ${({size}) => getFontSize(size)}px;
+  ${({center}) => center && 'text-align: center;'}
+  ${({margin}) => margin && `margin: ${margin}`}
 `;
 
 export default MetroText;

@@ -1,12 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import InfoSection from 'organisms/InfoSection/InfoSection';
-import MetroText, {REGULAR, INPUT, MEDIUM} from 'atoms/MetroText/MetroText';
+import MetroText, {
+  REGULAR,
+  EXTRA_SMALL,
+  MEDIUM,
+  INPUT,
+} from 'atoms/MetroText/MetroText';
+import Icon, {LOGO_BIG} from 'atoms/Icon/Icon';
 import {Dimensions} from 'react-native';
 
-const InfoTitle = styled(MetroText)`
-  margin: 30px 0;
-  text-align: center;
+const Logo = styled.View`
+  position: absolute;
+  bottom: 140px;
+  width: ${Dimensions.get('window').width}px;
+  display: flex;
+  align-items: center;
 `;
 
 const License = styled.TouchableOpacity`
@@ -20,11 +28,33 @@ const LicenseText = styled(MetroText)`
   text-decoration: underline;
 `;
 
+const InfoWrapper = styled.View`
+  padding: 20px 15px 0 15px;
+`;
+
+const InfoText = styled(MetroText)`
+  margin-top: 30px;
+`;
+
+const infoText =
+  "Odpowiednia, stała pora przyjmowania leków gwarantuje ich skuteczność. Dla osób, które przyjmują ich dużo, regularność może być szczególnie trudna. Chcieliśmy zwrócić uwagę na ten problem i pomóc wszystkim, których on dotyka, zarówno starszym jak i młodszym, więc stworzyliśmy aplikacje - ,,MyMeds''. Ma ona na celu ułatwienie systematyczności osobom, które przyjmują leki/suplementy.";
+
 const InfoView = () => {
   return (
     <>
-      <InfoTitle size={REGULAR}>Informacje</InfoTitle>
-      <InfoSection />
+      <InfoWrapper>
+        <MetroText center size={REGULAR}>
+          Informacje o projekcie
+        </MetroText>
+        <InfoText size={EXTRA_SMALL} weight={MEDIUM}>
+          {infoText}
+        </InfoText>
+      </InfoWrapper>
+
+      <Logo>
+        <Icon type={LOGO_BIG} />
+      </Logo>
+
       <License onPress={() => null}>
         <LicenseText size={INPUT} weight={MEDIUM}>
           Tło plik wektorowy utworzone przez freepik - pl.freepik.com

@@ -4,7 +4,7 @@ import store from 'src/store';
 import {getNow} from 'src/Utils/getDate';
 import {changePath, addTakenToday, changeModalTakenOpen} from '.';
 import {saveLocalData, loadLocalList} from './local_storage_actions';
-const API_URL = 'http://51.38.131.160:8080/api/';
+const API_URL = 'http://51.38.131.160:8400/api/';
 
 export const register = async (email, password, name) => {
   try {
@@ -21,7 +21,10 @@ export const register = async (email, password, name) => {
 
 export const login = (email, password) => async dispatch => {
   try {
-    const {data, status} = await axios.post(`${API_URL}login`, {
+    const {
+      data: {data},
+      status,
+    } = await axios.post(`${API_URL}login`, {
       email,
       password,
     });
@@ -83,7 +86,9 @@ export const loadData =
   async dispatch => {
     try {
       const {
-        data: {list},
+        data: {
+          data: {list},
+        },
       } = await axios.get(`${API_URL}meds/01.01.2000`, {
         headers: {Authorization: `Bearer ${accessToken}`},
       });

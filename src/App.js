@@ -24,6 +24,7 @@ import AddView from 'src/Views/AddView';
 import InfoView from 'src/Views/InfoView';
 import AccountView from 'src/Views/AccountView';
 import CameraView from 'src/Views/CameraView';
+import SettingsView from 'src/Views/SettingsView';
 
 import useNotification from 'src/hooks/useNotification';
 import useReduxHistory from 'src/hooks/useReduxHistory';
@@ -89,6 +90,7 @@ const App = () => {
         <Route exact path="/add" component={AddView} />
         <Route exact path="/add/:scan" component={AddView} />
         <Route exact path="/info" component={InfoView} />
+        <Route exact path="/settings" component={SettingsView} />
         <Route exact path="/account" component={AccountView} />
         <Route exact path="/camera" component={CameraView} />
       </Switch>
