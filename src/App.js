@@ -17,9 +17,8 @@ import {loadData} from 'src/actions/api_actions';
 import {loadLocalData} from 'src/actions/local_storage_actions';
 
 import RootView from 'src/Views/RootView';
-import LoginView from 'src/Views/LoginView';
+import StartView from 'src/Views/StartView';
 import HomeView from 'src/Views/HomeView';
-import CalendarView from 'src/Views/CalendarView';
 import AddView from 'src/Views/AddView';
 import InfoView from 'src/Views/InfoView';
 import AccountView from 'src/Views/AccountView';
@@ -84,14 +83,13 @@ const App = () => {
   return (
     <RootView>
       <Switch>
-        <Route exact path="/start/:where" component={LoginView} />
+        <Route exact path="/start/:where" component={StartView} />
         <Route exact path="/home" component={HomeView} />
-        <Route exact path="/calendar" component={CalendarView} />
         <Route exact path="/add" component={AddView} />
         <Route exact path="/add/:scan" component={AddView} />
-        <Route exact path="/info" component={InfoView} />
-        <Route exact path="/settings" component={SettingsView} />
         <Route exact path="/account" component={AccountView} />
+        <Route exact path="/account/info" component={InfoView} />
+        <Route exact path="/account/settings" component={SettingsView} />
         <Route exact path="/camera" component={CameraView} />
       </Switch>
     </RootView>

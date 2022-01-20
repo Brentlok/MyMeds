@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon, {HOME, CALENDAR, ADD, MESSAGE, PERSON} from 'atoms/Icon/Icon';
+import Icon, {HOME, ADD, MESSAGE, PERSON} from 'atoms/Icon/Icon';
 import {useLocation, useHistory} from 'react-router-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
@@ -42,19 +42,14 @@ const BottomPanel = () => {
   return (
     <PanelWrapper>
       <Icon
-        onPress={() => navigateTo('/calendar')}
-        type={CALENDAR}
-        active={pathname.includes('/calendar')}
+        onPress={() => navigateTo('/home')}
+        type={HOME}
+        active={pathname.includes('/home')}
       />
       <Icon
         onPress={() => navigateTo('/add')}
         type={ADD}
         active={pathname.includes('/add')}
-      />
-      <Icon
-        onPress={() => navigateTo('/home')}
-        type={HOME}
-        active={pathname.includes('/home')}
       />
       <Icon
         onPress={() => navigateTo('/message')}

@@ -67,13 +67,13 @@ const AccountSection = () => {
       name: 'Informacje o projekcie',
       icon: INFO,
       active: true,
-      action: () => history.push('/info'),
+      action: () => history.push('/account/info'),
     },
     {
       name: 'Ustawienia',
       icon: SETTINGS,
       active: true,
-      action: () => history.push('/settings'),
+      action: () => history.push('/account/settings'),
     },
     {
       name: 'Wyloguj się',

@@ -65,11 +65,10 @@ const RegisterOrLogin = ({where}) => {
         setMessage('Proszę podaj dłuższe hasło');
         return;
       }
-      const sendRegister = await dispatch(
-        register(mail, password1, 'anonymous'),
-      );
+      const sendRegister = await register(mail, password1, 'anonymous');
       if (sendRegister.message) {
         setMessage(JSON.stringify(sendRegister.message));
+        console.log(sendRegister.message);
       } else {
         setMessage('Pomyślnie zarejestrowano!');
         mailRef.current.setValue('');
