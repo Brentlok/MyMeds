@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loadData} from 'src/actions/api_actions';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
-import {light_grey} from 'src/colors';
+import {light_grey, grey} from 'src/colors';
 
 const StatusBox = styled.TouchableOpacity`
   margin-top: 5px;
@@ -55,8 +55,12 @@ const TimeSection = () => {
 
   const TimeSectionWrapper = styled.View`
     padding: 10px 15px 0 15px;
+    margin-left: -15px;
+    width: ${Dimensions.get('window').width}px;
     background-color: ${light_grey};
     height: ${height}px;
+    border: 0 solid ${grey};
+    border-top-width: 1px;
   `;
 
   return (

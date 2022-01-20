@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import StartPanel from 'organisms/StartPanel/StartPanel';
-import Icon, {LOGO} from 'atoms/Icon/Icon';
+import Icon, {LOGO_MED} from 'atoms/Icon/Icon';
 import RegisterOrLogin from 'organisms/RegisterOrLogin/RegisterOrLogin';
 
 const LoginView = ({match}) => {
@@ -22,7 +22,7 @@ const LoginView = ({match}) => {
   return (
     <LoginWrapper>
       <Logo>
-        <Icon type={LOGO} />
+        <Icon type={LOGO_MED} />
       </Logo>
       {where === 'start' ? <StartPanel /> : <RegisterOrLogin where={where} />}
     </LoginWrapper>

@@ -5,6 +5,7 @@ import {useLocation, useHistory} from 'react-router-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {displayNotification} from 'src/hooks/useNotification';
 import {grey, white} from 'src/colors';
+import {Dimensions} from 'react-native';
 
 const BottomPanel = () => {
   const history = useHistory();
@@ -16,7 +17,8 @@ const BottomPanel = () => {
   const PanelWrapper = styled.View`
     position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0px;
+    width: ${Dimensions.get('window').width}px;
     height: 70px;
     background-color: ${white};
     display: flex;

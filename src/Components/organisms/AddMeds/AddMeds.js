@@ -13,7 +13,6 @@ import {primary, red, white} from 'src/colors';
 const AddMedsWrapper = styled.View`
   width: 100%;
   height: ${Dimensions.get('window').height - 140}px;
-  padding: 20px 15px 0 15px;
 `;
 
 const Title = styled(MetroText)`
@@ -28,7 +27,7 @@ const Message = styled(MetroText)`
 
 const SubmitButton = styled.TouchableOpacity`
   position: absolute;
-  bottom: 25px;
+  bottom: 45px;
   left: ${(Dimensions.get('window').width - 185) / 2}px;
   display: flex;
   align-items: center;

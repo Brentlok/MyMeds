@@ -7,14 +7,16 @@ import BottomPanel from 'molecules/BottomPanel/BottomPanel';
 import GoBack from 'atoms/GoBack/GoBack';
 import {white} from 'src/colors';
 
-const RootViewWrapper = styled.Pressable`
-  background-color: ${white};
-  width: 100%;
-  height: ${Dimensions.get('window').height}px;
-`;
-
 const RootView = ({children}) => {
   const {pathname} = useLocation();
+
+  const RootViewWrapper = styled.Pressable`
+    background-color: ${white};
+    width: 100%;
+    height: ${Dimensions.get('window').height}px;
+    ${!pathname.includes('/start') && 'padding: 0 15px;'}
+  `;
+
   return (
     <RootViewWrapper onPress={() => Keyboard.dismiss()}>
       {!pathname.includes('start') && pathname !== '/' && (

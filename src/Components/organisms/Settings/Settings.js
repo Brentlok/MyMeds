@@ -1,12 +1,7 @@
 import React from 'react';
-import styled from 'styled-components/native';
 import {Linking} from 'react-native';
 import {checkForBatteryPermission} from 'src/Utils/powerSettings';
 import Setting from 'molecules/Setting/Setting';
-
-const SettingsWrapper = styled.View`
-  padding: 0 15px;
-`;
 
 const settingsList = [
   {
@@ -25,11 +20,11 @@ const settingsList = [
 
 const Settings = () => {
   return (
-    <SettingsWrapper>
+    <>
       {settingsList.map(item => (
         <Setting {...item} key={item.title} />
       ))}
-    </SettingsWrapper>
+    </>
   );
 };
 

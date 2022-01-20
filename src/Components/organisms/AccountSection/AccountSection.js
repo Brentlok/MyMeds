@@ -8,8 +8,6 @@ import {useHistory} from 'react-router-native';
 import {Alert} from 'react-native';
 import {light_grey, grey} from 'src/colors';
 
-const OptionListWrapper = styled.View``;
-
 const Option = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -84,7 +82,7 @@ const AccountSection = () => {
   ];
 
   return (
-    <OptionListWrapper>
+    <>
       {optionList.map(({name, icon, active, action}) => (
         <Option key={name} onPress={action}>
           <IconBox>
@@ -93,7 +91,7 @@ const AccountSection = () => {
           <MetroText size={EXTRA_SMALL}>{name}</MetroText>
         </Option>
       ))}
-    </OptionListWrapper>
+    </>
   );
 };
 

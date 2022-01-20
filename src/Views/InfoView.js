@@ -7,7 +7,7 @@ import MetroText, {
   INPUT,
 } from 'atoms/MetroText/MetroText';
 import Icon, {LOGO_BIG} from 'atoms/Icon/Icon';
-import {Dimensions} from 'react-native';
+import {Dimensions, Linking} from 'react-native';
 
 const Logo = styled.View`
   position: absolute;
@@ -28,10 +28,6 @@ const LicenseText = styled(MetroText)`
   text-decoration: underline;
 `;
 
-const InfoWrapper = styled.View`
-  padding: 20px 15px 0 15px;
-`;
-
 const InfoText = styled(MetroText)`
   margin-top: 30px;
 `;
@@ -42,20 +38,19 @@ const infoText =
 const InfoView = () => {
   return (
     <>
-      <InfoWrapper>
-        <MetroText center size={REGULAR}>
-          Informacje o projekcie
-        </MetroText>
-        <InfoText size={EXTRA_SMALL} weight={MEDIUM}>
-          {infoText}
-        </InfoText>
-      </InfoWrapper>
+      <MetroText center size={REGULAR}>
+        Informacje o projekcie
+      </MetroText>
+      <InfoText size={EXTRA_SMALL} weight={MEDIUM}>
+        {infoText}
+      </InfoText>
 
       <Logo>
         <Icon type={LOGO_BIG} />
       </Logo>
 
-      <License onPress={() => null}>
+      <License
+        onPress={() => Linking.openURL('https://pl.freepik.com/wektory/logo')}>
         <LicenseText size={INPUT} weight={MEDIUM}>
           Tło plik wektorowy utworzone przez freepik - pl.freepik.com
         </LicenseText>

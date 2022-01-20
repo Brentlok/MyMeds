@@ -23,6 +23,7 @@ import ConnectedAccountsIcon from 'assets/svg/accounts.svg';
 import SettingsIcon from 'assets/svg/settings.svg';
 
 export const LOGO = 'LOGO';
+export const LOGO_MED = 'LOGO_MED';
 export const LOGO_BIG = 'LOGO_BIG';
 export const PERSON = 'PERSON';
 export const PERSON_BIG = 'PERSON_BIG';
@@ -50,6 +51,8 @@ const getIcon = (type, active) => {
   switch (type) {
     case LOGO:
       return <LogoIcon width={130} />;
+    case LOGO_MED:
+      return <LogoIcon width={180} />;
     case LOGO_BIG:
       return <LogoIcon width={250} />;
     case PERSON_BIG:
