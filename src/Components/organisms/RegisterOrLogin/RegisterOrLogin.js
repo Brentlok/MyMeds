@@ -123,7 +123,7 @@ const RegisterOrLogin = ({where}) => {
           : 'Zaloguj się...'}
       </Title>
       <TitleInput
-        autoComplete="email"
+        autoComplete={where === 'name' ? 'off' : 'email'}
         title={
           where === 'name'
             ? 'Podaj swoją nazwę użytkownika...'

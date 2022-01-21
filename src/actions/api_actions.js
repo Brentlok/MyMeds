@@ -52,38 +52,40 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
-export const createMed =
-  (name, quantity, quantity_type, hour) => async dispatch => {
-    const {accessToken} = store.getState();
-    try {
-      await axios.post(
-        `${API_URL}meds`,
-        {
-          name,
-          quantity,
-          quantity_type,
-          taking_date: `01.01.2000 ${hour}:00`,
+export const createMed = async (name, quantity, quantity_type, hour) => {
+  const {accessToken} = store.getState();
+  try {
+    await axios.post(
+      `${API_URL}meds`,
+      {
+        name,
+        quantity,
+        quantity_type,
+        taking_date: `01.01.2000 ${hour}:00`,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      await dispatch(loadData());
-      const hourNow = new Date().getHours();
-      if (hour <= hourNow) {
-        await dispatch({
-          type: ADD_TOMORROW,
-          payload: {addedForTomorrow: hour.toString()},
-        });
-        await dispatch(addTakenToday(hour.toString()));
-      }
-      return 'success';
-    } catch (error) {
-      return error.message;
-    }
-  };
+      },
+    );
+    return 'success';
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const loadNewMeds = hour => async dispatch => {
+  await dispatch(loadData());
+  const hourNow = new Date().getHours();
+  if (hour <= hourNow) {
+    await dispatch({
+      type: ADD_TOMORROW,
+      payload: {addedForTomorrow: hour.toString()},
+    });
+    await dispatch(addTakenToday(hour.toString()));
+  }
+};
 
 export const loadData =
   (accessToken = store.getState().accessToken) =>

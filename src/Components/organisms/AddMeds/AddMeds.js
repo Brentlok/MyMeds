@@ -6,9 +6,9 @@ import AmountInput from 'molecules/AmountInput/AmountInput';
 import TimeInput from 'molecules/TimeInput/TimeInput';
 import TitleInput from 'molecules/TitleInput/TitleInput';
 import MetroText, {SMALL, REGULAR, MEDIUM} from 'atoms/MetroText/MetroText';
-import {createMed} from 'src/actions/api_actions';
+import {createMed, loadNewMeds} from 'src/actions/api_actions';
 import SuccessScreen from 'atoms/SuccessScreen/SuccessScreen';
-import {primary, red, white} from 'src/colors';
+import {primary, red, white, grey} from 'src/colors';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
@@ -47,14 +47,6 @@ const AddMeds = () => {
 
   const successAnim = useRef(new Animated.Value(0)).current;
 
-  successAnim.addListener(({value}) => {
-    if (value === 1) {
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 700);
-    }
-  });
-
   const dispatch = useDispatch();
   const nameRef = useRef(null);
   const amountRef = useRef(null);
@@ -70,20 +62,28 @@ const AddMeds = () => {
       nameRef.current.setBorderColor(red);
       return;
     }
-    const sendCreateMed = await dispatch(
-      createMed(name, amount, amountType, time),
-    );
+    const sendCreateMed = await createMed(name, amount, amountType, time);
     if (sendCreateMed) {
       if (sendCreateMed === 'success') {
         setShowSuccess(true);
         setMessage('');
-        nameRef.current.setValue('');
+        setTimeout(() => {
+          dispatch(loadNewMeds(timeRef.current.getValue()));
+        }, 300);
         return;
       } else {
         setMessage(sendCreateMed);
       }
     }
   };
+
+  successAnim.addListener(({value}) => {
+    if (value === 1) {
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 700);
+    }
+  });
 
   return (
     <>
