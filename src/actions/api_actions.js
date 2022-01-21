@@ -1,18 +1,22 @@
 import axios from 'axios';
-import {LOAD_DATA, DATA_LOADED, LOGIN, ADD_TOMORROW} from 'src/reducers';
 import store from 'src/store';
+import {LOAD_DATA, DATA_LOADED, LOGIN, ADD_TOMORROW} from 'src/reducers';
 import {getNow} from 'src/Utils/getDate';
 import {changePath, addTakenToday, changeModalTakenOpen} from '.';
 import {saveLocalData, loadLocalList} from './local_storage_actions';
 const API_URL = 'http://51.38.131.160:8400/api/';
 
-export const register = async (email, password, name) => {
+export const register = name => async dispatch => {
+  const {mail, password} = await store.getState();
   try {
     const {status} = await axios.post(`${API_URL}register`, {
-      email,
+      email: mail,
       password,
       name,
     });
+    setTimeout(() => {
+      dispatch(changePath('/start/start'));
+    }, 1000);
     return status;
   } catch (error) {
     return error;

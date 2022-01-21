@@ -8,6 +8,8 @@ import MetroText, {BIG, MEDIUM, SMALL} from 'atoms/MetroText/MetroText';
 import {login, register} from 'src/actions/api_actions';
 import Icon from 'assets/svg/group.svg';
 import {red} from 'src/colors';
+import {useHistory} from 'react-router-native';
+import {saveRegisterData} from '../../../actions';
 
 const GroupIcon = styled(Icon)`
   position: absolute;
@@ -37,46 +39,50 @@ const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const RegisterOrLogin = ({where}) => {
+  const history = useHistory();
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const mailRef = useRef(null);
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
 
-  const submit = async () => {
-    if (where === 'register') {
-      const mail = mailRef.current.getValue();
-      const password1 = password1Ref.current.getValue();
-      const password2 = password2Ref.current.getValue();
-      if (!emailRegex.test(mail)) {
-        setMessage('Podaj prawidłowy adres email');
-        mailRef.current.setBorderColor(red);
-        return;
-      }
-      if (password1 !== password2) {
-        password1Ref.current.setBorderColor(red);
-        password2Ref.current.setBorderColor(red);
-        setMessage('Podane hasła nie są identyczne');
-        return;
-      }
-      if (password1.length < 8) {
-        password1Ref.current.setBorderColor(red);
-        password2Ref.current.setBorderColor(red);
-        setMessage('Proszę podaj dłuższe hasło');
-        return;
-      }
-      const sendRegister = await register(mail, password1, 'anonymous');
-      if (sendRegister.message) {
-        setMessage(JSON.stringify(sendRegister.message));
-        console.log(sendRegister.message);
-      } else {
-        setMessage('Pomyślnie zarejestrowano!');
-        mailRef.current.setValue('');
-        password1Ref.current.setValue('');
-        password2Ref.current.setValue('');
-      }
+  const registerSubmit = async () => {
+    const mail = mailRef.current.getValue();
+    const password1 = password1Ref.current.getValue();
+    const password2 = password2Ref.current.getValue();
+    if (!emailRegex.test(mail)) {
+      setMessage('Podaj prawidłowy adres email');
+      mailRef.current.setBorderColor(red);
       return;
     }
+    if (password1 !== password2) {
+      password1Ref.current.setBorderColor(red);
+      password2Ref.current.setBorderColor(red);
+      setMessage('Podane hasła nie są identyczne');
+      return;
+    }
+    if (password1.length < 8) {
+      password1Ref.current.setBorderColor(red);
+      password2Ref.current.setBorderColor(red);
+      setMessage('Proszę podaj dłuższe hasło');
+      return;
+    }
+    const registerData = {mail, password: password1};
+    dispatch(saveRegisterData(registerData));
+    history.push('/start/name');
+  };
+
+  const nameSubmit = async () => {
+    const name = mailRef.current.getValue();
+    const sendRegister = await dispatch(register(name));
+    if (sendRegister.message) {
+      setMessage(JSON.stringify(sendRegister.message));
+    } else {
+      setMessage('Pomyślnie zarejestrowano!');
+    }
+  };
+
+  const loginSubmit = async () => {
     const mail = mailRef.current.getValue();
     const password1 = password1Ref.current.getValue();
     if (!emailRegex.test(mail)) {
@@ -95,14 +101,34 @@ const RegisterOrLogin = ({where}) => {
     }
   };
 
+  const submit = async () => {
+    if (where === 'register') {
+      await registerSubmit();
+      return;
+    }
+    if (where === 'name') {
+      await nameSubmit();
+      return;
+    }
+    await loginSubmit();
+  };
+
   return (
     <ROLWrapper>
       <Title size={BIG}>
-        {where === 'register' ? 'Utwórz konto...' : 'Zaloguj się...'}
+        {where === 'register'
+          ? 'Utwórz konto...'
+          : where === 'name'
+          ? 'To już ostatni etap...'
+          : 'Zaloguj się...'}
       </Title>
       <TitleInput
         autoComplete="email"
-        title="Podaj swój adres e-mail..."
+        title={
+          where === 'name'
+            ? 'Podaj swoją nazwę użytkownika...'
+            : 'Podaj swój adres e-mail...'
+        }
         passRef={mailRef}
       />
       {where === 'register' ? (
@@ -119,6 +145,13 @@ const RegisterOrLogin = ({where}) => {
             title="Powtórz hasło..."
             passRef={password2Ref}
           />
+          <Message size={SMALL} weight={MEDIUM}>
+            {message}
+          </Message>
+          <Button onPress={submit} primary value="Przejdź dalej..." />
+        </>
+      ) : where === 'name' ? (
+        <>
           <Message size={SMALL} weight={MEDIUM}>
             {message}
           </Message>

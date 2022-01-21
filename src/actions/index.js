@@ -2,6 +2,7 @@ import {
   CHANGE_MODAL_TAKEN_OPEN,
   CHANGE_PATH,
   ADD_TAKEN_TODAY,
+  SAVE_REGISTER_DATA,
 } from 'src/reducers';
 import store from 'src/store';
 import {saveLocalData, loadLocalData} from './local_storage_actions';
@@ -58,3 +59,8 @@ export const mute = hour => async dispatch => {
 };
 
 export const changePath = newPath => ({type: CHANGE_PATH, payload: {newPath}});
+
+export const saveRegisterData = ({mail, password}) => ({
+  type: SAVE_REGISTER_DATA,
+  payload: {mail, password},
+});

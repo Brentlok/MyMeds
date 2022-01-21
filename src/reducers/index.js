@@ -12,6 +12,8 @@ const initialState = {
   dataLoaded: false,
   accessToken: null,
   newPath: '',
+  mail: '',
+  password: '',
 };
 
 export const LOAD_DATA = 'LOAD_DATA';
@@ -23,6 +25,7 @@ export const LOGIN = 'LOGIN';
 export const CHANGE_PATH = 'CHANGE_PATH';
 export const ADD_TAKEN_TODAY = 'ADD_TAKEN_TODAY';
 export const ADD_TOMORROW = 'ADD_TOMORROW';
+export const SAVE_REGISTER_DATA = 'SAVE_REGISTER_DATA';
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -85,6 +88,13 @@ const rootReducer = (state = initialState, action) => {
           ...state.addedForTomorrow,
           action.payload.addedForTomorrow,
         ],
+      };
+    }
+    case SAVE_REGISTER_DATA: {
+      return {
+        ...state,
+        mail: action.payload.mail,
+        password: action.payload.password,
       };
     }
     default:

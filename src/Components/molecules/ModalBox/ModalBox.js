@@ -4,7 +4,7 @@ import {Dimensions, Animated} from 'react-native';
 import ModalButton from 'atoms/ModalButton/ModalButton';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeModalTakenOpen, mute} from 'src/actions';
+import {changeModalTakenOpen} from 'src/actions';
 import CloseIcon from 'assets/svg/close.svg';
 import RingIcon from 'assets/svg/ring.svg';
 import RingIconMuted from 'assets/svg/ring_muted.svg';
@@ -47,7 +47,7 @@ const ModalBox = () => {
     top: 50%;
     left: 50%;
     margin-top: -70px;
-    margin-left: -${(Dimensions.get('window').width - 30) / 2}px;
+    margin-left: -${(Dimensions.get('window').width - 60) / 2}px;
     width: ${Dimensions.get('window').width - 30}px;
     height: 140px;
     background-color: ${light_grey};
@@ -66,7 +66,7 @@ const ModalBox = () => {
     top: 15px;
   `;
 
-  const RingIconBox = styled.TouchableOpacity`
+  const RingIconBox = styled.View`
     position: absolute;
     right: ${isMuted ? 12 : 15}px;
     top: 15px;
@@ -79,9 +79,7 @@ const ModalBox = () => {
       </CloseIconBox>
       <MetroText size={SMALL}>{modalText}</MetroText>
       {modalText === 'Czy już przyjąłeś?' && (
-        <RingIconBox onPress={() => dispatch(mute(itemToRemove))}>
-          {isMuted ? <RingIconMuted /> : <RingIcon />}
-        </RingIconBox>
+        <RingIconBox>{isMuted ? <RingIconMuted /> : <RingIcon />}</RingIconBox>
       )}
       <ModalButton yes />
       <ModalButton />
