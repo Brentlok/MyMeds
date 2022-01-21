@@ -1,86 +1,66 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  LOAD_DATA,
-  LOAD_LOCAL_DATA,
   CHANGE_MODAL_TAKEN_OPEN,
-  DATA_LOADED,
-  REMOVE_ITEM,
+  CHANGE_PATH,
+  ADD_TAKEN_TODAY,
+  SAVE_REGISTER_DATA,
 } from 'src/reducers';
+import store from 'src/store';
+import {saveLocalData, loadLocalData} from './local_storage_actions';
 
-//https://run.mocky.io/v3/f1658bd6-a680-4f1b-8631-a47139293916 - empty list
-//https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1 - standard
-//https://run.mocky.io/v3/0b9143b1-fc7a-4595-8cee-7d56375682c8 - long
+export const changeModalTakenOpen = (type, item) => ({
+  type: CHANGE_MODAL_TAKEN_OPEN,
+  payload: {
+    modalText:
+      type === 'close'
+        ? null
+        : type === 'taken'
+        ? 'Czy już przyjąłeś?'
+        : 'Czy chcesz to usunąć?',
+    itemToRemove: item,
+  },
+});
 
-const API_URL = 'https://run.mocky.io/v3/595fca50-7f9e-4c5c-96f9-48fca2a5dfa1';
+export const addTakenToday = (hour, notification) => async dispatch => {
+  if (notification) {
+    await dispatch(loadLocalData());
+  }
+  const {list, takenToday} = await store.getState();
 
-export const loadData = () => async dispatch => {
+  if (hour && takenToday.includes(hour)) {
+    return;
+  }
+
+  if (!hour) {
+    hour = list[takenToday.length].hour;
+  }
+
+  const newTakenToday = [...takenToday, hour];
+  await dispatch(saveLocalData({takenToday: newTakenToday}));
+  await dispatch({
+    type: ADD_TAKEN_TODAY,
+    payload: {newTakenToday},
+  });
+};
+
+export const mute = hour => async dispatch => {
   try {
-    const response = await axios.get(API_URL);
-    const list = response.data.list.sort(
-      (a, b) => parseInt(a.time.hours, 10) > parseInt(b.time.hours, 10),
-    );
-    dispatch({
-      type: LOAD_DATA,
-      payload: {
-        list,
-      },
-    });
-    dispatch({
-      type: DATA_LOADED,
-      payload: {
-        dataLoaded: 'loaded',
-      },
-    });
+    const {muted} = await store.getState();
+    let newMuted;
+    if (muted.includes(hour)) {
+      newMuted = muted.filter(mutedHour => mutedHour !== hour);
+    } else {
+      newMuted = [...muted, hour];
+    }
+    newMuted.sort((a, b) => a > b);
+    await dispatch(saveLocalData({muted: newMuted}));
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: DATA_LOADED,
-      payload: {
-        dataLoaded: 'error',
-      },
-    });
   }
 };
 
-const storageKey = 'testingKey';
+export const changePath = newPath => ({type: CHANGE_PATH, payload: {newPath}});
 
-export const saveLocalData = data => async () => {
-  try {
-    const jsonValue = JSON.stringify(data);
-    await AsyncStorage.setItem(storageKey, jsonValue);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const readLocalData = async () => {
-  try {
-    const storageData = await AsyncStorage.getItem(storageKey);
-    if (storageData === null) {
-      //if there is no saved data localy just return this object with some default values
-      return {batteryOptimizationChecked: false};
-    }
-    return JSON.parse(storageData);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const loadLocalData = () => async dispatch => {
-  try {
-    const {batteryOptimizationChecked} = await readLocalData();
-    dispatch({
-      type: LOAD_LOCAL_DATA,
-      payload: {
-        batteryOptimizationChecked,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const changeModalTakenOpen = () => ({type: CHANGE_MODAL_TAKEN_OPEN});
-
-export const removeItem = () => ({type: REMOVE_ITEM});
+export const saveRegisterData = ({mail, password}) => ({
+  type: SAVE_REGISTER_DATA,
+  payload: {mail, password},
+});

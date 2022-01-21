@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import {black} from 'src/colors';
 
 export const SEMI_BOLD = 'SEMI_BOLD';
 export const BOLD = 'BOLD';
@@ -11,10 +12,6 @@ export const MEDIUM = 'MEDIUM';
 export const REGULAR = 'REGULAR';
 export const BIG = 'BIG';
 export const EXTRA_BIG = 'EXTRA_BIG';
-
-export const LIGHT_GREY = '#8B8B8B';
-export const DARK_GREY = '#545454';
-export const WHITE = 'white';
 
 const getFontWeight = (weight = BOLD) => {
   switch (weight) {
@@ -49,9 +46,11 @@ const getFontSize = size => {
 };
 
 const MetroText = styled.Text`
-  color: ${({color}) => (color ? color : '#1f1f1f')};
+  color: ${({color}) => (color ? color : black)};
   font-family: Metropolis-${({weight}) => getFontWeight(weight)};
   font-size: ${({size}) => getFontSize(size)}px;
+  ${({center}) => center && 'text-align: center;'}
+  ${({margin}) => margin && `margin: ${margin}`}
 `;
 
 export default MetroText;

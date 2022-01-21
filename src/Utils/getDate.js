@@ -5,13 +5,30 @@ export const getToday = () => {
   return {date, month};
 };
 
+export const isToday = (date = new Date()) => {
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
+  const today = new Date();
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+};
+
+export const getNow = () => {
+  const now = new Date();
+  return {hours: now.getHours(), minutes: now.getMinutes()};
+};
+
 export const getDateList = date => {
   const dayList = [];
   const dayInMilis = 86400000;
   const today = date || new Date();
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 7; i++) {
     dayList.push(
-      getDayObject(new Date(today - dayInMilis * 2 + dayInMilis * i)),
+      getDayObject(new Date(today - dayInMilis * 3 + dayInMilis * i)),
     );
   }
   return dayList;

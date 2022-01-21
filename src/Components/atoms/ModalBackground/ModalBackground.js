@@ -37,7 +37,7 @@ const ModalBackground = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(changeModalTakenOpen());
+    dispatch(changeModalTakenOpen('close'));
   };
 
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);

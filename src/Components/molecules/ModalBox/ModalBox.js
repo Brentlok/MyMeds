@@ -2,13 +2,18 @@ import React, {useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
 import {Dimensions, Animated} from 'react-native';
 import ModalButton from 'atoms/ModalButton/ModalButton';
-import Icon, {CLOSE, RING} from 'atoms/Icon/Icon';
 import MetroText, {SMALL} from 'atoms/MetroText/MetroText';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeModalTakenOpen} from 'src/actions';
+import CloseIcon from 'assets/svg/close.svg';
+import RingIcon from 'assets/svg/ring.svg';
+import RingIconMuted from 'assets/svg/ring_muted.svg';
+import {light_grey} from 'src/colors';
 
 const ModalBox = () => {
-  const {modalTakenOpen} = useSelector(state => state);
+  const {modalTakenOpen, modalText, muted, itemToRemove} = useSelector(
+    state => state,
+  );
   const positionAnim = useRef(
     new Animated.Value(parseInt(-Dimensions.get('window').width, 10)),
   ).current;
@@ -32,18 +37,20 @@ const ModalBox = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(changeModalTakenOpen());
+    dispatch(changeModalTakenOpen('close'));
   };
+
+  const isMuted = muted.includes(itemToRemove);
 
   const ModalBoxWrapper = styled(Animated.View)`
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -70px;
-    margin-left: -${(Dimensions.get('window').width - 30) / 2}px;
+    margin-left: -${(Dimensions.get('window').width - 60) / 2}px;
     width: ${Dimensions.get('window').width - 30}px;
     height: 140px;
-    background-color: #f5f5f5;
+    background-color: ${light_grey};
     border-radius: 25px;
     elevation: 7;
     padding: 20px 0;
@@ -53,11 +60,27 @@ const ModalBox = () => {
     flex-wrap: wrap;
   `;
 
+  const CloseIconBox = styled.TouchableOpacity`
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  `;
+
+  const RingIconBox = styled.View`
+    position: absolute;
+    right: ${isMuted ? 12 : 15}px;
+    top: 15px;
+  `;
+
   return (
     <ModalBoxWrapper style={{transform: [{translateX: positionAnim}]}}>
-      <Icon type={CLOSE} onPress={closeModal} />
-      <MetroText size={SMALL}>Czy już przyjąłeś?</MetroText>
-      <Icon type={RING} />
+      <CloseIconBox onPress={closeModal}>
+        <CloseIcon />
+      </CloseIconBox>
+      <MetroText size={SMALL}>{modalText}</MetroText>
+      {modalText === 'Czy już przyjąłeś?' && (
+        <RingIconBox>{isMuted ? <RingIconMuted /> : <RingIcon />}</RingIconBox>
+      )}
       <ModalButton yes />
       <ModalButton />
     </ModalBoxWrapper>

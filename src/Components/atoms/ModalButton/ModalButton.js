@@ -3,15 +3,24 @@ import styled from 'styled-components/native';
 import MetroText, {BOLD, SMALL} from 'atoms/MetroText/MetroText';
 import Icon, {YES, NO} from 'atoms/Icon/Icon';
 import LinearGradient from 'react-native-linear-gradient';
-import {useDispatch} from 'react-redux';
-import {removeItem, changeModalTakenOpen} from 'src/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeItem} from 'src/actions/api_actions';
+import {addTakenToday, changeModalTakenOpen} from 'src/actions';
+import {light_grey, red, white} from 'src/colors';
 
 const ModalButton = ({yes}) => {
+  const {itemToRemove, modalText} = useSelector(state => state);
   const dispatch = useDispatch();
 
   const handlePress = () => {
-    dispatch(changeModalTakenOpen());
-    dispatch(removeItem());
+    if (modalText === 'Czy chcesz to usunąć?' && yes) {
+      dispatch(removeItem(itemToRemove.id));
+      return;
+    }
+    if (yes) {
+      dispatch(addTakenToday(itemToRemove));
+    }
+    dispatch(changeModalTakenOpen('close'));
   };
 
   const ModalButtonWrapper = styled.TouchableOpacity`
@@ -26,7 +35,7 @@ const ModalButton = ({yes}) => {
     justify-content: space-evenly;
     padding: 0 25px;
     elevation: 4;
-    ${!yes && 'border: 3px solid #ff5252; background-color: #f5f5f5;'}
+    ${!yes && `border: 3px solid ${red}; background-color: ${light_grey};`}
     overflow: hidden;
   `;
 
@@ -48,7 +57,7 @@ const ModalButton = ({yes}) => {
         />
       )}
       <Icon type={yes ? YES : NO} />
-      <MetroText weight={BOLD} size={SMALL} color={yes ? '#ffffff' : '#FF5252'}>
+      <MetroText weight={BOLD} size={SMALL} color={yes ? white : red}>
         {yes ? 'TAK' : 'NIE'}
       </MetroText>
     </ModalButtonWrapper>

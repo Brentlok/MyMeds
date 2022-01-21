@@ -4,12 +4,15 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {useParams} from 'react-router-native';
+import TogglePasswordIcon from 'assets/svg/password.svg';
+import {black, primary, light_grey, grey} from 'src/colors';
 
-const Input = forwardRef(({border, number}, ref) => {
-  const [borderColor, setBorderColor] = useState('rgba(31,31,31,0.5)');
+const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
+  const [borderColor, setBorderColor] = useState(grey);
   const [inputValue, setInputValue] = useState('');
+  const [hidePassword, setHidePassword] = useState(!!password);
 
   const {scan} = useParams();
 
@@ -23,6 +26,9 @@ const Input = forwardRef(({border, number}, ref) => {
     getValue: () => inputValue,
     setValue: value => {
       setInputValue(value);
+    },
+    setBorderColor: value => {
+      setBorderColor(value);
     },
   }));
 
@@ -39,13 +45,14 @@ const Input = forwardRef(({border, number}, ref) => {
   //for some reasons input from styled-components wont work properly
   const styles = StyleSheet.create({
     input: {
-      flexShrink: 1,
       width: '100%',
+      marginRight: 15,
+      flexShrink: 1,
       height: 50,
       borderWidth: 0,
       padding: 15,
       fontFamily: 'Metropolis-Medium',
-      color: '#1f1f1f',
+      color: black,
     },
   });
 
@@ -55,19 +62,36 @@ const Input = forwardRef(({border, number}, ref) => {
       borderWidth: 2,
       borderColor: borderColor,
       borderRadius: 9,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: light_grey,
+    },
+    togglePassword: {
+      position: 'absolute',
+      bottom: 15,
+      right: 15,
     },
   });
 
   return (
-    <TextInput
-      style={border ? stylesWithBorder.input : styles.input}
-      onChangeText={handleChange}
-      value={inputValue}
-      onFocus={() => setBorderColor('#11d8a5')}
-      onBlur={() => setBorderColor(`rgba(31,31,31,${inputValue ? 1 : 0.5})`)}
-      keyboardType={number ? 'numeric' : 'default'}
-    />
+    <>
+      <TextInput
+        style={border ? stylesWithBorder.input : styles.input}
+        onChangeText={handleChange}
+        value={inputValue}
+        onFocus={() => setBorderColor(primary)}
+        onBlur={() => setBorderColor(inputValue ? black : grey)}
+        autoComplete={autoComplete}
+        keyboardType={number ? 'numeric' : 'default'}
+        secureTextEntry={hidePassword}
+      />
+      {password && (
+        <TouchableOpacity
+          onPressIn={() => setHidePassword(false)}
+          onPressOut={() => setHidePassword(true)}
+          style={stylesWithBorder.togglePassword}>
+          <TogglePasswordIcon />
+        </TouchableOpacity>
+      )}
+    </>
   );
 });
 

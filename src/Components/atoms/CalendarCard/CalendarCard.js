@@ -3,16 +3,12 @@ import styled from 'styled-components/native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import MetroText, {
-  EXTRA_SMALL,
-  SMALL,
+  INPUT,
   MEDIUM,
-  BIG,
-  EXTRA_BIG,
   BOLD,
   EXTRA_BOLD,
-  WHITE,
-  LIGHT_GREY,
 } from 'atoms/MetroText/MetroText';
+import {grey, dark_grey, white} from 'src/colors';
 
 const CalendarCard = ({active, date, month}) => {
   const isMonth = 'isMonth';
@@ -21,16 +17,16 @@ const CalendarCard = ({active, date, month}) => {
 
   const CardBox = styled.View`
     overflow: hidden;
-    padding: 5px 0 15px 0;
-    background-color: #fff;
+    padding: 15px 0;
+    background-color: ${white};
     display: flex;
-    width: 60px;
-    height: 115px;
+    width: 45px;
+    height: 100px;
     justify-content: ${() => (active ? 'space-between' : 'flex-end')};
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 100px;
     elevation: 4;
-    ${() => !active && 'border: 1px solid #d1d1d1'}
+    ${() => !active && `border: 1px solid ${grey}`}
   `;
 
   const CardText = styled(MetroText)`
@@ -60,23 +56,23 @@ const CalendarCard = ({active, date, month}) => {
       {active && (
         <CardText
           type={isToday}
-          color={active ? WHITE : LIGHT_GREY}
-          size={SMALL}>
+          color={active ? white : dark_grey}
+          size={INPUT}>
           Dziś
         </CardText>
       )}
       <CardText
         type={isDay}
         weight={EXTRA_BOLD}
-        color={active ? WHITE : LIGHT_GREY}
-        size={active ? EXTRA_BIG : BIG}>
+        color={active ? white : dark_grey}
+        size={MEDIUM}>
         {date}
       </CardText>
       <CardText
         type={isMonth}
         weight={active ? BOLD : EXTRA_BOLD}
-        color={active ? WHITE : LIGHT_GREY}
-        size={active ? MEDIUM : EXTRA_SMALL}>
+        color={active ? white : dark_grey}
+        size={INPUT}>
         {month}
       </CardText>
     </CardBox>

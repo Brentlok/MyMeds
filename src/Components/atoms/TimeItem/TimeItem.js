@@ -5,30 +5,28 @@ import MetroText, {
   EXTRA_BOLD,
   MEDIUM,
   EXTRA_SMALL,
-  DARK_GREY,
 } from 'atoms/MetroText/MetroText';
 import {Dimensions} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon, {OPEN_MODAL, RING} from 'atoms/Icon/Icon';
+import Icon, {OPEN_MODAL, RING, RING_MUTED} from 'atoms/Icon/Icon';
 import {useDispatch} from 'react-redux';
-import {changeModalTakenOpen} from 'src/actions';
+import {changeModalTakenOpen, mute} from 'src/actions';
+import {grey, dark_grey} from 'src/colors';
 
-const TimeItem = ({last, active, data}) => {
+const TimeItem = ({last, active, data, muted, disabled}) => {
   const dispatch = useDispatch();
 
-  const openModal = () => {
-    if (active) {
-      dispatch(changeModalTakenOpen());
-    }
+  const openModal = (type, item) => {
+    dispatch(changeModalTakenOpen(type, item));
   };
 
-  const TimeItemWrapper = styled.View`
-    width: 100%;
+  const TimeItemWrapper = styled.Pressable`
+    ${disabled && 'opacity: 0.5'}
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 15px 5px;
-    border: 0px solid #cdcdcd;
+    border: 0px solid ${grey};
     ${() => !last && !active && 'border-bottom-width: 3px;'}
   `;
 
@@ -38,7 +36,7 @@ const TimeItem = ({last, active, data}) => {
   `;
 
   const Meds = styled.View`
-    border: 0px solid #c4c4c4;
+    border: 0px solid ${grey};
     border-left-width: 2px;
     width: 80%;
     padding: 0 30px 0 10px;
@@ -51,14 +49,10 @@ const TimeItem = ({last, active, data}) => {
 
   const MedsText = styled.View`
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-right: 40px;
+    flex-direction: column;
   `;
 
-  const MedItemWrapper = styled.View`
-    width: 100%;
+  const MedItemWrapper = styled.TouchableOpacity`
     display: flex;
     flex-direction: column;
   `;
@@ -74,30 +68,34 @@ const TimeItem = ({last, active, data}) => {
     height: 3px;
   `;
 
-  const {
-    time: {hours, minutes},
-    medsList,
-  } = data;
+  const {hour, list} = data;
 
   return (
     <TimeItemWrapper>
       <MedTimeTitle size={SMALL} weight={EXTRA_BOLD}>
-        {hours}:{minutes}
+        {hour}:00
       </MedTimeTitle>
       <Meds>
         <MedsText>
-          {medsList.map(item => (
-            <MedItemWrapper key={item.name}>
+          {list.map(item => (
+            <MedItemWrapper
+              onPress={() => openModal('delete', item)}
+              key={item.name}>
               <MedTitle weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
               </MedTitle>
-              <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={DARK_GREY}>
-                {item.quantity} {item.quantityType}
+              <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={dark_grey}>
+                {item.quantity} {item.quantity_type}
               </MetroText>
             </MedItemWrapper>
           ))}
         </MedsText>
-        <Icon onPress={openModal} type={active ? OPEN_MODAL : RING} />
+        <Icon
+          onPress={() =>
+            active ? openModal('taken', hour) : dispatch(mute(hour))
+          }
+          type={active ? OPEN_MODAL : muted ? RING_MUTED : RING}
+        />
       </Meds>
       {active && (
         <BorderGradient
