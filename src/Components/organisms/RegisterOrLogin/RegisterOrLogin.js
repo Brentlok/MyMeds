@@ -9,7 +9,7 @@ import {login, register} from 'src/actions/api_actions';
 import Icon from 'assets/svg/group.svg';
 import {red} from 'src/colors';
 import {useHistory} from 'react-router-native';
-import {saveRegisterData} from '../../../actions';
+import {saveRegisterData} from 'src/actions';
 
 const GroupIcon = styled(Icon)`
   position: absolute;
@@ -131,49 +131,39 @@ const RegisterOrLogin = ({where}) => {
         }
         passRef={mailRef}
       />
-      {where === 'register' ? (
-        <>
-          <TitleInput
-            password
-            autoComplete="password"
-            title="Utwórz hasło..."
-            passRef={password1Ref}
-          />
-          <TitleInput
-            autoComplete="password"
-            password
-            title="Powtórz hasło..."
-            passRef={password2Ref}
-          />
-          <Message size={SMALL} weight={MEDIUM}>
-            {message}
-          </Message>
-          <Button onPress={submit} primary value="Przejdź dalej..." />
-        </>
-      ) : where === 'name' ? (
-        <>
-          <Message size={SMALL} weight={MEDIUM}>
-            {message}
-          </Message>
-          <Button onPress={submit} primary value="Utwórz konto" />
-        </>
-      ) : (
-        <>
-          <TitleInput
-            autoComplete="password"
-            password
-            title="Podaj hasło..."
-            passRef={password1Ref}
-          />
-          <Message size={SMALL} weight={MEDIUM}>
-            {message}
-          </Message>
-          <Button onPress={submit} primary value="Zaloguj się" />
-          <GroupIcon
-            width={Dimensions.get('window').width}
-            height={0.52 * Dimensions.get('window').width}
-          />
-        </>
+      <TitleInput
+        password
+        autoComplete="password"
+        title="Utwórz hasło..."
+        passRef={password1Ref}
+      />
+      {where === 'register' && (
+        <TitleInput
+          autoComplete="password"
+          password
+          title="Powtórz hasło..."
+          passRef={password2Ref}
+        />
+      )}
+      <Message size={SMALL} weight={MEDIUM}>
+        {message}
+      </Message>
+      <Button
+        onPress={submit}
+        primary
+        value={
+          where === 'name'
+            ? 'Utwórz konto'
+            : where === 'login'
+            ? 'Zaloguj się'
+            : 'Przejdź dalej...'
+        }
+      />
+      {where === 'login' && (
+        <GroupIcon
+          width={Dimensions.get('window').width}
+          height={0.52 * Dimensions.get('window').width}
+        />
       )}
     </ROLWrapper>
   );
