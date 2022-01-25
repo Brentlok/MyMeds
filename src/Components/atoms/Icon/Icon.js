@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {primary, black} from 'src/colors';
+import {primary, black, grey} from 'src/colors';
 
 import LogoIcon from 'assets/svg/logo.svg';
 import PersonIcon from 'assets/svg/avatar.svg';
@@ -21,6 +21,7 @@ import GreatIcon from 'assets/svg/great.svg';
 import LogoutIcon from 'assets/svg/logout.svg';
 import ConnectedAccountsIcon from 'assets/svg/accounts.svg';
 import SettingsIcon from 'assets/svg/settings.svg';
+import ArrowIcon from 'assets/svg/arrow.svg';
 
 export const LOGO = 'LOGO';
 export const LOGO_MED = 'LOGO_MED';
@@ -46,6 +47,7 @@ export const GREAT = 'GREAT';
 export const LOGOUT = 'LOGOUT';
 export const ACCOUNTS = 'ACCOUNTS';
 export const SETTINGS = 'SETTINGS';
+export const ARROW = 'ARROW';
 
 const getIcon = (type, active) => {
   switch (type) {
@@ -95,6 +97,8 @@ const getIcon = (type, active) => {
       return <ConnectedAccountsIcon />;
     case SETTINGS:
       return <SettingsIcon />;
+    case ARROW:
+      return <ArrowIcon fill={grey} />;
     default:
       return null;
   }
