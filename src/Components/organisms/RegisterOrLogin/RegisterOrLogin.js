@@ -131,12 +131,14 @@ const RegisterOrLogin = ({where}) => {
         }
         passRef={mailRef}
       />
-      <TitleInput
-        password
-        autoComplete="password"
-        title="Utwórz hasło..."
-        passRef={password1Ref}
-      />
+      {where !== 'name' && (
+        <TitleInput
+          password
+          autoComplete="password"
+          title="Utwórz hasło..."
+          passRef={password1Ref}
+        />
+      )}
       {where === 'register' && (
         <TitleInput
           autoComplete="password"

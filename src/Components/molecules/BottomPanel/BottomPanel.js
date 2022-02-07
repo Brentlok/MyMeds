@@ -31,7 +31,10 @@ const BottomPanel = () => {
   `;
 
   const navigateTo = newPath => {
-    if (newPath === '/add' && !isInternetReachable) {
+    if (
+      (newPath === '/add' || newPath === '/message') &&
+      !isInternetReachable
+    ) {
       displayNotification(
         'Nie masz połączenia z internetem',
         'Spróbuj ponownie później...',
