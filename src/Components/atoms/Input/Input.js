@@ -1,11 +1,5 @@
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-} from 'react';
+import React, {useState, forwardRef, useImperativeHandle} from 'react';
 import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import {useParams} from 'react-router-native';
 import TogglePasswordIcon from 'assets/svg/password.svg';
 import {black, primary, light_grey, grey} from 'src/colors';
 
@@ -13,14 +7,6 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
   const [borderColor, setBorderColor] = useState(grey);
   const [inputValue, setInputValue] = useState('');
   const [hidePassword, setHidePassword] = useState(!!password);
-
-  const {scan} = useParams();
-
-  useEffect(() => {
-    if (scan) {
-      setInputValue(scan);
-    }
-  }, [scan]);
 
   useImperativeHandle(ref, () => ({
     getValue: () => inputValue,

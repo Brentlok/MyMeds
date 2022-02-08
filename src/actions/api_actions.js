@@ -5,6 +5,7 @@ import {getNow} from 'src/Utils/getDate';
 import {changePath, addTakenToday, changeModalTakenOpen} from '.';
 import {saveLocalData, loadLocalList} from './local_storage_actions';
 const API_URL = 'http://51.38.131.160:8400/api/';
+const SUGGESTION_API_URL = 'http://54.37.138.225:3000/';
 
 export const register = name => async dispatch => {
   const {mail, password} = await store.getState();
@@ -162,4 +163,29 @@ export const removeItem = itemId => async dispatch => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const getMedicines = async name => {
+  const {data} = await axios.get(`${SUGGESTION_API_URL}medicines/${name}/`);
+  const uniqueData = [...new Set(data)];
+  return uniqueData;
+};
+
+const getSupplements = async name => {
+  const {data} = await axios.get(`${SUGGESTION_API_URL}supplements/${name}`);
+  return data;
+};
+
+export const suggestItem = async name => {
+  const supplements = await getSupplements(name);
+  const medicines = await getMedicines(name);
+  const data = [...supplements.slice(0, 3), ...medicines].slice(0, 5);
+  return data;
+};
+
+export const getByCode = async code => {
+  const {data} = await axios.get(
+    `${SUGGESTION_API_URL}medicines/code/0${code}`,
+  );
+  return data;
 };

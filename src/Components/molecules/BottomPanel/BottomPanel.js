@@ -47,20 +47,16 @@ const BottomPanel = () => {
   return (
     <PanelWrapper>
       <Icon
-        onPress={() => navigateTo('/home')}
-        type={HOME}
-        active={pathname.includes('/home')}
-      />
-      <Icon
         onPress={() => navigateTo('/add')}
         type={ADD}
         active={pathname.includes('/add')}
       />
       <Icon
-        onPress={() => navigateTo('/message')}
-        type={MESSAGE}
-        active={pathname.includes('/message')}
+        onPress={() => navigateTo('/home')}
+        type={HOME}
+        active={pathname.includes('/home')}
       />
+
       <Icon
         onPress={() => navigateTo('/account')}
         type={PERSON}

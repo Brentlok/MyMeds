@@ -8,7 +8,7 @@ import TitleInput from 'molecules/TitleInput/TitleInput';
 import MetroText, {SMALL, REGULAR, MEDIUM} from 'atoms/MetroText/MetroText';
 import {createMed, loadNewMeds} from 'src/actions/api_actions';
 import SuccessScreen from 'atoms/SuccessScreen/SuccessScreen';
-import {primary, red, white, grey} from 'src/colors';
+import {primary, red, white} from 'src/colors';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
@@ -90,6 +90,7 @@ const AddMeds = () => {
       <AddMedsWrapper>
         <Title size={REGULAR}>Dodaj lek / suplement</Title>
         <TitleInput
+          addMed={true}
           passRef={nameRef}
           title="Nazwa leku / suplementu..."
           autoComplete="off"
