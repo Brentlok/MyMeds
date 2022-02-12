@@ -1,4 +1,4 @@
-package com.mymeds;
+package com.mymeds_pl;
 
 import android.app.Application;
 import android.content.Context;

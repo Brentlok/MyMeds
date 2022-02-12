@@ -4,8 +4,16 @@ import Input from 'atoms/Input/Input';
 import MetroText, {MEDIUM, EXTRA_SMALL} from 'atoms/MetroText/MetroText';
 import ScannerIcon from 'assets/svg/scan.svg';
 import {useHistory} from 'react-router-native';
+import SuggestionsInput from '../../atoms/SuggestionsInput/SuggestionsInput';
 
-const TitleInput = ({passRef, title, password, autoComplete, scaner}) => {
+const TitleInput = ({
+  passRef,
+  title,
+  password,
+  autoComplete,
+  scaner,
+  addMed,
+}) => {
   const history = useHistory();
 
   const Title = styled(MetroText)`
@@ -31,13 +39,21 @@ const TitleInput = ({passRef, title, password, autoComplete, scaner}) => {
       </Title>
       {scaner ? (
         <InputScanner>
-          <Input
-            password={password}
-            border
-            ref={passRef}
-            autoComplete={autoComplete}
-            scaner={scaner}
-          />
+          {addMed ? (
+            <SuggestionsInput
+              password={password}
+              ref={passRef}
+              autoComplete={autoComplete}
+              scaner={scaner}
+            />
+          ) : (
+            <Input
+              password={password}
+              ref={passRef}
+              autoComplete={autoComplete}
+              scaner={scaner}
+            />
+          )}
           <RunScanner onPress={() => history.push('/camera')}>
             <ScannerIcon />
           </RunScanner>
@@ -45,7 +61,6 @@ const TitleInput = ({passRef, title, password, autoComplete, scaner}) => {
       ) : (
         <Input
           password={password}
-          border
           ref={passRef}
           autoComplete={autoComplete}
           scaner={scaner}
