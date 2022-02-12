@@ -31,7 +31,7 @@ const useNotification = () => {
 const checkNotifications = async list => {
   const notificationsList = (await notifee.getTriggerNotifications()).map(
     ({notification}) => ({
-      hour: notification.title.slice(9, 11),
+      hour: notification.title.slice(12, 14),
       id: notification.id,
     }),
   );
@@ -76,14 +76,40 @@ export const displayNotification = async (title, body) => {
   });
 };
 
-const addNotification = async (title, list, hour) => {
+export const notifyTomorrow = async hour => {
+  const notificationsList = (await notifee.getTriggerNotifications()).map(
+    ({notification}) => ({
+      hour: notification.title.slice(12, 14),
+      id: notification.id,
+      title: notification.title,
+      list: notification.android.style.lines,
+    }),
+  );
+
+  notificationsList.forEach(notification => {
+    if (notification.hour === hour) {
+      notifee.cancelTriggerNotification(notification.id);
+      addNotification(
+        notification.title,
+        notification.list,
+        notification.hour,
+        true,
+      );
+    }
+  });
+};
+
+const addNotification = async (title, list, hour, tomorrow) => {
   const date = new Date(Date.now());
   date.setHours(hour);
   date.setMinutes(0);
   date.setSeconds(0);
   const time =
-    date.getTime() < Date.now() ? date.getTime() + 86400000 : date.getTime();
+    date.getTime() < Date.now() || tomorrow
+      ? date.getTime() + 86400000
+      : date.getTime();
   //to be sure that timestamp is in the future
+  //or if you want to set notification for tomorrow's day
 
   const trigger = {
     type: TriggerType.TIMESTAMP,

@@ -57,7 +57,7 @@ const AddMeds = () => {
     const amount = amountRef.current.getValue();
     const amountType = amountRef.current.getValueType();
     const time = timeRef.current.getValue();
-    if (name === '') {
+    if (name.length < 3) {
       setMessage('Musisz coś wpisać...');
       nameRef.current.setBorderColor(red);
       return;

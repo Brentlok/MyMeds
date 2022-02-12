@@ -42,7 +42,6 @@ const TitleInput = ({
           {addMed ? (
             <SuggestionsInput
               password={password}
-              border
               ref={passRef}
               autoComplete={autoComplete}
               scaner={scaner}
@@ -50,7 +49,6 @@ const TitleInput = ({
           ) : (
             <Input
               password={password}
-              border
               ref={passRef}
               autoComplete={autoComplete}
               scaner={scaner}
@@ -63,7 +61,6 @@ const TitleInput = ({
       ) : (
         <Input
           password={password}
-          border
           ref={passRef}
           autoComplete={autoComplete}
           scaner={scaner}

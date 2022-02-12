@@ -3,7 +3,7 @@ import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import TogglePasswordIcon from 'assets/svg/password.svg';
 import {black, primary, light_grey, grey} from 'src/colors';
 
-const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
+const Input = forwardRef(({number, password, autoComplete}, ref) => {
   const [borderColor, setBorderColor] = useState(grey);
   const [inputValue, setInputValue] = useState('');
   const [hidePassword, setHidePassword] = useState(!!password);
@@ -25,6 +25,9 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
       }
       return;
     }
+    if (value[value.length - 1] === ' ') {
+      return;
+    }
     setInputValue(value);
   };
 
@@ -35,16 +38,9 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
       marginRight: 15,
       flexShrink: 1,
       height: 50,
-      borderWidth: 0,
       padding: 15,
       fontFamily: 'Metropolis-Medium',
       color: black,
-    },
-  });
-
-  const stylesWithBorder = StyleSheet.create({
-    input: {
-      ...styles.input,
       borderWidth: 2,
       borderColor: borderColor,
       borderRadius: 9,
@@ -60,7 +56,7 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
   return (
     <>
       <TextInput
-        style={border ? stylesWithBorder.input : styles.input}
+        style={styles.input}
         onChangeText={handleChange}
         value={inputValue}
         onFocus={() => setBorderColor(primary)}
@@ -71,9 +67,8 @@ const Input = forwardRef(({border, number, password, autoComplete}, ref) => {
       />
       {password && (
         <TouchableOpacity
-          onPressIn={() => setHidePassword(false)}
-          onPressOut={() => setHidePassword(true)}
-          style={stylesWithBorder.togglePassword}>
+          onPress={() => setHidePassword(hide => !hide)}
+          style={styles.togglePassword}>
           <TogglePasswordIcon />
         </TouchableOpacity>
       )}
