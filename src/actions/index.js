@@ -5,7 +5,7 @@ import {
   SAVE_REGISTER_DATA,
 } from 'src/reducers';
 import store from 'src/store';
-import {notifyTomorrow} from '../hooks/useNotification';
+import {notifyTomorrow} from 'src/hooks/useNotification';
 import {saveLocalData, loadLocalData} from './local_storage_actions';
 
 export const changeModalTakenOpen = (type, item) => ({

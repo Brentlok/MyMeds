@@ -13,18 +13,14 @@ const RootView = ({children}) => {
   const RootViewWrapper = styled.Pressable`
     background-color: ${white};
     width: 100%;
-    height: ${Dimensions.get('window').height}px;
-    ${!pathname.includes('/start') && 'padding: 0 15px;'}
+    flex: 1;
+    ${!pathname.includes('/start') && 'padding: 0 15px 70px 15px;'}
   `;
 
   return (
     <RootViewWrapper onPress={() => Keyboard.dismiss()}>
-      {!pathname.includes('start') && pathname !== '/' && (
-        <>
-          <TopPanel />
-          <BottomPanel />
-        </>
-      )}
+      {!pathname.includes('start') && pathname !== '/' && <TopPanel />}
+      {!pathname.includes('start') && pathname !== '/' && <BottomPanel />}
       <GoBack show={!['/', '/home', '/start/start'].includes(pathname)} />
       {children}
     </RootViewWrapper>

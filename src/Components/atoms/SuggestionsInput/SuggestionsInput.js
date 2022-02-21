@@ -84,9 +84,6 @@ const SuggestionsInput = forwardRef(({number, password, autoComplete}, ref) => {
       }
       return;
     }
-    if (value[value.length - 1] === ' ') {
-      return;
-    }
     setInputValue(value);
   };
 

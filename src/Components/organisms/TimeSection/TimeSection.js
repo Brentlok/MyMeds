@@ -37,9 +37,6 @@ const TimeSection = () => {
   const {lastCheckedTime} = useSelector(state => state);
   const {hours, minutes} = lastCheckedTime;
 
-  //262 - y position, 70 height of bottom panel
-  const height = Dimensions.get('window').height - 262 - 70;
-
   const {isInternetReachable} = useNetInfo();
 
   const handlePress = () => {
@@ -57,9 +54,9 @@ const TimeSection = () => {
     padding: 10px 15px 0 15px;
     margin-left: -15px;
     width: ${Dimensions.get('window').width}px;
-    background-color: ${light_grey};
-    height: ${height}px;
+    flex: 1;
     border: 0 solid ${grey};
+    background-color: ${light_grey};
     border-top-width: 1px;
   `;
 
@@ -76,7 +73,7 @@ const TimeSection = () => {
           </RefreshBox>
         </StatusBox>
       </Header>
-      <TimeList height={height} />
+      <TimeList />
     </TimeSectionWrapper>
   );
 };

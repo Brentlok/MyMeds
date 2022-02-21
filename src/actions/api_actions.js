@@ -25,6 +25,7 @@ export const register = name => async dispatch => {
 };
 
 export const login = (email, password) => async dispatch => {
+  console.log('login');
   try {
     const {
       data: {data},
@@ -36,9 +37,6 @@ export const login = (email, password) => async dispatch => {
     if (status !== 200) {
       return status;
     }
-    if (data.message === 'Invalid Credentials') {
-      return 'Podałeś niepoprawne dane';
-    }
     await dispatch(saveLocalData({accessToken: data.access_token}));
     await dispatch({
       type: LOGIN,
@@ -49,7 +47,7 @@ export const login = (email, password) => async dispatch => {
     await dispatch(changePath('/home'));
     await dispatch(loadData(data.access_token));
   } catch (error) {
-    return error;
+    return error.message.slice(-3);
   }
 };
 

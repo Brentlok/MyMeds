@@ -12,7 +12,7 @@ import {primary, red, white} from 'src/colors';
 
 const AddMedsWrapper = styled.View`
   width: 100%;
-  height: ${Dimensions.get('window').height - 140}px;
+  flex: 1;
 `;
 
 const Title = styled(MetroText)`
@@ -27,14 +27,13 @@ const Message = styled(MetroText)`
 
 const SubmitButton = styled.TouchableOpacity`
   position: absolute;
-  bottom: 45px;
-  left: ${(Dimensions.get('window').width - 185) / 2}px;
+  bottom: 15px;
+  left: ${(Dimensions.get('window').width - 215) / 2}px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 185px;
   height: 60px;
-  margin: auto;
   border: 3px solid ${primary};
   elevation: 3;
   background-color: ${white};

@@ -57,10 +57,6 @@ const TimeItem = ({last, active, data, muted, disabled}) => {
     flex-direction: column;
   `;
 
-  const MedTitle = styled(MetroText)`
-    width: 100%;
-  `;
-
   const BorderGradient = styled(LinearGradient)`
     width: ${Dimensions.get('window').width.toFixed()}px;
     position: absolute;
@@ -81,9 +77,9 @@ const TimeItem = ({last, active, data, muted, disabled}) => {
             <MedItemWrapper
               onPress={() => openModal('delete', item)}
               key={item.name}>
-              <MedTitle weight={EXTRA_BOLD} size={SMALL}>
+              <MetroText weight={EXTRA_BOLD} size={SMALL}>
                 {item.name}
-              </MedTitle>
+              </MetroText>
               <MetroText weight={MEDIUM} size={EXTRA_SMALL} color={dark_grey}>
                 {item.quantity} {item.quantity_type}
               </MetroText>

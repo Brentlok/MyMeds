@@ -39,7 +39,7 @@
         android:screenOrientation="portrait"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
         android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize"
+        android:windowSoftInputMode="adjustPan"
         android:showWhenLocked="true"
         android:turnScreenOn="true"
         android:exported="true"

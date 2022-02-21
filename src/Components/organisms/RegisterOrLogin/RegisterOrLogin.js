@@ -97,7 +97,11 @@ const RegisterOrLogin = ({where}) => {
     }
     const sendLogin = await dispatch(login(mail, password1));
     if (sendLogin) {
-      setMessage(sendLogin);
+      if (sendLogin === '500') {
+        setMessage('Podałeś niepoprawne dane');
+        mailRef.current.setBorderColor(red);
+        password1Ref.current.setBorderColor(red);
+      }
     }
   };
 

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {View, ScrollView} from 'react-native';
 import styled from 'styled-components/native';
 import TimeItem from 'atoms/TimeItem/TimeItem';
 import {useSelector, useDispatch} from 'react-redux';
@@ -11,7 +12,7 @@ import MetroText, {
 } from 'atoms/MetroText/MetroText';
 import {useHistory} from 'react-router-native';
 
-const TimeList = ({height}) => {
+const TimeList = () => {
   const [firstActive, setFirstActive] = useState(null);
 
   const {list, dataLoaded, takenToday, muted, addedForTomorrow} = useSelector(
@@ -27,17 +28,19 @@ const TimeList = ({height}) => {
   const history = useHistory();
 
   const TimeListWrapper = styled.ScrollView`
-    height: ${height - 45}px;
+    flex: 1;
   `;
 
   const NothingWrapper = styled.View`
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: ${height - 45}px;
     padding: 10px 0;
   `;
+
+  const TimeListComponent = list.length ? TimeListWrapper : NothingWrapper;
 
   const NothingText = styled(MetroText)`
     margin: 15px;
@@ -65,7 +68,7 @@ const TimeList = ({height}) => {
 
   //wait for api
   return dataLoaded && firstActive !== null ? (
-    <TimeListWrapper>
+    <TimeListComponent>
       {list.length ? (
         <>
           {filteredList.length ? (
@@ -80,12 +83,12 @@ const TimeList = ({height}) => {
               />
             ))
           ) : (
-            <NothingWrapper>
+            <>
               <Icon type={GREAT} />
               <NothingText size={SMALL} weight={SEMI_BOLD}>
                 To już wszystko na dziś!
               </NothingText>
-            </NothingWrapper>
+            </>
           )}
         </>
       ) : (
@@ -114,7 +117,7 @@ const TimeList = ({height}) => {
           )}
         </NothingWrapper>
       )}
-    </TimeListWrapper>
+    </TimeListComponent>
   ) : (
     <TimeListWrapper />
   );
