@@ -25,10 +25,7 @@ const Input = forwardRef(({number, password, autoComplete}, ref) => {
       }
       return;
     }
-    if (value[value.length - 1] === ' ') {
-      return;
-    }
-    setInputValue(value);
+    setInputValue(value.replaceAll(' ', ''));
   };
 
   //for some reasons input from styled-components wont work properly
